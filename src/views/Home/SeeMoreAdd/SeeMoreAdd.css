@@ -1,0 +1,26 @@
+.seeMore {
+  height: 200px;
+  margin-top: 5px;
+  background-color: var(--main-color);
+  color: white;
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+.seeMore > button {
+  display: block;
+  margin: auto;
+  padding: 10px;
+  font-size: 15px;
+  background: #cfc4c4;
+  color: var(--main-color);
+
+  border: 0px;
+  box-shadow: 0 0 10px white;
+  cursor: pointer;
+}
+
+.seeMore > button:hover {
+  background-color: var(--main-color);
+  color: white;
+}

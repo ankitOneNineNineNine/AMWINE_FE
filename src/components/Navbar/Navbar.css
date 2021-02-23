@@ -1,0 +1,12 @@
+.nav {
+  z-index: 100;
+  position: fixed;
+  display: flex;
+  height: 50px;
+  flex-direction: column;
+  background-color: var(--main-color);
+  color: white;
+  /* transition: 0.4s all ease-in-out; */
+  top: 0;
+  width: 100%;
+}

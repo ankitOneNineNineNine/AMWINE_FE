@@ -1,0 +1,29 @@
+.ad > h2 {
+  text-align: center;
+}
+.ad {
+  height: 80vh;
+  background-image: url("../../images/wineComp2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: block;
+  margin: auto;
+  color: white;
+  position: relative;
+}
+.ad > h2 {
+  font-size: 3em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media only screen and (max-width: 600px) {
+  .ad > h2 {
+    top: 5%;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+  }
+}

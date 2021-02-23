@@ -1,0 +1,40 @@
+.cartContainer {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgb(209, 202, 202);
+  padding: 10px;
+  z-index: 100000000000000000;
+  text-align: center;
+  border-radius: 100%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgb(177, 10, 10);
+  background: black;
+  color: white;
+  box-shadow: 0 0 10px black;
+}
+
+.cartContainer:hover > .fa-shopping-cart,
+.cartContainer > span {
+  box-shadow: 0 0 20px black;
+}
+
+.cartContainer > span {
+  position: absolute;
+  border-radius: 100%;
+  border: 2px solid white;
+  width: 15px;
+  color: var(--main-color);
+  text-align: center;
+  line-height: 13px;
+  height: 15px;
+  top: 5px;
+  right: 0.5px;
+  background-color: white;
+}
+
+@media only screen and (max-width: 300px) {
+  .cartContainer {
+    bottom: 50px;
+  }
+}

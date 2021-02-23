@@ -1,0 +1,103 @@
+.product {
+  /* display: inline-flex; */
+  width: 250px;
+  height: 400px;
+  /* position: relative; */
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 10px var(--main-color);
+  text-align: center;
+  margin-bottom: 20px;
+  text-align: center;
+  margin: 10px;
+}
+.slick-prev,
+.slick-next {
+  display: inline-block;
+  position: absolute;
+  top: 80%;
+  z-index: 1;
+}
+.slick-next {
+  right: 0;
+}
+.slick-track {
+  display: inline-flex;
+}
+.imageContainer {
+  min-width: 250px;
+  height: 250px;
+  position: absolute;
+  overflow: hidden;
+}
+.product > h2 {
+  text-decoration: underline;
+  text-shadow: 0 0 2px white;
+  margin-top: -2px;
+}
+.bgImage {
+  position: relative;
+  transition: 0.3s all ease-in-out;
+  top: 0;
+  background-image: url("../../../images/wine2.jpg");
+  height: 100vh;
+}
+
+.imageContainer:hover .bgImage {
+  transform: scale(1.2);
+}
+.desc {
+  position: absolute;
+  margin-top: 250px;
+}
+.productName {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.productPrice {
+  background: var(--main-color);
+  padding: 8px;
+  width: 40%;
+  float: left;
+  color: white;
+  cursor: pointer;
+}
+.addToCart {
+  float: right;
+  width: 150px;
+}
+.addToCart > input {
+  width: 30px;
+  padding: 10px;
+  position: relative;
+  top: -5px;
+}
+.addToCartButton {
+  background-color: var(--main-color);
+  color: white;
+  padding: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.addToCartButton:hover {
+  background-color: rgb(1, 78, 78);
+}
+.addToCartButton:hover .fa {
+  color: greenyellow;
+}
+
+/* @media only screen and (max-width: 865px) and (min-width: 700px) {
+  .product {
+    width: 30%;
+  }
+}
+@media only screen and (max-width: 700px) and (min-width: 400px) {
+  .product {
+    width: 45%;
+  }
+} */
+@media only screen and (max-width: 480px) {
+  .product {
+    margin: auto;
+  }
+}

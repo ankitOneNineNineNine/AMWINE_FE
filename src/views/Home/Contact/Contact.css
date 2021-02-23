@@ -1,0 +1,48 @@
+.contactContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.pymtInfo > h2 {
+  text-align: center;
+}
+
+.cntctInfo > span {
+  display: block;
+  font-size: 20px;
+  letter-spacing: 2.5px;
+}
+.iconContainerSocial {
+  padding: 5px;
+  margin: auto;
+  text-align: center;
+}
+.iconContainerSocial > .fa {
+  padding: 5px;
+  text-align: center;
+  margin: auto 5px;
+}
+.fa-instagram {
+  color: indianred;
+}
+.fa-facebook {
+  color: #4267b2;
+}
+.iconContainerSocial > .fa:hover {
+  color: var(--main-color);
+}
+
+@media only screen and (max-width: 400px) {
+  .contactContainer {
+    margin: auto;
+    text-align: center;
+    display: block;
+  }
+  .pymtInfo,
+  .cntctInfo {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }
+}

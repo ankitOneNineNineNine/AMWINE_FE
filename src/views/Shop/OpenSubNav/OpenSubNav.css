@@ -1,0 +1,23 @@
+.openSubNav {
+  color: white;
+  position: absolute;
+  background: var(--main-color);
+  box-shadow: 0 0 15px white;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  left: 50%;
+  /* transition: 0.2s all ease-in-out; */
+  z-index: 1500;
+  position: fixed;
+}
+.open {
+  top: 42px;
+}
+.close {
+  top: 80px;
+}
+.openSubNav > .fa {
+  margin-top: -5px;
+}

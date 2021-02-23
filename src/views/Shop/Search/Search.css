@@ -1,0 +1,32 @@
+.search {
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+}
+.searchButton {
+  line-height: 20px;
+  display: inline-block;
+  padding: 5px;
+  cursor: pointer;
+  background: var(--main-color);
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+
+.search > input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background: var(--main-color);
+  color: white;
+  box-shadow: 0 0 5px var(--main-color);
+  flex: 1;
+  margin: 5px;
+}
+
+.searchButton:hover .fa-search {
+  color: white;
+}

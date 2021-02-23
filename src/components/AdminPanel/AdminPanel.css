@@ -1,0 +1,13 @@
+.adminPanel {
+  width: 100%;
+  padding: 5px;
+}
+.postContents {
+  width: calc(100% - 255px);
+  margin-left: 250px;
+  transition: all 100s ease-in-out;
+}
+
+.compContents {
+  margin-top: 54px;
+}

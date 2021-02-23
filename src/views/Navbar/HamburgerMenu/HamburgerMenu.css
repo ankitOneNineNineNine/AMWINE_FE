@@ -1,0 +1,12 @@
+.hamMenu {
+  margin-left: auto;
+  padding: 20px;
+  margin-top: -55px;
+  display: none;
+}
+
+@media only screen and (max-width: 550px) {
+  .hamMenu {
+    display: inline-block;
+  }
+}

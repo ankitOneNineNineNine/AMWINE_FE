@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "./Login.css";
+import {post} from '../../utilities/http'
+import { connect } from "react-redux";
+import { setUser } from "../../reduxMgmt/actions/user.actions";
+import { failureNotification, successNotification } from "../../utilities/toast";
+const loginFormDetails = {
+  eoru: "",
+  password: "",
+};
+
+//mapStatetoProps
+const mapStatetoProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+//mapDispatchToProps
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveUserToStore: (user) => dispatch(setUser(user)),
+  };
+};
+
+function Login({user, history, saveUserToStore}) {
+  const [formDetails, setFormDetails] = useState({ ...loginFormDetails });
+  const [submitClicked, setSubmitClicked] = useState(false)
+  function formChange(e) {
+    let { name, value } = e.target;
+    setFormDetails({ ...formDetails, [name]: value });
+  }
+  useEffect(() => {
+    if (Object.keys(user).length) {
+      successNotification(`Welcome ${user.userName}`);
+      history.push("/");
+    }
+  }, [user]);
+  async function login(e) {
+    e.preventDefault();
+    setSubmitClicked(true)
+    try{
+      let details = await post('/auth/signin', {body: formDetails});
+      localStorage.setItem("i_hash", JSON.stringify(details.token));
+      saveUserToStore(details.user);
+    }
+    catch(e){
+      failureNotification(e.response.data.msg)
+      setSubmitClicked(false)
+    }
+  }
+  return (
+    <div className="login">
+      <h2>Login</h2>
+      <form className="loginForm" method="post" onSubmit={login}>
+        <label>Email or Username</label>
+        <input
+          onChange={formChange}
+          type="text"
+          name="eoru"
+          defaultValue={formDetails.eoru}
+        />
+        <label>Password</label>
+        <input
+          type="password"
+          onChange={formChange}
+          name="password"
+          defaultValue={formDetails.password}
+        />
+
+        <button className="loginButton" onClick={login} style = {submitClicked? {backgroundColor: 'gray'}: null} disabled = {submitClicked}>
+          Login
+        </button>
+      </form>
+      <div className="others">
+        <p>
+          Don't Have an Account? Click <Link to="/Join"> Here</Link>
+        </p>
+        <p>
+          Forgot your password? Click <Link to="/forgot-password">Here</Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default connect(mapStatetoProps, mapDispatchToProps)(Login)

@@ -1,0 +1,62 @@
+.productDetails {
+  height: 100%;
+  padding: 5px;
+}
+.aboutProduct {
+  margin-top: 10%;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+.dImageContainer {
+  width: 500px;
+  float: left;
+  height: 500px;
+  background-image: url("../../../images/wine2.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.ddetails {
+  display: inline-block;
+  width: 40%;
+  padding: 50px;
+}
+.ddetails > button {
+  padding: 15px;
+  text-align: center;
+  display: block;
+  border-radius: 15px;
+  cursor: pointer;
+
+  border: 0;
+}
+.ddetails > button:hover {
+  background-color: var(--main-color);
+}
+.otherProducts {
+  margin: auto;
+  margin-top: 8%;
+  text-align: center;
+  display: block;
+}
+.otherProducts .product {
+  display: inline-flex;
+}
+@media only screen and (max-width: 600px) {
+  .dImageContainer {
+    display: block;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    text-align: center;
+  }
+  .ddetails {
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+  .ddetails > button {
+    margin: auto;
+  }
+}

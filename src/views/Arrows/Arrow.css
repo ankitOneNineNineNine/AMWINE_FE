@@ -1,0 +1,28 @@
+.arrowLeft,
+.arrowRight {
+  background-color: var(--main-color);
+  padding: 20px;
+  position: absolute;
+  top: 100%;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrowLeft {
+  left: 0;
+}
+.arrowRight {
+  right: 0;
+}
+.fa-chevron-left,
+.fa-chevron-right {
+  transition: 0.3s ease-in-out;
+}
+.arrowLeft:hover .fa-chevron-left {
+  transform: scale(1.2);
+}
+
+.arrowRight:hover .fa-chevron-right {
+  transform: scale(1.2);
+}

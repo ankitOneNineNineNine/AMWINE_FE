@@ -2,8 +2,9 @@ import React from "react";
 import "./MainNavLink.css";
 import { authLinks, links } from "../../../utilities/links";
 import { Link } from "react-router-dom";
-
+import {isAuthorized} from '../../../utilities/auth.middleware'
 import Wine from "../../../images/wine.png";
+
 
 
 function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
@@ -14,19 +15,29 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
       <div className="links">
         <ul>
           {mapLinks.map((link, i) => {
-            return link === "Profile" ? (
-              <Link to={"/" + link} key={i}>
-                <li className={currentLink === link ? "activeMainNav" : null}>
-                  <img className="publicProfile" src={Wine} />
-                </li>
-              </Link>
-            ) : (
-              <Link to={"/" + link} key={i}>
-                <li className={currentLink === link ? "activeMainNav" : null}>
-                  {link}
-                </li>
-              </Link>
-            );
+            return link === "Profile" ?  
+                isAuthorized(user)?
+                (
+                  <Link to={`/admin`} key={i}>
+                    <li className={currentLink === link ? "activeMainNav" : null}>
+                      <img className="publicProfile" src={Wine} />
+                    </li>
+                  </Link>
+                ) 
+                :
+                (
+                  <Link to={`/profile/${user._id}`} key={i}>
+                    <li className={currentLink === link ? "activeMainNav" : null}>
+                      <img className="publicProfile" src={Wine} />
+                    </li>
+                  </Link>
+                ) : (
+                  <Link to={"/" + link} key={i}>
+                    <li className={currentLink === link ? "activeMainNav" : null}>
+                      {link}
+                    </li>
+                  </Link>
+                )
           })}
         </ul>
       </div>

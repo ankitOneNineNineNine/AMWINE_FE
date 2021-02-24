@@ -1,0 +1,28 @@
+.pProfile {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+.topHandle > ul {
+  margin: auto;
+  width: 50%;
+}
+.topHandle > ul > li {
+  list-style: none;
+  display: inline-block;
+  cursor: pointer;
+  margin: 2px;
+  padding: 10px;
+  color: white;
+  background-color: var(--main-color);
+}
+.topHandle > ul > li:hover {
+  background-color: #50514d;
+}
+.topHandle .cSL {
+  background-color: #50514d;
+}
+@media only screen and (max-width: 530px) {
+  .topHandle > ul {
+    width: 80%;
+  }
+}

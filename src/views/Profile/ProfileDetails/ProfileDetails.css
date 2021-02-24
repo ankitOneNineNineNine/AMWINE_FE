@@ -28,6 +28,7 @@
 }
 .pImage {
   width: 100%;
+  height: 100%;
 }
 .pDetailsContainer {
   display: inline-block;

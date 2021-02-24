@@ -1,15 +1,22 @@
 import React, { useRef, useState } from 'react';
 import './ProfileUpdate.css';
-import Wine from '../../../../images/wine.png'
+import Wine from '../../../images/wine.png'
+import { connect } from 'react-redux';
 
 const updateFormDetails = {
     fullName: "",
     address: "",
     number: "",
-    image: ""
+    image: null
 }
 
-export default function ProfileUpdate(){
+const mapStateToProps = state =>{
+    return {
+        user:state.user
+    }
+}
+
+function ProfileUpdate({user}){
     const imageChange = useRef(null)
     const [formDetails, setFormDetails] = useState({...updateFormDetails});
 
@@ -36,7 +43,7 @@ const imageSelect = (e) =>{
         setFormDetails({...formDetails, image: ""})
     }
 }
-console.log()
+
 return(
     <div className = ''>
      <form method = 'put' onSubmit = {submit}>
@@ -51,15 +58,20 @@ return(
        
          <input type = 'file' ref = {imageChange} name = 'image' onChange = {detailsChange} className = 'imageSelector'></input>
          <label>FullName</label>
-            <h2><input type = 'text' className = 'editor' onChange = {detailsChange} name = 'fullName' placeholder = 'FullName' defaultValue = {formDetails.fullName}/></h2>
+            <h2><input type = 'text' className = 'editor' onChange = {detailsChange} name = 'fullName' placeholder = 'FullName' defaultValue = {user.fullName}/></h2>
             <label>Username</label>
-            <p>UserName (Uneditable)</p>
+            <p>{user.userName} (Uneditable)</p>
             <label>Email</label>
-            <p>email (Uneditable)</p>
+            <p>{user.email} (Uneditable)</p>
             <label>Address</label>
-            <p><input type = 'text' className = 'editor' onChange = {detailsChange} name = 'address' placeholder = 'Address' defaultValue = {formDetails.address}/></p>
+            <p><input type = 'text' className = 'editor' onChange = {detailsChange} name = 'address' placeholder = 'Address' defaultValue = {user.address}/></p>
             <label>Number</label>
-            <p><input type = 'tel' className = 'editor' onChange = {detailsChange} name = 'number' placeholder = 'Ph. Number' defaultValue = {formDetails.number}/></p>
+            <p><input type = 'tel' className = 'editor' onChange = {detailsChange} name = 'number' placeholder = 'Ph. Number' defaultValue = {user.number}/></p>
+            <label>Image</label>
+            <p><input type = 'file' className = 'editor' onChange = {detailsChange} name = 'image' placeholder = 'image'/>
+            <img src = {formDetails.image?URL.createObjectURL(formDetails.image):Wine} className = 'editProfileProfileImage'/>
+            
+            </p>
         </div>
     <button className = 'updateProfileButton' onClick = {submit}>Update</button>
     </div>
@@ -67,3 +79,5 @@ return(
     </div>
 )
 }
+
+export default connect(mapStateToProps)(ProfileUpdate);

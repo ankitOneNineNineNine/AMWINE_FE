@@ -41,6 +41,13 @@ export default function SideNav({ name, sideNavOpen,currentSideNavLink, match })
           </Link>
         </ul>
       </div>
+      <div className="admins">
+        <ul>
+          <Link to={`${match.url}/admins`}>
+            <li className = {currentSideNavLink === '/admins'?'sideNavLinkActive':null }>Admins</li>
+          </Link>
+        </ul>
+      </div>
       <Link to= '/'><button className = 'gotoHome'>GoTo Home</button></Link>
     </div>
   );

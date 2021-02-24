@@ -9,12 +9,7 @@ import { get, post } from "../../utilities/http";
 import { connect } from "react-redux";
 import { setUser } from "../../reduxMgmt/actions/user.actions";
 
-//mapStatetoProps
-const mapStatetoProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+
 
 //mapDispatchToProps
 const mapDispatchToProps = (dispatch) => {
@@ -31,19 +26,14 @@ const registerFormDetails = {
   number: "",
 };
 
-function Register({ saveUserToStore, history, user }) {
+function Register({ saveUserToStore, history }) {
   const [formDetails, setFormDetails] = useState({ ...registerFormDetails });
   const [submitClicked, setSubmitClicked] = useState(false)
   function formChange(e) {
     let { name, value } = e.target;
     setFormDetails({ ...formDetails, [name]: value });
   }
-  useEffect(() => {
-    if (Object.keys(user).length) {
-      successNotification(`Welcome ${user.userName}`);
-      history.push("/");
-    }
-  }, [user]);
+ 
 
   async function register(e) {
     e.preventDefault();
@@ -59,6 +49,8 @@ function Register({ saveUserToStore, history, user }) {
         let details = await post("/auth/signup", { body: formDetails });
       localStorage.setItem("i_hash", JSON.stringify(details.token));
       saveUserToStore(details.user);
+      successNotification(`Welcome ${details.user.userName}`);
+      history.push("/");
       }
       catch(e){
         failureNotification(e)
@@ -177,4 +169,4 @@ function Register({ saveUserToStore, history, user }) {
   );
 }
 
-export default connect(mapStatetoProps, mapDispatchToProps)(Register);
+export default connect(null, mapDispatchToProps)(Register);

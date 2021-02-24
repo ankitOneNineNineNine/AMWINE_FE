@@ -10,12 +10,7 @@ const loginFormDetails = {
   password: "",
 };
 
-//mapStatetoProps
-const mapStatetoProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+
 
 //mapDispatchToProps
 const mapDispatchToProps = (dispatch) => {
@@ -24,19 +19,14 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function Login({user, history, saveUserToStore}) {
+function Login({history, saveUserToStore}) {
   const [formDetails, setFormDetails] = useState({ ...loginFormDetails });
   const [submitClicked, setSubmitClicked] = useState(false)
   function formChange(e) {
     let { name, value } = e.target;
     setFormDetails({ ...formDetails, [name]: value });
   }
-  useEffect(() => {
-    if (Object.keys(user).length) {
-      successNotification(`Welcome ${user.userName}`);
-      history.push("/");
-    }
-  }, [user]);
+
   async function login(e) {
     e.preventDefault();
     setSubmitClicked(true)
@@ -44,6 +34,8 @@ function Login({user, history, saveUserToStore}) {
       let details = await post('/auth/signin', {body: formDetails});
       localStorage.setItem("i_hash", JSON.stringify(details.token));
       saveUserToStore(details.user);
+      successNotification(`Welcome ${details.user.userName}`);
+      history.push("/");
     }
     catch(e){
       failureNotification(e.response.data.msg)
@@ -85,4 +77,4 @@ function Login({user, history, saveUserToStore}) {
   );
 }
 
-export default connect(mapStatetoProps, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(Login)

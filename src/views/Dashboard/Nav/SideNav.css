@@ -56,3 +56,13 @@
 .gotoHome:hover {
   box-shadow: 0 0 10px white;
 }
+.admins {
+  text-align: center;
+}
+.admins li {
+  display: inline-block;
+  width: 80%;
+  text-align: center;
+  border: 3px solid white;
+  border: 3px solid white;
+}

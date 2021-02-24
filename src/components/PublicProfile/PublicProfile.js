@@ -20,12 +20,10 @@ return (
             <ul>
                 <li className = {(match.params.link === user._id)? 'cSL': null}><Link to = {`/profile/${user._id}`}>Profile</Link></li>
                 <li className = {(match.params.link === 'update')? 'cSL': null}><Link to = '/profile/update'>Update Profile</Link></li>
-                <li className = {(match.params.link === 'cart')? 'cSL': null}><Link to = '/profile/cart'>Cart</Link></li>
-            </ul>
+                <li><Link to = '/cart'>Cart</Link></li>            </ul>
         </div>
         <div className = 'det'>
         {match.params.link === 'update'? <ProfileUpdate />
-        :match.params.link === 'cart'? <CartContents />
         :<ProfileDetails />
         }
         </div>

@@ -9,7 +9,7 @@ export default function ImageText(){
         <div className="newsText">
           <h2>ANKIT WINE SHOP</h2>
           <p>Join us to get Special Discounts!!</p>
-          <Link to = '/Join' className = 'JoinButtonBelow'>Join</Link>
+          <Link to = '/join' className = 'JoinButtonBelow'>Join</Link>
         </div>
       </div>
     )

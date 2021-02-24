@@ -26,6 +26,7 @@ import { connect } from "react-redux";
 import AdminSignin from "./components/AdminSignin/AdminSignin";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
 import ProfileDetails from "./views/Profile/ProfileDetails/ProfileDetails";
+import CartContents from "./components/CartContents/CartContents";
 
 function AdminRoute({ component: Component, user, ...rest }) {
   return (
@@ -58,7 +59,7 @@ function PublicRoute({ component: Component, isAdmin, ...rest }) {
   );
 }
 function PublicAuth({ component: Component, user, ...rest }) {
-  return !user ? (
+  return !Object.keys(user).length ? (
     <Route
       {...rest}
       render={(props) => {
@@ -102,6 +103,7 @@ function App({ saveUserToState, user }) {
           <PublicRoute exact path="/" component={Home} />
           <PublicRoute exact path="/shop" component={Shop} />
           <PublicRoute exact path="/profile/:link" component={PublicProfile} />
+          <PublicRoute path = '/cart' component = {CartContents} />
           <PublicRoute path="/shop/1234" component={ProductDetails} />
           <PublicRoute path="/about" component={About} />
           {/* <PublicRoute path="/about" component = {About} /> */}

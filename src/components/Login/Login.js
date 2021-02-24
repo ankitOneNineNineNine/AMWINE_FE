@@ -5,6 +5,7 @@ import {post} from '../../utilities/http'
 import { connect } from "react-redux";
 import { setUser } from "../../reduxMgmt/actions/user.actions";
 import { failureNotification, successNotification } from "../../utilities/toast";
+import { isAuthorized } from "../../utilities/auth.middleware";
 const loginFormDetails = {
   eoru: "",
   password: "",
@@ -35,6 +36,9 @@ function Login({history, saveUserToStore}) {
       localStorage.setItem("i_hash", JSON.stringify(details.token));
       saveUserToStore(details.user);
       successNotification(`Welcome ${details.user.userName}`);
+      if(isAuthorized(details.user)){
+        successNotification(`Hello Admin!`);
+      }
       history.push("/");
     }
     catch(e){

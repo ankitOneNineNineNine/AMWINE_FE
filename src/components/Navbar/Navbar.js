@@ -11,17 +11,17 @@ let scrolledNav = {
   boxShadow: " 0 0 15px white",
 };
 
-const mapStateToProps = state=>{
+const mapStateToProps = (state) => {
   return {
-    user: state.user
-  }
-}
+    user: state.user,
+  };
+};
 
-const mapDispathToProps = dispatch =>{
+const mapDispathToProps = (dispatch) => {
   return {
-    onSignOut: ()=> dispatch(setUser({}))
-  }
-}
+    onSignOut: () => dispatch(setUser({})),
+  };
+};
 
 function Navbar(props) {
   const [showMenu, setShowMenu] = useState(false);
@@ -31,33 +31,33 @@ function Navbar(props) {
     e.preventDefault();
     setShowMenu((showMenu) => !showMenu);
   };
-const signOut = (e) =>{
-  localStorage.clear();
-  props.onSignOut();
-  props.history.push('/')
-}
+  const signOut = (e) => {
+    localStorage.clear();
+    props.onSignOut();
+    props.history.push("/");
+  };
   useEffect(() => {
     let link = props.location.pathname.substring(
       1,
       props.location.pathname.length
     );
-    setCurrentLink(link);
     if (link !== "") {
       setStyleNav(scrolledNav);
     }
-    else{
-      window.onscroll = (e) => {
+    setCurrentLink(link);
+    window.onscroll = (e) => {
+      if (link !== "") {
+        setStyleNav(scrolledNav);
+      } else {
         if (e.path[1].pageYOffset > 100) {
           setStyleNav(scrolledNav);
         } else {
           setStyleNav({ backgroundColor: "transparent" });
         }
-      };
-    } 
+      }
+    };
   }, [props.location.pathname]);
-  useEffect(() => {
- 
-  });
+  useEffect(() => {});
   return (
     <>
       <nav className="nav" style={styleNav}>
@@ -66,8 +66,8 @@ const signOut = (e) =>{
           setShowMenu={setShowMenu}
           showMenu={showMenu}
           currentLink={currentLink}
-          user = {props.user}
-          signOut = {signOut}
+          user={props.user}
+          signOut={signOut}
         />
         <HamburgerMenu showMenu={showMenu} openOrClose={openOrClose} />
       </nav>

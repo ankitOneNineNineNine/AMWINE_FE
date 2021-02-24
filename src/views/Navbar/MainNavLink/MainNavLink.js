@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./MainNavLink.css";
 import { authLinks, links } from "../../../utilities/links";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 isAuthorized(user)?
                 (
                   <Link to={`/admin`} key={i}>
-                    <li className={currentLink === link ? "activeMainNav" : null}>
+                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
                       <img className="publicProfile" src={Wine} />
                     </li>
                   </Link>
@@ -27,13 +27,13 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 :
                 (
                   <Link to={`/profile/${user._id}`} key={i}>
-                    <li className={currentLink === link ? "activeMainNav" : null}>
+                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
                       <img className="publicProfile" src={Wine} />
                     </li>
                   </Link>
                 ) : (
-                  <Link to={"/" + link} key={i}>
-                    <li className={currentLink === link ? "activeMainNav" : null}>
+                  <Link to={"/" + link.toLowerCase()} key={i}>
+                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
                       {link}
                     </li>
                   </Link>
@@ -46,7 +46,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
           <ul>
             {mapLinks.map((link, i) => {
               return (
-                <Link to={"/" + link} key={i}>
+                <Link to={"/" + link.toLowerCase()} key={i}>
                   <li className={currentLink === link ? "activeMainNav" : null}  onClick = {()=> {setShowMenu(false)}}>
                     {link}
                   </li>
@@ -67,4 +67,6 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
   );
 }
 
-export default (MainNavLink)
+export default MainNavLink
+
+

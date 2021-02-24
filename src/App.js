@@ -115,7 +115,7 @@ function App({ saveUserToState, user }) {
             component={ForgotPassword}
             user={user}
           />
-          <Route exact path="/adminLogin" component={AdminSignin} />
+          {/* <Route exact path="/adminLogin" component={AdminSignin} /> */}
         </Switch>
       </Router>
       <ToastContainer />

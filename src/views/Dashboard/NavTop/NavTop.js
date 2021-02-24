@@ -2,7 +2,8 @@ import React from 'react';
 import './NavTop.css'
 import Wine from '../../../images/wine.png'
 import { Link } from 'react-router-dom';
-export default function NavTop({openSideNav, sideNavOpen, match}){
+import { profilePicUrl } from '../../../utilities/urls';
+export default function NavTop({user, openSideNav, sideNavOpen, match}){
 
 const navTopStyle = {
     justifyContent: 'center',
@@ -21,7 +22,7 @@ const navTopStyle = {
                     <i className = 'dashSearchIcon fa fa-search fa-2x'></i>
                     </div>
             </div>
-               <Link to  = {match.url}><img className = 'profilePicture' src = {Wine}  /></Link> 
+               <Link to  = {match.url}><img className = 'profilePicture' src = {`${profilePicUrl}/${user.image}`||Wine}  /></Link> 
 
 
         </div>

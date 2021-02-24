@@ -21,11 +21,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import { setUser } from "./reduxMgmt/actions/user.actions";
-import { post } from "./utilities/http";
+import { get, post } from "./utilities/http";
 import { connect } from "react-redux";
 import AdminSignin from "./components/AdminSignin/AdminSignin";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
-import ProfileDetails from "./views/Profile/ProfileDetails/ProfileDetails";
 import CartContents from "./components/CartContents/CartContents";
 
 function AdminRoute({ component: Component, user, ...rest }) {
@@ -90,12 +89,16 @@ const mapDispathToProps = (dispatch) => {
 };
 function App({ saveUserToState, user }) {
   useEffect(() => {
-    post("/auth/signin", {
-      body: { token: JSON.parse(localStorage.getItem("i_hash")) },
-    }).then((details) => {
-      saveUserToState(details.user);
-    });
+    get('/user',{}, true)
+    .then(user=>{
+      saveUserToState(user);
+    })
+    .catch(console.log)
+
   }, []);
+  useEffect(()=>{
+    
+  }, [user])
   return (
     <>
       <Router>

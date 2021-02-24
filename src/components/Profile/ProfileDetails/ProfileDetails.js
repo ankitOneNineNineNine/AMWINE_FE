@@ -2,6 +2,7 @@ import React from 'react';
 import './ProfileDetails.css'
 import Wine from '../../../images/wine.png'
 import { connect } from 'react-redux';
+import { profilePicUrl } from '../../../utilities/urls';
 
 const mapStateToProps = state =>{
     return {
@@ -14,7 +15,7 @@ function ProfileDetails({user}){
         <div className = 'profileContainer'>
         <div className = 'profileDetails'>
             <div className = 'pImageContainer'>
-                <img className = 'pImage' src = {Wine} />
+                <img className = 'pImage' src = {`${profilePicUrl}/${user.image}` || Wine} />
             </div>
             <div className = 'pDetailsContainer'>
                 <h2>{user.fullName}</h2>

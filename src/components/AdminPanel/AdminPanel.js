@@ -5,11 +5,11 @@ import SideNav from "../../views/Dashboard/Nav/SideNav";
 import NavTop from "../../views/Dashboard/NavTop/NavTop";
 import SalesAnalytics from "../../views/AdminPanel/Analytics/Sales/SalesAnalytics";
 import ReviewsAnalytics from "../../views/AdminPanel/Analytics/Reviews/Reviews";
-import ProfileDetails from "../../views/Profile/ProfileDetails/ProfileDetails";
-import ProfileUpdate from "../../views/Profile/ProfileUpdate/ProfileUpdate";
 import AddProduct from "../../views/AdminPanel/Post/AddProduct/AddProduct";
 import UpdateProduct from "../../views/AdminPanel/Post/UpdateProduct/UpdateProduct";
 import PostAds from "../../views/AdminPanel/Post/PostAds/PostAds";
+import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
+import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
 
 
 export default function AdminPanel({ name, match }) {

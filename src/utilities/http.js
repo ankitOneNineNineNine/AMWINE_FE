@@ -9,18 +9,18 @@ const http = axios.create({
 const reqHeaders = {
   "Content-Type": "application/json",
 };
-const authReqToke = {
-  Authorization: localStorage.getItem("i_hash"),
+const authReqToken = {
+  Authorization: JSON.parse(localStorage.getItem("i_hash")),
 };
 
 //api call functions
 
-function get(url, { headers = reqHeaders, params = {} } = {}, secured = false) {
-  // observable TODO
+function get(url, { headers = reqHeaders, params = {} } = {}, secured = false, type = "application/json") {
+
   return http({
     method: "GET",
     url,
-    headers: secured ? authReqToke : reqHeaders,
+    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
     params,
   }).then((data) => data.data);
 }
@@ -28,13 +28,14 @@ function get(url, { headers = reqHeaders, params = {} } = {}, secured = false) {
 function post(
   url,
   { headers = reqHeaders, params = {}, body = {} },
-  secured = false
+  secured = false,
+  type = "application/json"
 ) {
   // observable TODO
   return http({
     method: "POST",
     url,
-    headers: secured ? authReqToke : reqHeaders,
+    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
     data: body,
     params,
   }).then((data) => data.data);
@@ -43,27 +44,31 @@ function post(
 function put(
   url,
   { headers = reqHeaders, params = {}, body = {} },
-  secured = false
+  secured = false,
+  type = "application/json"
 ) {
+ 
   return http({
     method: "PUT",
     url,
-    headers: secured ? authReqToke : reqHeaders,
+    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
     data: body,
     params,
-  });
+  })
+  .then(data=>data.data);
 }
 
 function remove(
   url,
   { headers = reqHeaders, params = {}, body = {} },
-  secured = false
+  secured = false,
+  type = "application/json"
 ) {
-  // observable TODO
+ 
   return http({
     method: "DELETE",
     url,
-    headers: secured ? authReqToke : reqHeaders,
+    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
     params,
   });
 }

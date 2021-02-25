@@ -6,28 +6,29 @@ import SeeMoreAdd from "../../views/Home/SeeMoreAdd/SeeMoreAdd";
 import './Home.css'
 import Slideshow from "../../views/Home/slideShow/Slideshow";
 import Ad from "../../views/Ad/Ad";
+import { connect } from "react-redux";
 
 
-const product = {
-  image: "../../../images/wine2.jpg",
-  name: "AM Wine",
-  price: "5000",
-  avail: 5,
-  url: '1234'
-};
-const products = [product, product, product, product, product,product,product,product];
 
-export default function Home() {
+const mapStateToProps = state=>{
+  return {
+    products: state.product.products,
+    user: state.user.user
+  }
+}
+function Home({products, user}) {
 
   return (
     <div className = 'home'>
       
       <ImageText />
       <h2>Latest Wine on Stock</h2>
-      <Slideshow products = {products}/>
+      <Slideshow products = {products} user = {user}/>
       <SeeMoreAdd />
       <Ad />
 
     </div>
   );
 }
+
+export default connect(mapStateToProps)(Home)

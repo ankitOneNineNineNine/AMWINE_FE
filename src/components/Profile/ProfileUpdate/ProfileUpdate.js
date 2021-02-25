@@ -2,10 +2,12 @@ import React, { useRef, useState } from "react";
 import "./ProfileUpdate.css";
 import { connect } from "react-redux";
 import { put } from "../../../utilities/http";
-import { setUser } from "../../../reduxMgmt/actions/user.actions";
+import { setUser } from "../../../reduxMgmt/actions/actions";
 import { profilePicUrl } from "../../../utilities/urls";
 import { successNotification } from "../../../utilities/toast";
 import { withRouter } from "react-router-dom";
+import Wine from '../../../images/wine.png'
+
 const updateFormDetails = {
   fullName: null,
   address: null,
@@ -16,7 +18,7 @@ const updateFormDetails = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.user.user,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -50,7 +52,6 @@ function ProfileUpdate({ user, saveUserToState, history }) {
       "multipart/form-data"
     );
     if (user) {
-      console.log(user);
       saveUserToState(user);
       successNotification("Successfully Updated!");
       history.push(`/profile/${user._id}`);
@@ -71,7 +72,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
       <form method="put" onSubmit={submit}>
         <div className="profileUpdator">
           <div className="pImageContainer">
-            <img className="pImage" src={`${profilePicUrl}/${user.image}`} />
+            <img className="pImage" src={user.image? `${profilePicUrl}/${user.image}` : Wine} />
 
             <i
               className={`uploaderIcon fa ${
@@ -150,7 +151,9 @@ function ProfileUpdate({ user, saveUserToState, history }) {
                 src={
                   formDetails.image
                     ? URL.createObjectURL(formDetails.image)
-                    : `${profilePicUrl}/${user.image}`
+                    : user.image? 
+                    `${profilePicUrl}/${user.image}`
+                    :Wine
                 }
                 className="editProfileProfileImage"
               />

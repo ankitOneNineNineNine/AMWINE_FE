@@ -1,17 +1,16 @@
 import React from "react";
 import "./ProductDetails.css";
 import Product from "../Product/Product";
+import { connect } from "react-redux";
 
-const product = {
-  image: "../../../images/wine2.jpg",
-  name: "AM Wine",
-  price: "5000",
-  avail: 5,
-  url: "1234",
-};
-const products = [product, product, product, product];
+const mapStateToProps = state=>{
+  return {
+    products: state.product.products,
+    user: state.user.user
+  }
+}
 
-export default function ProductDetails() {
+function ProductDetails({products, user}) {
   return (
     <div className="productDetails">
       <div className="aboutProduct">
@@ -33,9 +32,11 @@ export default function ProductDetails() {
       <div className="otherProducts">
         <h2>Similar Products</h2>
         {products.map((product, i) => {
-          return <Product key = {i} product={product} />;
+          return <Product user = {user}  key = {i} product={product} />;
         })}
       </div>
     </div>
   );
 }
+
+export default connect(mapStateToProps)(ProductDetails);

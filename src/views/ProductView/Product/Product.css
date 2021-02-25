@@ -48,6 +48,8 @@
 }
 .desc {
   position: absolute;
+  width: 250px;
+  overflow: hidden;
   margin-top: 250px;
 }
 .productName {
@@ -64,7 +66,19 @@
 }
 .addToCart {
   float: right;
-  width: 150px;
+  width: 40%;
+}
+.updateButton {
+  float: right;
+  width: 40%;
+  padding: 5px;
+  background: var(--main-color);
+  color: white;
+  cursor: pointer;
+}
+.updateButton:hover {
+  background-color: white;
+  color: black;
 }
 .addToCart > input {
   width: 30px;
@@ -80,10 +94,10 @@
   cursor: pointer;
 }
 .addToCartButton:hover {
-  background-color: rgb(1, 78, 78);
+  background-color: white;
 }
 .addToCartButton:hover .fa {
-  color: greenyellow;
+  color: black;
 }
 
 /* @media only screen and (max-width: 865px) and (min-width: 700px) {

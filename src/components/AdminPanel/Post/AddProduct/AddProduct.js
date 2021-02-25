@@ -4,19 +4,37 @@ import {
   failureNotification,
   successNotification,
 } from "../../../../utilities/toast";
+import { post } from "../../../../utilities/http";
+import { setProducts } from "../../../../reduxMgmt/actions/actions";
+import { connect } from "react-redux";
 const addProductFormDetails = {
-  name: "",
-  price: 0,
-  quantity: 0,
-  description: "",
+  name: null,
+  price: null,
+  quantity: null,
   images: [],
+  pType: "wine",
+  variety: null,
 };
 
-export default function AddProduct() {
+const mapStateToProps = (state) => {
+  return {
+    products: state.product.products,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveProductToState: (products) => dispatch(setProducts(products)),
+  };
+};
+
+function AddProduct({ products, saveProductToState }) {
   const productImage = useRef(null);
   const [formDetails, setFormDetails] = useState({ ...addProductFormDetails });
   const formChange = (e) => {
     let { name, value } = e.target;
+    if (name === "price" || name === "quantity") {
+      value = +value;
+    }
     if (name === "images") {
       let images = formDetails.images;
       images.push(e.target.files[0]);
@@ -30,22 +48,42 @@ export default function AddProduct() {
     images.splice(i, 1);
     setFormDetails({ ...formDetails, images });
   };
-  const add = (e) => {
+  const add = async (e) => {
     e.preventDefault();
     let test = validate();
-    console.log(formDetails);
+    let formData = new FormData();
+    let { name, price, variety, pType, quantity, images } = formDetails;
+    if (name) formData.append("name", name);
+    if (price) formData.append("price", price);
+    if (variety) formData.append("variety", variety);
+    if (pType) formData.append("pType", pType);
+    if (quantity) formData.append("quantity", quantity);
+    if (images.length) {
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+    }
+    if (test) {
+      let product = await post(
+        "/authProduct/",
+        { body: formData },
+        true,
+        "multipart/form-data"
+      );
+      let prod = products;
+      prod.push(formDetails);
+      saveProductToState(prod);
+      successNotification("Successfully Added");
+    }
   };
   const validate = () => {
     for (const item in formDetails) {
-      if ((item === "quantity" || item === "price") && formDetails[item] < 10) {
+      if (!formDetails[item]) {
         failureNotification(`${item} should be present`);
-        break;
-      }
-      if (formDetails[item].length < 1) {
-        failureNotification(`${item} should be present`);
-        break;
+        return false;
       }
     }
+    return true;
   };
   const addMoreImage = () => {
     productImage.current.click();
@@ -74,16 +112,20 @@ export default function AddProduct() {
           type="number"
           onChange={formChange}
           name="quantity"
-          defaultValue={formDetails.price}
+          defaultValue={formDetails.quantity}
         />
-        <label>Description</label>
-        <textarea
-          rows="10"
-          cols="30"
+        <label>Variety</label>
+        <input
           onChange={formChange}
-          name="description"
-          defaultValue={formDetails.description}
+          name="variety"
+          placeholder="Sparkling, Red, Sweet, Rose, etc."
+          defaultValue={formDetails.variety}
         />
+        <label>Type</label>
+        <select name="pType">
+          <option value="wine">Wine</option>
+          <option value="beer">Beer</option>
+        </select>
         <label>Images</label>
         <input
           type="file"
@@ -119,3 +161,5 @@ export default function AddProduct() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);

@@ -5,14 +5,17 @@ import SideNav from "../../views/Dashboard/Nav/SideNav";
 import NavTop from "../../views/Dashboard/NavTop/NavTop";
 import SalesAnalytics from "../../views/AdminPanel/Analytics/Sales/SalesAnalytics";
 import ReviewsAnalytics from "../../views/AdminPanel/Analytics/Reviews/Reviews";
-import AddProduct from "../../views/AdminPanel/Post/AddProduct/AddProduct";
-import UpdateProduct from "../../views/AdminPanel/Post/UpdateProduct/UpdateProduct";
-import PostAds from "../../views/AdminPanel/Post/PostAds/PostAds";
+import AddProduct from "./Post/AddProduct/AddProduct";
+import UpdateProduct from "./Post/UpdateProduct/UpdateProduct";
+import PostAds from "./Post/PostAds/PostAds";
 import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
 import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
 
 
-export default function AdminPanel({ name, match }) {
+
+
+export default function AdminPanel({ user, match }) {
+  
   const [sideNavOpen, setSideNavOpen] = useState(true);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -35,9 +38,9 @@ function AdminSubRoute({component:Component,user, ...rest}){
         return (
           <>
         <div className = 'sidenav'>
-      <SideNav name="ankit" sideNavOpen={sideNavOpen} match = {match} currentSideNavLink = {rest.path.substring(10, rest.path.length)} />
+      <SideNav name={user && user.userName} sideNavOpen={sideNavOpen} match = {match} currentSideNavLink = {rest.path.substring(10, rest.path.length)} />
       </div><div className = 'postContents' style = {!sideNavOpen? postContentsStyle:null}>
-      <NavTop openSideNav={openSideNav} match = {match} sideNavOpen={sideNavOpen} />
+      <NavTop openSideNav={openSideNav} user = {user} match = {match} sideNavOpen={sideNavOpen} />
           <div className = 'compContents'>
           <Component {...props}/>
           </div>
@@ -55,7 +58,7 @@ function AdminSubRoute({component:Component,user, ...rest}){
       <AdminSubRoute path = {match.url + '/analytics/sales'} component = {SalesAnalytics} />
       <AdminSubRoute path = {match.url + '/analytics/reviews'} component = {ReviewsAnalytics} />
       <AdminSubRoute path = {match.url + '/post/addProduct'} component = {AddProduct} />
-      <AdminSubRoute path = {match.url + '/post/updateProduct'} component = {UpdateProduct} />
+      <AdminSubRoute path = {match.url + '/post/updateProduct/:id'} component = {UpdateProduct} />
       <AdminSubRoute path = {match.url + '/post/postAds'} component = {PostAds} />
       
     </div>

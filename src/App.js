@@ -20,10 +20,9 @@ import { isAuthorized } from "./utilities/auth.middleware";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
-import { setUser } from "./reduxMgmt/actions/user.actions";
+import { setProducts, setUser } from "./reduxMgmt/actions/actions";
 import { get, post } from "./utilities/http";
 import { connect } from "react-redux";
-import AdminSignin from "./components/AdminSignin/AdminSignin";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
 import CartContents from "./components/CartContents/CartContents";
 
@@ -33,7 +32,7 @@ function AdminRoute({ component: Component, user, ...rest }) {
       {...rest}
       render={(props) => {
         return isAuthorized(user) ? (
-          <Component {...props} />
+          <Component {...props} user={user} />
         ) : (
           <Redirect to="/" />
         );
@@ -78,27 +77,30 @@ function PublicAuth({ component: Component, user, ...rest }) {
 //redux
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.user.user,
   };
 };
 
 const mapDispathToProps = (dispatch) => {
   return {
     saveUserToState: (user) => dispatch(setUser(user)),
+    saveProductToState: products=>dispatch(setProducts(products))
   };
 };
-function App({ saveUserToState, user }) {
+function App({ saveUserToState, user, products , saveProductToState}) {
   useEffect(() => {
-    get('/user',{}, true)
-    .then(user=>{
-      saveUserToState(user);
+    get("/user", {}, true)
+      .then((user) => {
+        saveUserToState(user);
+      })
+      .catch(console.log);
+    get('/product', {})
+    .then(products=>{
+      saveProductToState(products)
     })
     .catch(console.log)
-
   }, []);
-  useEffect(()=>{
-    
-  }, [user])
+  useEffect(() => {}, [user]);
   return (
     <>
       <Router>
@@ -106,7 +108,7 @@ function App({ saveUserToState, user }) {
           <PublicRoute exact path="/" component={Home} />
           <PublicRoute exact path="/shop" component={Shop} />
           <PublicRoute exact path="/profile/:link" component={PublicProfile} />
-          <PublicRoute path = '/cart' component = {CartContents} />
+          <PublicRoute path="/cart" component={CartContents} />
           <PublicRoute path="/shop/1234" component={ProductDetails} />
           <PublicRoute path="/about" component={About} />
           {/* <PublicRoute path="/about" component = {About} /> */}

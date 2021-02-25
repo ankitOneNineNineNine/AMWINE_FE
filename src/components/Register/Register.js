@@ -7,7 +7,7 @@ import {
 } from "../../utilities/toast";
 import { get, post } from "../../utilities/http";
 import { connect } from "react-redux";
-import { setUser } from "../../reduxMgmt/actions/user.actions";
+import { setUser } from "../../reduxMgmt/actions/actions";
 
 
 

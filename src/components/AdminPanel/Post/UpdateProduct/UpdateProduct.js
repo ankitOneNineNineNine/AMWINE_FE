@@ -12,7 +12,8 @@ const updateProductDetails = {
   images: [],
 };
 
-export default function UpdateProduct() {
+export default function UpdateProduct({match, product}) {
+  console.log(match.params.id)
   const productImage = useRef(null);
   const [formDetails, setFormDetails] = useState({ ...updateProductDetails });
   const formChange = (e) => {

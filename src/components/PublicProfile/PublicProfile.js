@@ -9,7 +9,7 @@ import './PublicProfile.css'
 
 const mapStateToProps = state=>{
     return {
-        user:state.user
+        user:state.user.user
     }
 }
 function PublicProfile({match, user}){

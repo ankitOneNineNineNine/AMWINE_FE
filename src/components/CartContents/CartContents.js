@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import "./CartContents.css";
 import Wine from '../../images/wine.png'
+import {setUser} from '../../reduxMgmt/reducers/reducers'
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.setUser.user,
   };
 };
 

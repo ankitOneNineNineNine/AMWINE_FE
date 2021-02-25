@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import Product from "../../views/ProductView/Product/Product";
 import Filter from "../../views/Shop/Filter/Filter";
 import Search from "../../views/Shop/Search/Search";
 import "./Shop.css";
 
-const product = {
-  image: "../../../images/wine2.jpg",
-  name: "AM Wine",
-  price: "5000",
-  avail: 5,
-  url: '1234'
-};
-const products = [
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-];
+const mapStateToProps = state=>{
+  return {
+    products: state.product.products,
+    user:state.user.user
+  }
+}
 
-export default function Shop() {
+function Shop({products, user}) {
   useEffect(()=>{
     window.scrollTo({
       top: 0,
@@ -46,10 +36,11 @@ export default function Shop() {
           <h3>Showing 1-12 of 83 results</h3>
         </div>
         {products.map((product, i) => {
-          return <Product key={i} product={product} />;
+          return <Product user = {user} key={i} product={product} />;
         })}
       </div>
      
     </div>
   );
 }
+export default  connect(mapStateToProps)(Shop)

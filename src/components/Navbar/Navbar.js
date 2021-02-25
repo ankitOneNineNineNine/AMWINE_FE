@@ -4,7 +4,9 @@ import "./Navbar.css";
 import MainNavLink from "../../views/Navbar/MainNavLink/MainNavLink";
 import HamburgerMenu from "../../views/Navbar/HamburgerMenu/HamburgerMenu";
 import { useLocation, withRouter } from "react-router-dom";
-import { setUser } from "../../reduxMgmt/actions/user.actions";
+import { setUser } from "../../reduxMgmt/actions/actions";
+
+
 import { connect } from "react-redux";
 let scrolledNav = {
   backgroundColor: "var(--main-color)",
@@ -13,7 +15,7 @@ let scrolledNav = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.user.user,
   };
 };
 

@@ -22,7 +22,7 @@ const navTopStyle = {
                     <i className = 'dashSearchIcon fa fa-search fa-2x'></i>
                     </div>
             </div>
-               <Link to  = {match.url}><img className = 'profilePicture' src = {`${profilePicUrl}/${user.image}`||Wine}  /></Link> 
+               <Link to  = {match.url}><img className = 'profilePicture' src = {(user && user.image)? `${profilePicUrl}/${user.image}` : Wine} /></Link> 
 
 
         </div>

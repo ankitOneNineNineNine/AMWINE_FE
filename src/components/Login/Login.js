@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import {post} from '../../utilities/http'
 import { connect } from "react-redux";
-import { setUser } from "../../reduxMgmt/actions/user.actions";
+import { setUser } from "../../reduxMgmt/actions/actions";
 import { failureNotification, successNotification } from "../../utilities/toast";
 import { isAuthorized } from "../../utilities/auth.middleware";
 const loginFormDetails = {

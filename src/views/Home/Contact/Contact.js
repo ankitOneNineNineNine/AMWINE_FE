@@ -16,8 +16,8 @@ export default function Contact(){
         <div className = 'cntctInfo'>
         <h2>Contact Info</h2>
         <span className = 'sadd'>Bhaktapur, Nepal</span>
-        <span className = 'tel'>Tel: +8787542464687</span>
-        <span className = 'email'>Email: pra@gads.com</span>
+        <span className = 'tel'><strong>Tel:</strong> +8787542464687</span>
+        <span className = 'email'><strong>Email:</strong> pra@gads.com</span>
         <div className = 'iconContainerSocial'>
         <i className = 'fa fa-facebook fa-3x'></i>
         <i className = 'fa fa-instagram fa-3x'></i>

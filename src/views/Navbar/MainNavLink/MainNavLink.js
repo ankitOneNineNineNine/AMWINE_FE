@@ -21,7 +21,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 (
                   <Link to={`/admin`} key={i}>
                     <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
-                      <img className="publicProfile" src={`${profilePicUrl}/${user.image}`||Wine} />
+                      <img className="publicProfile" src = {user.image? `${profilePicUrl}/${user.image}` : Wine}/>
                     </li>
                   </Link>
                 ) 
@@ -29,7 +29,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 (
                   <Link to={`/profile/${user._id}`} key={i}>
                     <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
-                      <img className="publicProfile" src={`${profilePicUrl}/${user.image}`||Wine} />
+                      <img className="publicProfile" src = {user.image? `${profilePicUrl}/${user.image}` : Wine}/>
                     </li>
                   </Link>
                 ) : (

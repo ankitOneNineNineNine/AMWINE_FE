@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux'
-
+import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {createLogger} from 'redux-logger'
 
 import reportWebVitals from './reportWebVitals';
-import { setUser } from './reduxMgmt/reducers/user.reducers';
+import { setProducts, setUser } from './reduxMgmt/reducers/reducers';
+
+const logger = createLogger();
 
 
-
-// const rootReducer = 
-const store = createStore(setUser)
+const rootReducer = combineReducers({user: setUser, product:setProducts})
+const store = createStore(rootReducer, applyMiddleware(logger))
 
 
 ReactDOM.render(

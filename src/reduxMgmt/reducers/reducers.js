@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_USER } from "../types/types";
+import { SET_CART, SET_PRODUCTS, SET_USER } from "../types/types";
 
 const initialUserState = {
   user: {},
@@ -30,3 +30,18 @@ export const setProducts = (state = initialProductsState, action) => {
   }
 };
 
+
+const initialCartProducts = {
+  products: [],
+}
+export const setCart = (state = initialCartProducts, action) => {
+  switch (action.type) {
+    case SET_CART:
+      return {
+        ...state,
+        products: action.payload,
+      };
+    default:
+      return state;
+  }
+};

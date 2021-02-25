@@ -20,7 +20,7 @@ import { isAuthorized } from "./utilities/auth.middleware";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
-import { setProducts, setUser } from "./reduxMgmt/actions/actions";
+import { setCart, setProducts, setUser } from "./reduxMgmt/actions/actions";
 import { get, post } from "./utilities/http";
 import { connect } from "react-redux";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
@@ -84,10 +84,11 @@ const mapStateToProps = (state) => {
 const mapDispathToProps = (dispatch) => {
   return {
     saveUserToState: (user) => dispatch(setUser(user)),
-    saveProductToState: products=>dispatch(setProducts(products))
+    saveProductToState: products=>dispatch(setProducts(products)),
+    saveCartPToState: products =>dispatch(setCart(products))
   };
 };
-function App({ saveUserToState, user, products , saveProductToState}) {
+function App({ saveUserToState, user, products , saveProductToState, saveCartPToState}) {
   useEffect(() => {
     get("/user", {}, true)
       .then((user) => {
@@ -99,6 +100,13 @@ function App({ saveUserToState, user, products , saveProductToState}) {
       saveProductToState(products)
     })
     .catch(console.log)
+    if(Object.keys(user).length){
+      
+    }
+    else{
+      let item = JSON.parse(localStorage.getItem('cart_p'))
+      saveCartPToState(item)
+    }
   }, []);
   useEffect(() => {}, [user]);
   return (
@@ -109,7 +117,7 @@ function App({ saveUserToState, user, products , saveProductToState}) {
           <PublicRoute exact path="/shop" component={Shop} />
           <PublicRoute exact path="/profile/:link" component={PublicProfile} />
           <PublicRoute path="/cart" component={CartContents} />
-          <PublicRoute path="/shop/1234" component={ProductDetails} />
+          <PublicRoute path="/shop/:id" component={ProductDetails} />
           <PublicRoute path="/about" component={About} />
           {/* <PublicRoute path="/about" component = {About} /> */}
           <AdminRoute path="/admin" component={AdminPanel} user={user} />

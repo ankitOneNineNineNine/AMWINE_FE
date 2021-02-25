@@ -12,14 +12,41 @@
   width: 500px;
   float: left;
   height: 500px;
-  background-image: url("../../../images/wine2.jpg");
+
   background-position: center;
   background-size: cover;
 }
+.dImage {
+  width: 100%;
+  height: 100%;
+  transition: 0.4s all ease-in-out;
+}
+.selectedDImage {
+  overflow: hidden;
+  cursor: pointer;
+  width: 400px;
+  height: 400px;
+}
+.selectedDImage:hover .dImage {
+  transform: scale(1.2);
+}
+.otherImagesContainer {
+  display: block;
+  margin: auto;
+  text-align: left;
+}
+.otherDImage {
+  width: 70px;
+  height: 60px;
+  padding: 5px;
+
+  cursor: pointer;
+}
+.otherDImage:hover {
+  transform: scale(1.2);
+}
 .ddetails {
   display: inline-block;
-  width: 40%;
-  padding: 50px;
 }
 .ddetails > button {
   padding: 15px;
@@ -32,6 +59,7 @@
 }
 .ddetails > button:hover {
   background-color: var(--main-color);
+  color: white;
 }
 .otherProducts {
   margin: auto;
@@ -45,15 +73,12 @@
 @media only screen and (max-width: 600px) {
   .dImageContainer {
     display: block;
-    width: 80%;
-    height: 80%;
     margin: auto;
     text-align: center;
   }
   .ddetails {
     display: block;
-    width: 100%;
-    padding: 0;
+    margin: auto;
     text-align: center;
   }
   .ddetails > button {

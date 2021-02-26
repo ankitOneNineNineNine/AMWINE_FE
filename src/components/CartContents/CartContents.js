@@ -5,6 +5,7 @@ import Wine from "../../images/wine.png";
 import { setUser } from "../../reduxMgmt/reducers/reducers";
 import { get } from "../../utilities/http";
 import { productPicUrl } from "../../utilities/urls";
+import { warningNotification } from "../../utilities/toast";
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
@@ -13,30 +14,57 @@ const mapStateToProps = (state) => {
   };
 };
 
-function Cart({ user, products, cart_p }) {
+function CartContents({ user, products, cart_p }) {
   const [productSelected, setProductsSelected] = useState([]);
-  const [cartProducts, setCartProducts] = useState([]);
-  const selectProduct = (e, i) => {
-    // console.log(e.target.name, e.target.checked, i)
-    let { name, checked } = e.target;
-    console.log(checked, i);
-    if (checked) {
-      setProductsSelected([...productSelected, i]);
+  const [qty, setQty] = useState({});
+  useEffect(() => {
+    console.log(productSelected);
+  });
+  const selectQty = (e) => {
+    let { name, value } = e.target;
+
+    let qtyT = { ...qty };
+    let pInd = productSelected.findIndex((p) => p.p === name);
+    if (pInd > -1) {
+      let pcheck = [...productSelected];
+      pcheck[pInd]["qty"] = +value;
+      setProductsSelected(pcheck);
+
+      return;
+    }
+
+    if (qtyT[name] >= 0) {
+      qtyT[name] = value;
+      setQty(qtyT);
     } else {
-      let productS = productSelected;
-      productS.splice(i, 1);
-      setProductsSelected(productS);
+      setQty({ ...qty, [name]: value });
     }
   };
-  useEffect(() => {
-    if (cart_p) {
-      cart_p.map((p_id) => {
-        get(`/product/${p_id}`).then((product) => {
-          setCartProducts([...cartProducts, product]);
-        });
-      });
+  const selectProduct = (e) => {
+    // console.log(e.target.name, e.target.checked, i)
+    let { name, checked, value } = e.target;
+
+    if (qty[value]) {
+      setProductsSelected([
+        ...productSelected,
+        {
+          p: value,
+          qty: qty[value],
+          price: +e.target.attributes[2].value,
+        },
+      ]);
+    } else {
+      setProductsSelected([
+        ...productSelected,
+        {
+          p: value,
+          qty: 1,
+          price: +e.target.attributes[2].value,
+        },
+      ]);
     }
-  }, [cart_p]);
+  };
+
   const checkout = (e) => {
     e.preventDefault();
     console.log(productSelected);
@@ -48,50 +76,73 @@ function Cart({ user, products, cart_p }) {
       setProductsSelected([]);
     }
   };
-
+  let sTPrice = productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0);
+  let tPrice = sTPrice ? sTPrice + 150 : 0;
   return (
     <div className="cartContents">
       <h2>Cart</h2>
 
       <div className="productsInCart">
-        {cartProducts.map((product) => {
+        {cart_p.map((product, i) => {
           return (
-            <>
+            <div key={i}>
               <div className="cartProduct">
-                <input
-                  type="checkbox"
-                  id="vehicle1"
-                  name="product"
-                  value={product._id}
-                  onChange={(e) => selectProduct(e, 0)}
-                />
                 <img
                   src={`${productPicUrl}/${product.images[0]}`}
                   className="pInCartImg"
                 />
-                <span>{product.name}</span>
-                <span className="pCartPrice">{product.price}</span>
+                <span className="trash">
+                  <i className="removeFromCart fa fa-trash fa-2x"></i>
+                </span>
+                <input
+                  type="checkbox"
+                  className="selectChecboxCart"
+                  value={product._id}
+                  onChange={selectProduct}
+                  price={product.price}
+                />
+                <div className="cartProductDetails">
+                  <div className="p_name">
+                    <span>{product.name}</span>
+                  </div>
+                  <div className="remDetailsPCart">
+                    <span className="quantity">
+                      Quantity:{" "}
+                      <input
+                        type="number"
+                        onChange={selectQty}
+                        name={product._id}
+                        min={1}
+                        defaultValue={1}
+                        max={product.quantity}
+                      />
+                    </span>
+                    <span className="pCartPrice">{product.price}</span>
+                  </div>
+                </div>
               </div>
               <br />
-            </>
+            </div>
           );
         })}
       </div>
       <div className="checkOut">
         <h2>Order Summary</h2>
         <table>
-          <tr>
-            <td>Subtotal (x items)</td>
-            <td>Rs. x</td>
-          </tr>
-          <tr>
-            <td>Shipping Fee</td>
-            <td>Rs. x</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>Rs. x</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Subtotal (x items)</td>
+              <td>Rs. {sTPrice}</td>
+            </tr>
+            <tr>
+              <td>Shipping Fee</td>
+              <td>Rs. 150</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>Rs. {tPrice}</td>
+            </tr>
+          </tbody>
         </table>
 
         <button onClick={checkout} className="proceedToCheckout">
@@ -102,4 +153,10 @@ function Cart({ user, products, cart_p }) {
   );
 }
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps)(
+  React.memo(CartContents, (props, nextProps) => {
+    if (props.cart_p === nextProps.cart_p) {
+      return true;
+    }
+  })
+);

@@ -23,14 +23,14 @@ function Product({ product, user, saveCartPToState, cart_p }) {
   const productURL = "/shop/" + product._id;
   const picUrl = productPicUrl + "/" + product.images[0];
 
-  const addToCart = (p_id) => {
-    if (cart_p.indexOf(p_id) > -1) {
+  const addToCart = (p) => {
+    if (cart_p.indexOf(p._id) > -1) {
       warningNotification("Already in the cart");
       return;
     }
 
     let item = cart_p;
-    item.push(p_id);
+    item.push(p);
     if (!Object.keys(user).length) {
       localStorage.setItem("cart_p", JSON.stringify(item));
     }
@@ -63,12 +63,11 @@ function Product({ product, user, saveCartPToState, cart_p }) {
               <button className="updateButton">Update</button>
             </Link>
           ) : (
-            <div className="addToCart" onClick={() => addToCart(product._id)}>
-              {console.log(cart_p.indexOf(product._id) > -1)}
+            <div className="addToCart" onClick={() => addToCart(product)}>
               <button
                 className="addToCartButton"
                 style={
-                  cart_p.indexOf(product._id) > -1
+                  cart_p.findIndex((p) => p._id === product._id) > -1
                     ? { backgroundColor: "white", color: "black" }
                     : null
                 }
@@ -82,4 +81,11 @@ function Product({ product, user, saveCartPToState, cart_p }) {
     </div>
   );
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  React.memo(Product, (props, nextProps) => {
+    if (props.cart_p === nextProps.cart_p) return true;
+  })
+);

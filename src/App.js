@@ -105,7 +105,10 @@ function App({ saveUserToState, user, products , saveProductToState, saveCartPTo
     }
     else{
       let item = JSON.parse(localStorage.getItem('cart_p'))
-      saveCartPToState(item)
+      if(item && item.length){
+        saveCartPToState(item)
+      }
+  
     }
   }, []);
   useEffect(() => {}, [user]);

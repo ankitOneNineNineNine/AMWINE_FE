@@ -8,6 +8,7 @@ import {
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
+import { get } from "../../../utilities/http";
 
 const mapStateToProps = (state) => {
   return {
@@ -26,27 +27,26 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
   const [loading, setLoading] = useState(true);
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
   useEffect(() => {
-    let tProduct = products.filter(
-      (product) => product._id === match.params.id
-    )[0];
-    if (tProduct) {
-      setProduct(tProduct);
-      setCurrentSelectedImage(tProduct.images[0]);
-    }
-    if (product) setLoading(false);
-  });
+    get(`/product/${match.params.id}`)
+      .then((tP) => {
+        setProduct(tP);
+        setCurrentSelectedImage(tP.images[0]);
+        setLoading(false);
+      })
+      .catch(console.log);
+  }, []);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
   };
-  const addToCart = (p_id) => {
-    if (cart_p.indexOf(p_id) > -1) {
+  const addToCart = (p) => {
+    if (cart_p.indexOf(p._id) > -1) {
       warningNotification("Already in the cart");
       return;
     }
 
     let item = cart_p;
-    item.push(p_id);
+    item.push(p);
     if (!Object.keys(user).length) {
       localStorage.setItem("cart_p", JSON.stringify(item));
     }
@@ -91,12 +91,12 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
           <button
             onClick={() => addToCart(product._id)}
             style={
-              cart_p.indexOf(product._id || -1) > -1
+              cart_p.findIndex((p) => p._id === product._id) > -1
                 ? { backgroundColor: "var(--main-color)", color: "white" }
                 : null
             }
           >
-            {cart_p.indexOf(product._id || -1) > -1
+            {cart_p.findIndex((p) => p._id === product._id) > -1
               ? "Already in Cart"
               : "Add to Cart"}
           </button>
@@ -124,4 +124,11 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  React.memo(ProductDetails, (props, nextProps) => {
+    if (props.cart_p === nextProps.cart_p) return true;
+  })
+);

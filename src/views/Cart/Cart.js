@@ -10,13 +10,18 @@ const mapStateToProps = (state) => {
 };
 
 function Cart({ cart_p }) {
+  console.log(cart_p);
   return (
     <Link to="/cart">
       <div className="cartContainer">
         <i className="fa fa-shopping-cart fa-2x"></i>
-        <span>{cart_p.length || 0}</span>
+        <span>{(cart_p && cart_p.length) || 0}</span>
       </div>
     </Link>
   );
 }
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps)(
+  React.memo(Cart, (props, nextProps) => {
+    if (props.cart_p.length === nextProps.cart_p.length) return true;
+  })
+);

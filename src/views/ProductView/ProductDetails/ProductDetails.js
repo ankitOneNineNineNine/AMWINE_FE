@@ -3,12 +3,12 @@ import "./ProductDetails.css";
 import Product from "../Product/Product";
 import { connect } from "react-redux";
 import { productPicUrl } from "../../../utilities/urls";
-import { setCart } from "../../../reduxMgmt/actions/actions";
+import { setCart, setUser } from "../../../reduxMgmt/actions/actions";
 import {
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
-import { get } from "../../../utilities/http";
+import { get, put } from "../../../utilities/http";
 
 const mapStateToProps = (state) => {
   return {
@@ -20,9 +20,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveCartPToState: (products) => dispatch(setCart(products)),
+    saveUserToState: user=>dispatch(setUser(user))
   };
 };
-function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
+function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCartPToState }) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
@@ -39,17 +40,27 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
   };
-  const addToCart = (p) => {
-    if (cart_p.indexOf(p._id) > -1) {
+  const addToCart = async(p) => {
+    if (cart_p.findIndex(pr=>pr._id === p._id)>-1) {
       warningNotification("Already in the cart");
       return;
     }
-
     let item = cart_p;
     item.push(p);
     if (!Object.keys(user).length) {
       localStorage.setItem("cart_p", JSON.stringify(item));
+    } else {
+      let formData = new FormData();
+      formData.append('cart',  JSON.stringify(p))
+      let user = await put(
+        "/user",
+        { body :formData},
+        true,
+        "multipart/form-data"
+      );
+      saveUserToState(user)
     }
+    
     saveCartPToState(item);
     successNotification("Addedd to cart");
   };
@@ -89,7 +100,7 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
           <h5>Variety: {product && product.variety}</h5>
           <hr />
           <button
-            onClick={() => addToCart(product._id)}
+            onClick={() => addToCart(product)}
             style={
               cart_p.findIndex((p) => p._id === product._id) > -1
                 ? { backgroundColor: "var(--main-color)", color: "white" }
@@ -127,8 +138,4 @@ function ProductDetails({ products, user, match, cart_p, saveCartPToState }) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  React.memo(ProductDetails, (props, nextProps) => {
-    if (props.cart_p === nextProps.cart_p) return true;
-  })
-);
+)(ProductDetails);

@@ -39,7 +39,7 @@ export const setCart = (state = initialCartProducts, action) => {
     case SET_CART:
       return {
         ...state,
-        products: action.payload,
+        products: [...action.payload],
       };
     default:
       return state;

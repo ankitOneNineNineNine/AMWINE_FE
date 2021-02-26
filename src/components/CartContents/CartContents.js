@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import "./CartContents.css";
 import Wine from "../../images/wine.png";
-import { setUser } from "../../reduxMgmt/reducers/reducers";
-import { get } from "../../utilities/http";
+import { setCart, setUser } from "../../reduxMgmt/actions/actions";
+import { get, put } from "../../utilities/http";
 import { productPicUrl } from "../../utilities/urls";
-import { warningNotification } from "../../utilities/toast";
+import {
+  successNotification,
+  warningNotification,
+} from "../../utilities/toast";
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
@@ -13,13 +16,16 @@ const mapStateToProps = (state) => {
     cart_p: state.cart.products,
   };
 };
-
-function CartContents({ user, products, cart_p }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveProductsToCart: (products) => dispatch(setCart(products)),
+    saveUserToState:user=>dispatch(setUser(user))
+  };
+};
+function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToState }) {
   const [productSelected, setProductsSelected] = useState([]);
   const [qty, setQty] = useState({});
-  useEffect(() => {
-    console.log(productSelected);
-  });
+
   const selectQty = (e) => {
     let { name, value } = e.target;
 
@@ -39,6 +45,26 @@ function CartContents({ user, products, cart_p }) {
     } else {
       setQty({ ...qty, [name]: value });
     }
+  };
+  const removePFromCart = async (product) => {
+    let products = cart_p;
+    let nowProduct = product._id;
+    products.splice(products.indexOf(nowProduct), 1);
+
+    if (!Object.keys(user).length) {
+      localStorage.setItem("cart_p", JSON.stringify(products));
+    } else {
+      let formData = new FormData();
+      formData.append('cart', JSON.stringify(product))
+      let user = await put(
+        "/user",
+        { body :formData},
+        true,
+        "multipart/form-data"
+      );
+      saveUserToState(user)
+    }
+    saveProductsToCart(products);
   };
   const selectProduct = (e) => {
     // console.log(e.target.name, e.target.checked, i)
@@ -69,13 +95,7 @@ function CartContents({ user, products, cart_p }) {
     e.preventDefault();
     console.log(productSelected);
   };
-  const checkAll = (e) => {
-    if (e.target.checked) {
-      setProductsSelected([0, 2, 3]);
-    } else {
-      setProductsSelected([]);
-    }
-  };
+
   let sTPrice = productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0);
   let tPrice = sTPrice ? sTPrice + 150 : 0;
   return (
@@ -91,7 +111,10 @@ function CartContents({ user, products, cart_p }) {
                   src={`${productPicUrl}/${product.images[0]}`}
                   className="pInCartImg"
                 />
-                <span className="trash">
+                <span
+                  className="trash"
+                  onClick={() => removePFromCart(product)}
+                >
                   <i className="removeFromCart fa fa-trash fa-2x"></i>
                 </span>
                 <input
@@ -153,10 +176,4 @@ function CartContents({ user, products, cart_p }) {
   );
 }
 
-export default connect(mapStateToProps)(
-  React.memo(CartContents, (props, nextProps) => {
-    if (props.cart_p === nextProps.cart_p) {
-      return true;
-    }
-  })
-);
+export default connect(mapStateToProps, mapDispatchToProps)(CartContents);

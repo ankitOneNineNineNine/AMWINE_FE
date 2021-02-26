@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import "./Product.css";
 import { productPicUrl } from "../../../utilities/urls";
 import { isAuthorized } from "../../../utilities/auth.middleware";
-import { setCart } from "../../../reduxMgmt/actions/actions";
+import { setCart, setUser } from "../../../reduxMgmt/actions/actions";
 import { connect } from "react-redux";
 import {
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
+import { put } from "../../../utilities/http";
 const mapStateToProps = (state) => {
   return {
     cart_p: state.cart.products,
@@ -17,13 +18,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveCartPToState: (products) => dispatch(setCart(products)),
+    saveUserToState:user=>dispatch(setUser(user))
   };
 };
-function Product({ product, user, saveCartPToState, cart_p }) {
+function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
   const productURL = "/shop/" + product._id;
   const picUrl = productPicUrl + "/" + product.images[0];
 
-  const addToCart = (p) => {
+  const addToCart = async (p) => {
     if (cart_p.indexOf(p._id) > -1) {
       warningNotification("Already in the cart");
       return;
@@ -33,6 +35,16 @@ function Product({ product, user, saveCartPToState, cart_p }) {
     item.push(p);
     if (!Object.keys(user).length) {
       localStorage.setItem("cart_p", JSON.stringify(item));
+    } else {
+      let formData = new FormData();
+      formData.append('cart', JSON.stringify(p))
+      let user = await put(
+        "/user",
+        { body :formData},
+        true,
+        "multipart/form-data"
+      );
+      saveUserToState(user)
     }
     saveCartPToState(item);
     successNotification("Addedd to cart");
@@ -84,8 +96,4 @@ function Product({ product, user, saveCartPToState, cart_p }) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  React.memo(Product, (props, nextProps) => {
-    if (props.cart_p === nextProps.cart_p) return true;
-  })
-);
+)(Product);

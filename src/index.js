@@ -7,12 +7,12 @@ import {applyMiddleware, combineReducers, createStore} from 'redux'
 import {createLogger} from 'redux-logger'
 
 import reportWebVitals from './reportWebVitals';
-import { setProducts, setUser,setCart } from './reduxMgmt/reducers/reducers';
+import { setProducts, setUser,setCart, setFilter } from './reduxMgmt/reducers/reducers';
 
 const logger = createLogger();
 
 
-const rootReducer = combineReducers({user: setUser, product:setProducts, cart:setCart})
+const rootReducer = combineReducers({user: setUser, product:setProducts, cart:setCart, filter:setFilter})
 const store = createStore(rootReducer, applyMiddleware(logger))
 
 

@@ -9,7 +9,7 @@ import { profilePicUrl } from "../../../utilities/urls";
 
 
 function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
-  let mapLinks = Object.keys(user).length ? authLinks : links;
+  let mapLinks = localStorage.getItem('i_hash') ? authLinks : links;
 
   return (
     <>
@@ -59,7 +59,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
       ) : null}
 
 
-     {Object.keys(user).length ? 
+     {localStorage.getItem('i_hash') ? 
       <div className = 'logoutFloat' onClick = {signOut}>
       <button>Sign Out</button>
     </div>

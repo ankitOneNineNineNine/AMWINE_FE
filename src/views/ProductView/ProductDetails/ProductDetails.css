@@ -35,6 +35,37 @@
   margin: auto;
   text-align: left;
 }
+.reviewsPostContainer {
+  display: block;
+  float: right;
+  width: 25%;
+  text-align: center;
+}
+.starRating {
+  display: block;
+}
+.postReview {
+  width: 100%;
+  border-radius: 25px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 5px;
+  background: var(--main-color);
+  color: white;
+}
+.postReviewButton {
+  padding: 10px;
+  font-size: 1em;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  display: block;
+  margin: auto;
+  background: var(--main-color);
+  color: white;
+}
+.postReviewButton:hover {
+  box-shadow: 0 0 10px var(--main-color);
+}
 .otherDImage {
   width: 70px;
   height: 60px;
@@ -85,5 +116,13 @@
   }
   .ddetails > button {
     margin: auto;
+  }
+}
+
+@media only screen and (max-width: 890px) {
+  .reviewsPostContainer {
+    display: block;
+    float: left;
+    width: 100%;
   }
 }

@@ -1,4 +1,4 @@
-import { SET_USER,SET_PRODUCTS, SET_CART } from "../types/types";
+import { SET_USER,SET_PRODUCTS, SET_CART, SET_FILTER } from "../types/types";
 
 export const setUser = (user) => {
  return {
@@ -18,5 +18,12 @@ export const setCart = products =>{
     return {
         type: SET_CART,
         payload:products
+    }
+}
+
+export const setFilter = details =>{
+    return {
+        type: SET_FILTER,
+        payload:details
     }
 }

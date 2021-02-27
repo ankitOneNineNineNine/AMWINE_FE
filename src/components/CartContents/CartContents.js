@@ -51,7 +51,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
     let nowProduct = product._id;
     products.splice(products.indexOf(nowProduct), 1);
 
-    if (!Object.keys(user).length) {
+    if (!localStorage.getItem('i_hash')) {
       localStorage.setItem("cart_p", product._id);
     } else {
       let formData = new FormData();

@@ -123,7 +123,7 @@ function AddProduct({ products, saveProductToState, history }) {
           defaultValue={formDetails.variety}
         />
         <label>Type</label>
-        <select name="pType">
+        <select name="pType" onChange = {formChange}>
           <option value="wine">Wine</option>
           <option value="beer">Beer</option>
         </select>

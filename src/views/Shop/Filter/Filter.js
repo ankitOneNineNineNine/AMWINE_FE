@@ -2,11 +2,12 @@ import React from "react";
 import Search from "../Search/Search";
 import "./Filter.css";
 
-export default function Filter({filter, filterChange}) {
+export default function Filter({filter, filterChange, searchChange, search}) {
   return (
     <div className="filter">
+      <h2>Search</h2>
+      <Search filter = {filter}/>
       <h2>Filter</h2>
-      <Search filterChange = {filterChange} filter = {filter}/>
       <div className="priceRange">
         <label>Price</label>
         <input type="number" name = 'min' onChange = {filterChange}></input>
@@ -23,18 +24,13 @@ export default function Filter({filter, filterChange}) {
       </div>
       <div className="variety">
         <h2>Variety</h2>
-        <input type="checkbox" name="sparkling" value='Chardonnay'  onChange = {filterChange}/>
+        <input type="checkbox" name="Chardonnay" value='Chardonnay'  onChange = {filterChange}/>
         <label htmlFor="chardonay">Chardonay</label>
         <br />
-        <input type="checkbox" name="red" value="red"  onChange = {filterChange}/>
-        <label htmlFor="red">Red</label>
+        <input type="checkbox" name="sparkle" value="Sparkle"  onChange = {filterChange}/>
+        <label htmlFor="red">Sparkle</label>
         <br />
-        <input type="checkbox" name="sweet" value="sweet"  onChange = {filterChange}/>
-        <label htmlFor="sweet">Sweet</label>
-        <br />
-        <input type="checkbox" name="rose" value="rose"  onChange = {filterChange}/>
-        <label htmlFor="rose">Rose</label>
-        <br />
+   
       </div>
       <button className="filterButton" onClick = {filter}>Filter</button>
     </div>

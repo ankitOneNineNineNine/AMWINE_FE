@@ -33,7 +33,7 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
 
     let item = cart_p;
     item.push(p);
-    if (!Object.keys(user).length) {
+    if (!localStorage.getItem('i_hash')) {
       localStorage.setItem("cart_p", p._id);
     } else {
       let formData = new FormData();

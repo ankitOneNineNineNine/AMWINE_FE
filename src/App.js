@@ -57,7 +57,7 @@ function PublicRoute({ component: Component, isAdmin, ...rest }) {
   );
 }
 function PublicAuth({ component: Component, user, ...rest }) {
-  return !Object.keys(user).length ? (
+  return !localStorage.getItem('i_hash') ? (
     <Route
       {...rest}
       render={(props) => {

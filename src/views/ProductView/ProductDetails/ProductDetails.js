@@ -50,7 +50,7 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
     }
     let item = cart_p;
     item.push(p);
-    if (!Object.keys(user).length) {
+    if (!localStorage.getItem('i_hash')) {
       localStorage.setItem("cart_p", p._id);      
     saveCartPToState(item);
     successNotification("Addedd to cart");
@@ -138,23 +138,12 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
           }
           <hr />
         </div>
-      </div>
-      <div className="otherProducts">
-        <h2>Similar Products</h2>
-        {products.map((pLocal, i) => {
-          if (product && product._id !== pLocal._id) {
-            if (
-              product.type === pLocal.type ||
-              product.variety === pLocal.variety
-            ) {
-              return <Product user={user} key={i} product={pLocal} />;
-            } else {
-              return <h3 key={i}>No other Similar Products Found</h3>;
-            }
-          } else {
-            return <h3 key={i}>No other Similar Products Found</h3>;
-          }
-        })}
+      <div className = 'reviewsPostContainer'>
+        <span className = 'starRating'>star rating here</span>
+          <textarea rows={5} cols = {30} placeholder = 'Please give the review...' type = 'text' className = 'postReview'/>
+          <button className = 'postReviewButton'>Post</button>
+        </div>
+   
       </div>
     </div>
   );

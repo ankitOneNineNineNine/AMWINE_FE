@@ -70,10 +70,7 @@ table {
   height: 15px;
   cursor: pointer;
 }
-.footer {
-  margin-top: 200px;
-  height: 500px;
-}
+
 .removeFromCart {
   position: absolute;
   width: 15px;

@@ -52,10 +52,11 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
     products.splice(products.indexOf(nowProduct), 1);
 
     if (!Object.keys(user).length) {
-      localStorage.setItem("cart_p", JSON.stringify(products));
+      localStorage.setItem("cart_p", product._id);
     } else {
       let formData = new FormData();
-      formData.append('cart', JSON.stringify(product))
+      formData.append('action', 'remove');
+      formData.append('cart',product._id)
       let user = await put(
         "/user",
         { body :formData},

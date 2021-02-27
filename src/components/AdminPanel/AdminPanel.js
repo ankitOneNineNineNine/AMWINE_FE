@@ -31,7 +31,7 @@ export default function AdminPanel({ user, match }) {
     marginLeft: '0'
 }
 
-function AdminSubRoute({component:Component,user, ...rest}){
+function AdminSubRoute({component:Component, ...rest}){
 
   return (
     <Route {...rest} render = {(props)=>{

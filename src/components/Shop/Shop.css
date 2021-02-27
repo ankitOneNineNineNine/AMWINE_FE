@@ -17,6 +17,22 @@
 .shop > hr {
   box-shadow: 0 0 5px var(--main-color);
 }
+.paginateButtons button {
+  padding: 20px;
+  background: var(--main-color);
+  color: white;
+  cursor: pointer;
+  border: none;
+  margin: 5px;
+}
+.pageNumberShow {
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 5px;
+}
+.paginateButtons button:hover {
+  box-shadow: 0 0 10px var(--main-color);
+}
 .productCollection {
   width: 70%;
   overflow: hidden;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../views/Footer/Footer";
 import Contact from "../../views/Home/Contact/Contact";
 import ImageText from "../../views/Home/ImageText/Imagetext";
@@ -7,6 +7,8 @@ import './Home.css'
 import Slideshow from "../../views/Home/slideShow/Slideshow";
 import Ad from "../../views/Ad/Ad";
 import { connect } from "react-redux";
+import { setProducts } from "../../reduxMgmt/actions/actions";
+import { get } from "../../utilities/http";
 
 
 
@@ -16,8 +18,20 @@ const mapStateToProps = state=>{
     user: state.user.user
   }
 }
-function Home({products, user}) {
 
+const mapDispatchToProps = dispatch=>{
+  return {
+    saveProductsToState: products=>dispatch(setProducts(products))
+  }
+}
+function Home({products, user, saveProductsToState}) {
+useEffect(()=>{
+  get('/product/search')
+  .then(products=>{
+    saveProductsToState(products)
+  })
+  .catch(console.log)
+}, [])
   return (
     <div className = 'home'>
       
@@ -31,4 +45,4 @@ function Home({products, user}) {
   );
 }
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

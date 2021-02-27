@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function AddProduct({ products, saveProductToState }) {
+function AddProduct({ products, saveProductToState, history }) {
   const productImage = useRef(null);
   const [formDetails, setFormDetails] = useState({ ...addProductFormDetails });
   const formChange = (e) => {
@@ -74,6 +74,7 @@ function AddProduct({ products, saveProductToState }) {
       prod.push(formDetails);
       saveProductToState(prod);
       successNotification("Successfully Added");
+      history.push('/')
     }
   };
   const validate = () => {

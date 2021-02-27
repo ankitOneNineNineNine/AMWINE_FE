@@ -34,10 +34,11 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
     let item = cart_p;
     item.push(p);
     if (!Object.keys(user).length) {
-      localStorage.setItem("cart_p", JSON.stringify(item));
+      localStorage.setItem("cart_p", p._id);
     } else {
       let formData = new FormData();
-      formData.append('cart', JSON.stringify(p))
+      formData.append('cart', p._id)
+      formData.append('action', 'add')
       let user = await put(
         "/user",
         { body :formData},

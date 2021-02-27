@@ -78,6 +78,7 @@ function PublicAuth({ component: Component, user, ...rest }) {
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
+    cart_p: state.cart.products
   };
 };
 
@@ -88,27 +89,41 @@ const mapDispathToProps = (dispatch) => {
     saveCartPToState: products =>dispatch(setCart(products))
   };
 };
-function App({ saveUserToState, user, products , saveProductToState, saveCartPToState}) {
+function App({ saveUserToState, cart_p, user, products , saveProductToState, saveCartPToState}) {
   useEffect(() => {
-    get("/user", {}, true)
+    if(localStorage.getItem('i_hash')){
+      get("/user", {}, true)
       .then((user) => {
         saveUserToState(user);
+        console.log('cart', user.cart)
+        let  products = [];
+        user.cart.forEach(p_id=>{
+        get(`/product/${p_id}`)
+        .then(p=>{
+          products.push(p);
+          saveCartPToState([...cart_p, p])
+        })
+        .catch(console.log)
+        })
       })
       .catch(console.log);
-    get('/product', {})
-    .then(products=>{
-      saveProductToState(products)
-    })
-    .catch(console.log)
-    if(Object.keys(user).length){
-      
     }
     else{
+
       let item = JSON.parse(localStorage.getItem('cart_p'))
+      let  products = [];
       if(item && item.length){
-        saveCartPToState(item)
-      }
+        item.forEach(p_id=>{
+        get(`/product/${p_id}`)
+        .then(p=>{
+          products.push(p);
+          saveCartPToState(p)
+        })
+        .catch(console.log)
+        })
+      
   
+    }
     }
   }, []);
   useEffect(() => {}, [user]);

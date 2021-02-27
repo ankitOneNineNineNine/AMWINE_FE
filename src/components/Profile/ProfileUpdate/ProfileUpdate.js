@@ -7,6 +7,7 @@ import { profilePicUrl } from "../../../utilities/urls";
 import { successNotification } from "../../../utilities/toast";
 import { withRouter } from "react-router-dom";
 import Wine from '../../../images/wine.png'
+import { isAuthorized } from "../../../utilities/auth.middleware";
 
 const updateFormDetails = {
   fullName: null,
@@ -54,7 +55,12 @@ function ProfileUpdate({ user, saveUserToState, history }) {
     if (user) {
       saveUserToState(user);
       successNotification("Successfully Updated!");
-      history.push(`/profile/${user._id}`);
+      if(isAuthorized(user)){
+        history.push('/admin')
+      }
+      else{
+        history.push(`/profile/${user._id}`);
+      }
     }
   };
   const imageSelect = (e) => {

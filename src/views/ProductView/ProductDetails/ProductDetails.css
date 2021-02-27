@@ -48,7 +48,8 @@
 .ddetails {
   display: inline-block;
 }
-.ddetails > button {
+.ddetails > button,
+.ddetails a > button {
   padding: 15px;
   text-align: center;
   display: block;
@@ -57,7 +58,8 @@
 
   border: 0;
 }
-.ddetails > button:hover {
+.ddetails > button:hover,
+.ddetails a :hover {
   background-color: var(--main-color);
   color: white;
 }

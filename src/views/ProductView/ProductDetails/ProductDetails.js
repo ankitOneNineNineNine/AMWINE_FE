@@ -5,10 +5,13 @@ import { connect } from "react-redux";
 import { productPicUrl } from "../../../utilities/urls";
 import { setCart, setUser } from "../../../reduxMgmt/actions/actions";
 import {
+  failureNotification,
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
 import { get, put } from "../../../utilities/http";
+import { isAuthorized } from "../../../utilities/auth.middleware";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => {
   return {
@@ -48,21 +51,30 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
     let item = cart_p;
     item.push(p);
     if (!Object.keys(user).length) {
-      localStorage.setItem("cart_p", JSON.stringify(item));
+      localStorage.setItem("cart_p", p._id);      
+    saveCartPToState(item);
+    successNotification("Addedd to cart");
     } else {
       let formData = new FormData();
-      formData.append('cart',  JSON.stringify(p))
+      formData.append('cart',  p._id);
+      formData.append('action', 'add')
+     try{
       let user = await put(
         "/user",
         { body :formData},
         true,
         "multipart/form-data"
       );
-      saveUserToState(user)
+      saveUserToState(user);    
+      saveCartPToState(item);
+      successNotification("Addedd to cart");
+     }
+     catch(e){
+       failureNotification('Some Error Occured')
+       return;
+     }
     }
-    
-    saveCartPToState(item);
-    successNotification("Addedd to cart");
+
   };
   console.log(loading);
   if (loading) {
@@ -110,7 +122,20 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
             {cart_p.findIndex((p) => p._id === product._id) > -1
               ? "Already in Cart"
               : "Add to Cart"}
+              
           </button>
+
+          <hr />
+          {
+            isAuthorized(user)?
+            <Link to={`/admin/post/updateProduct/${product._id}`}>
+              <button
+            >
+              Update
+            </button>
+              </Link>
+            :null
+          }
           <hr />
         </div>
       </div>

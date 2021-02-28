@@ -116,8 +116,9 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
         item.forEach(p_id=>{
         get(`/product/${p_id}`)
         .then(p=>{
+
           products.push(p);
-          saveCartPToState(p)
+          saveCartPToState(products)
         })
         .catch(console.log)
         })

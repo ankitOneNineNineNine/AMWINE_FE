@@ -2,7 +2,7 @@ import React from "react";
 import Search from "../Search/Search";
 import "./Filter.css";
 
-export default function Filter({filter, filterChange, searchChange, search}) {
+export default function Filter({filter, varieties, filterChange, searchChange, search}) {
   return (
     <div className="filter">
       <h2>Search</h2>
@@ -24,15 +24,18 @@ export default function Filter({filter, filterChange, searchChange, search}) {
       </div>
       <div className="variety">
         <h2>Variety</h2>
-        <input type="checkbox" name="Chardonnay" value='Chardonnay'  onChange = {filterChange}/>
-        <label htmlFor="chardonay">Chardonay</label>
-        <br />
-        <input type="checkbox" name="sparkle" value="Sparkle"  onChange = {filterChange}/>
-        <label htmlFor="red">Sparkle</label>
-        <br />
-        <input type="checkbox" name="Booze" value='Booze'  onChange = {filterChange}/>
-        <label htmlFor="chardonay">Booze</label>
-        <br />
+        {
+          varieties.map((variety, i) =>{
+            return (
+              <div key = {i}>
+                    <input type="checkbox" name={variety} value={variety}  onChange = {filterChange}/>
+                     <label htmlFor={variety}>{variety}</label>
+                     <br />
+              </div>
+            )
+          })
+        }
+
    
       </div>
       <button className="filterButton" onClick = {filter}>Filter</button>

@@ -38,18 +38,18 @@
 .reviewsPostContainer {
   display: block;
   float: right;
-  width: 25%;
+  width: 40%;
   text-align: center;
 }
 .starRating {
   display: block;
+  font-size: 25px;
 }
 .postReview {
-  width: 100%;
+  width: 50%;
   border-radius: 25px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 5px;
+  height: 250px;
+  padding: 10px;
   background: var(--main-color);
   color: white;
 }
@@ -70,7 +70,7 @@
   width: 70px;
   height: 60px;
   padding: 5px;
-
+  border: 1px solid var(--main-color);
   cursor: pointer;
 }
 .otherDImage:hover {
@@ -94,6 +94,7 @@
   background-color: var(--main-color);
   color: white;
 }
+
 .otherProducts {
   margin: auto;
   margin-top: 8%;
@@ -103,11 +104,16 @@
 .otherProducts .product {
   display: inline-flex;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 666px) {
   .dImageContainer {
     display: block;
     margin: auto;
     text-align: center;
+    width: 100%;
+    background-position: center;
+  }
+  .selectedDImage {
+    width: 100%;
   }
   .ddetails {
     display: block;
@@ -124,5 +130,8 @@
     display: block;
     float: left;
     width: 100%;
+  }
+  .postReview {
+    height: 150px;
   }
 }

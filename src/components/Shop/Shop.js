@@ -40,14 +40,18 @@ function Shop({
 }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [searchText, setSearchText] = useState("");
-  const [totalProducts, setTotalProducts] = useState(0)
-  console.log(filterDetails);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [varieties, setVarieties] = useState([])
   useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
+    get('/product/pr/varieties')
+    .then(varieties=>{
+      setVarieties(varieties)
+    })
     post("/product/search", {
       body: {
         pageNumber: pageNumber,
@@ -133,7 +137,7 @@ function Shop({
         searchChange,
         search
       }}>
-        <Filter filter={filter} filterChange={filterChange} />
+        <Filter filter={filter} filterChange={filterChange} varieties = {varieties} />
       </SearchContext.Provider>
       </div>
       <div className="filterContainer"></div>

@@ -25,7 +25,13 @@ const mapDispatchToProps = (dispatch) => {
 function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToState }) {
   const [productSelected, setProductsSelected] = useState([]);
   const [qty, setQty] = useState({});
-
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [])
   const selectQty = (e) => {
     let { name, value } = e.target;
 
@@ -54,8 +60,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
     let pIDs = products.map(p=>p._id)
     if (!localStorage.getItem('i_hash')) {
       localStorage.setItem("cart_p", JSON.stringify(pIDs));
-      saveProductsToCart(products);
-      successNotification("Removed to cart");
+      
     } else {
       let formData = new FormData();
       formData.append('action', 'remove');
@@ -69,6 +74,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
       saveUserToState(user)
     }
     saveProductsToCart(products);
+    successNotification("Removed to cart");
   };
   const selectProduct = (e) => {
     // console.log(e.target.name, e.target.checked, i)

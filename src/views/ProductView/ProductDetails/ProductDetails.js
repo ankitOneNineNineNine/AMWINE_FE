@@ -9,10 +9,10 @@ import {
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
-import { get, put } from "../../../utilities/http";
+import { get, post, put } from "../../../utilities/http";
 import { isAuthorized } from "../../../utilities/auth.middleware";
 import { Link } from "react-router-dom";
-
+import StarRatingComponent from 'react-star-rating-component';
 const mapStateToProps = (state) => {
   return {
     products: state.product.products,
@@ -30,6 +30,8 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewText, setReviewText] = useState("");
   useEffect(() => {
     get(`/product/${match.params.id}`)
       .then((tP) => {
@@ -78,7 +80,23 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
     }
 
   };
-  console.log(loading);
+  const reviewTextChange = e =>{
+    setReviewText(e.target.value)
+  }
+ const postReview = e =>{
+   if(localStorage.getItem('i_hash')){
+     post('/product/review', {body: {
+       rating: reviewRating,
+       text: reviewText,
+       pId: product._id,
+     }}, true)
+     .then(console.log)
+     .catch(console.log)
+   }
+   else{
+     failureNotification('Please Login First')
+   }
+ }
   if (loading) {
     return null;
   }
@@ -108,6 +126,13 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
         </div>
         <div className="ddetails">
           <h2>{product && product.name}</h2>
+          <span className = 'starRating'>
+          <StarRatingComponent 
+          name="rate1" 
+          starCount={5}
+          value={product.rating||0}
+        />
+        </span>
           <hr />
           <h3>Price: Nrs. {product && product.price}</h3>
           <h4>Type: {product && product.pType}</h4>
@@ -141,9 +166,16 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
           <hr />
         </div>
       <div className = 'reviewsPostContainer'>
-        <span className = 'starRating'>star rating here</span>
-          <textarea rows={5} cols = {30} placeholder = 'Please give the review...' type = 'text' className = 'postReview'/>
-          <button className = 'postReviewButton'>Post</button>
+        <span className = 'starRating'>
+          <StarRatingComponent 
+          name="rate1" 
+          starCount={5}
+          value={reviewRating}
+          onStarHover = {(nextValue)=>setReviewRating(nextValue)}
+          onStarClick= {(nextValue)=>setReviewRating(nextValue)}
+        /></span>
+          <textarea rows={5} cols = {30} placeholder = 'Please give the review...' type = 'text' className = 'postReview' onChange = {reviewTextChange}/>
+          <button className = 'postReviewButton' onClick = {postReview}>Post</button>
         </div>
    
       </div>

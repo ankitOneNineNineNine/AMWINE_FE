@@ -40,6 +40,7 @@ function Shop({
 }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [searchText, setSearchText] = useState("");
+  const [totalProducts, setTotalProducts] = useState(0)
   console.log(filterDetails);
   useEffect(() => {
     window.scrollTo({
@@ -50,10 +51,12 @@ function Shop({
     post("/product/search", {
       body: {
         pageNumber: pageNumber,
-        itemsToShow:6,
+        itemsToShow:5,
         ...filterDetails
       },
-    }).then((products) => {
+    }).then(({products, count}) => {
+      console.log(products, count)
+      setTotalProducts(count)
       saveProductsToState(products);
       if (!products.length) {
         setPageNumber(1);
@@ -94,9 +97,11 @@ function Shop({
     post("/product/search", { body: {
       ...filterDetails, 
       pageNumber,
-      itemsToShow:6,
+      itemsToShow:5,
     }})
-      .then((products) => {
+      .then(({products, count}) => {
+        console.log(products, count)
+        setTotalProducts(count)
         
         saveProductsToState(products);
       })
@@ -112,7 +117,7 @@ function Shop({
     post("/product/search", { body: {
       ...defaultF, name: searchText, 
       pageNumber:1,
-      itemsToShow:6,
+      itemsToShow:5,
     }})
       .then(({products}) => {
         saveProductsToState(products);
@@ -134,7 +139,8 @@ function Shop({
       <div className="filterContainer"></div>
       <div className="productCollection">
         <div className="detailPlusSort">
-          <h3>Showing {products && products.length} results</h3>
+        <div className="pageNumberShow">Page: {pageNumber}</div>
+          <h3>Showing {products && products.length} of {totalProducts} results</h3>
         </div>
         {products.map((product, i) => {
           return <Product user={user} key={i} product={product} />;
@@ -142,6 +148,7 @@ function Shop({
         <div className="pageNumberShow">Page: {pageNumber}</div>
         <div className="paginateButtons">
           <button
+          className = {pageNumber===1? 'disabledButton': null}
             onClick={() =>
               setPageNumber((pageNumber) =>
                 pageNumber === 1 ? 1 : pageNumber - 1
@@ -150,7 +157,7 @@ function Shop({
           >
             Prev
           </button>
-          <button onClick={() => setPageNumber((pageNumber) => pageNumber + 1)}>
+          <button className = {pageNumber===Math.ceil(totalProducts/5)? 'disabledButton': null} onClick={() => setPageNumber((pageNumber) => pageNumber ===Math.ceil(totalProducts/5)? Math.ceil(totalProducts/5): pageNumber + 1)}>
             Next
           </button>
         </div>

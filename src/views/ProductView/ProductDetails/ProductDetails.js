@@ -50,8 +50,10 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
     }
     let item = cart_p;
     item.push(p);
+    let pIDs = item.map(p=>p._id)
     if (!localStorage.getItem('i_hash')) {
-      localStorage.setItem("cart_p", p._id);      
+      localStorage.setItem("cart_p", JSON.stringify(pIDs));      
+
     saveCartPToState(item);
     successNotification("Addedd to cart");
     } else {

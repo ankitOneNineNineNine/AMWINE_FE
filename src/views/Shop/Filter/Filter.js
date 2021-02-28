@@ -30,6 +30,9 @@ export default function Filter({filter, filterChange, searchChange, search}) {
         <input type="checkbox" name="sparkle" value="Sparkle"  onChange = {filterChange}/>
         <label htmlFor="red">Sparkle</label>
         <br />
+        <input type="checkbox" name="Booze" value='Booze'  onChange = {filterChange}/>
+        <label htmlFor="chardonay">Booze</label>
+        <br />
    
       </div>
       <button className="filterButton" onClick = {filter}>Filter</button>

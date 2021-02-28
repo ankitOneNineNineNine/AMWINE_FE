@@ -27,9 +27,15 @@
   margin: 5px;
 }
 .pageNumberShow {
-  font-size: 25px;
+  font-size: 15px;
   font-weight: bolder;
   margin: 5px;
+}
+.paginateButtons .disabledButton {
+  background-color: gray;
+}
+.paginateButtons .disabledButton:hover {
+  box-shadow: 0 0 0;
 }
 .paginateButtons button:hover {
   box-shadow: 0 0 10px var(--main-color);

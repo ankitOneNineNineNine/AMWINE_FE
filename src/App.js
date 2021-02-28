@@ -109,8 +109,8 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
       .catch(console.log);
     }
     else{
-
-      let item = JSON.parse(localStorage.getItem('cart_p'))
+      let item = JSON.parse(localStorage.getItem('cart_p'));
+  
       let  products = [];
       if(item && item.length){
         item.forEach(p_id=>{

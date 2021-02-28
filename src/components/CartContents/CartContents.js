@@ -50,9 +50,12 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
     let products = cart_p;
     let nowProduct = product._id;
     products.splice(products.indexOf(nowProduct), 1);
-
+    
+    let pIDs = products.map(p=>p._id)
     if (!localStorage.getItem('i_hash')) {
-      localStorage.setItem("cart_p", product._id);
+      localStorage.setItem("cart_p", JSON.stringify(pIDs));
+      saveProductsToCart(products);
+      successNotification("Removed to cart");
     } else {
       let formData = new FormData();
       formData.append('action', 'remove');

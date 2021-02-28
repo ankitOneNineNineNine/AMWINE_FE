@@ -33,8 +33,11 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
 
     let item = cart_p;
     item.push(p);
+    let pIDs = item.map(p=>p._id)
     if (!localStorage.getItem('i_hash')) {
-      localStorage.setItem("cart_p", p._id);
+      localStorage.setItem("cart_p", JSON.stringify(pIDs));
+      saveCartPToState(item);
+      successNotification("Added to cart");
     } else {
       let formData = new FormData();
       formData.append('cart', p._id)

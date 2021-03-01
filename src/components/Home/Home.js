@@ -25,12 +25,19 @@ const mapDispatchToProps = dispatch=>{
   }
 }
 function Home({products, user, saveProductsToState}) {
+  const [ad, setAd] = useState({})
 useEffect(()=>{
   get('/product/search')
   .then(products=>{
     saveProductsToState(products)
   })
   .catch(console.log)
+
+
+  get('/ad')
+  .then(ad=>{
+    setAd(ad)
+  })
 }, [])
   return (
     <div className = 'home'>
@@ -39,7 +46,7 @@ useEffect(()=>{
       <h2>Latest Wine on Stock</h2>
       <Slideshow products = {products} user = {user}/>
       <SeeMoreAdd />
-      <Ad />
+      <Ad ad = {ad}/>
 
     </div>
   );

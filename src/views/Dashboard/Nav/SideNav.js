@@ -14,8 +14,8 @@ export default function SideNav({ name, sideNavOpen,currentSideNavLink, match })
           <Link to={`${match.url}/analytics/sales`}>
             <li className = {currentSideNavLink === '/analytics/sales'?'sideNavLinkActive':null }>Sales</li>
           </Link>
-          <Link to={`${match.url}/analytics/reviews`}>
-            <li className = {currentSideNavLink === '/analytics/reviews'?'sideNavLinkActive':null }>Reviews</li>
+          <Link to={`${match.url}/analytics/products`}>
+            <li className = {currentSideNavLink === '/analytics/products'?'sideNavLinkActive':null }>Products</li>
           </Link>
         </ul>
       </div>

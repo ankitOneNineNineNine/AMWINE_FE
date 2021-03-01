@@ -1,6 +1,6 @@
 import React from 'react';
 import './SalesAnalytics.css'
-
+import ReviewAnalytics from '../ReviewAnalytics/ReviewAnalytics'
 
 export default function SalesAnalytics(){
     return (
@@ -19,6 +19,7 @@ export default function SalesAnalytics(){
                 <p>Red Chille Wine</p>
             </div>
             </div>
+            <ReviewAnalytics />
         </div>
      
     )

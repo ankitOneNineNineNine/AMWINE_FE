@@ -5,48 +5,51 @@ import "./Slideshow.css";
 import NextArrow from "../../Arrows/NextArrow";
 import PrevArrow from "../../Arrows/PrevArrow";
 
-
-
-export default function Slideshow({user, products, next, prev, currentSlide }) {
-  var settings = {
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
+export default function Slideshow({
+  user,
+  products,
+  next,
+  prev,
+  currentSlide,
+}) {
+  const settings = {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    speed: 500,
+    slidesToShow: 4.5,
+    slidesToScroll: 4.5,
+    initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1050,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-
-        }
+          dots: true,
+        },
       },
       {
-        breakpoint: 600,
+        breakpoint: 760,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2
-        }
+          slidesToShow: 2.5,
+          slidesToScroll: 2.5,
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
+          slidesToShow: 1.5,
+          slidesToScroll: 1.5,
+        },
+      },
     ],
   };
   return (
     <div className="slider">
       <Slider {...settings}>
         {products.map((product, i) => {
-          return <Product key={i} user = {user} product={product} />;
+          return <Product key={i} user={user} product={product} />;
         })}
       </Slider>
     </div>

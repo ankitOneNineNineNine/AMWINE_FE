@@ -1,12 +1,26 @@
 import React from 'react';
 import './Ad.css'
+import {adPicUrl} from '../../utilities/urls'
 
+export default function Ad({ad}){
+    const {title, image} =ad;
+    console.log(`${adPicUrl}/${image}`)
+    const bgStyleFromBE = image? {
+        backgroundImage: `url(${adPicUrl}/${image})`
+    }
+    : {
+        backgroundImage: "url(../../images/wine.png"
+    };
 
-export default function Ad(){
+    console.log(bgStyleFromBE)
     return (
-        <div className = 'ad'>
-        <h2>Feel the Wine!</h2>
-        
+        <>
+        <h2>{title}</h2>
+        <div className = 'ad'
+        style = {bgStyleFromBE}
+        >
+    
        </div>
+       </>
     )
 }

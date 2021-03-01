@@ -11,14 +11,12 @@ export default function Ad({ad}){
     : {
         backgroundImage: "url(../../images/wine.png"
     };
-
-    console.log(bgStyleFromBE)
     return (
         <>
-        <h2>{title}</h2>
         <div className = 'ad'
         style = {bgStyleFromBE}
         >
+            <h2>{title}</h2>
     
        </div>
        </>

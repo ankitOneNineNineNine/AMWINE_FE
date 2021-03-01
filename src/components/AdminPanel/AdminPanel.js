@@ -12,6 +12,7 @@ import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
 import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
 import ReviewsAnalytics from "../../views/AdminPanel/Analytics/ReviewAnalytics/ReviewAnalytics";
 import ProductAnalytics from "../../views/ProductAnalytics/ProductAnalytics";
+import Admins from "./Admins/Admins";
 
 
 
@@ -61,6 +62,7 @@ function AdminSubRoute({component:Component, ...rest}){
       <AdminSubRoute path = {match.url + '/analytics/products'} component = {ProductAnalytics} />
       <AdminSubRoute path = {match.url + '/post/addProduct'} component = {AddProduct} />
       <AdminSubRoute path = {match.url + '/post/updateProduct/:id'} component = {UpdateProduct} />
+      <AdminSubRoute path = {match.url + '/admins'} component = {Admins} />
       <AdminSubRoute path = {match.url + '/post/postAds'} component = {PostAds} />
       
     </div>

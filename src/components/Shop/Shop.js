@@ -122,8 +122,9 @@ function Shop({
       pageNumber:1,
       itemsToShow:5,
     }})
-      .then(({products}) => {
+      .then(({products, count}) => {
         saveProductsToState(products);
+        setTotalProducts(count)
       })
       .catch((err) => console.log(err));
   }

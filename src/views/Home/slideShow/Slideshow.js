@@ -5,12 +5,14 @@ import "./Slideshow.css";
 import NextArrow from "../../Arrows/NextArrow";
 import PrevArrow from "../../Arrows/PrevArrow";
 
+
+
 export default function Slideshow({user, products, next, prev, currentSlide }) {
   var settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 4.5,
-    slidesToScroll: 4.5,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     initialSlide: 0,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,

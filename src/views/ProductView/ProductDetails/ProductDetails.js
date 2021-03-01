@@ -12,7 +12,8 @@ import {
 import { get, post, put } from "../../../utilities/http";
 import { isAuthorized } from "../../../utilities/auth.middleware";
 import { Link } from "react-router-dom";
-import StarRatingComponent from 'react-star-rating-component';
+import StarRatingComponent from "react-star-rating-component";
+import Reviews from "../../Reviews/Reviews";
 const mapStateToProps = (state) => {
   return {
     products: state.product.products,
@@ -23,80 +24,98 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveCartPToState: (products) => dispatch(setCart(products)),
-    saveUserToState: user=>dispatch(setUser(user))
+    saveUserToState: (user) => dispatch(setUser(user)),
   };
 };
-function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCartPToState }) {
+function ProductDetails({
+  products,
+  user,
+  match,
+  cart_p,
+  saveUserToState,
+  saveCartPToState,
+}) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
+
+  const [reviewUsers, setReviewUsers] = useState([]);
   useEffect(() => {
     get(`/product/${match.params.id}`)
       .then((tP) => {
         setProduct(tP);
         setCurrentSelectedImage(tP.images[0]);
         setLoading(false);
+        tP.reviews.forEach(async (rev) => {
+          let user = await get(`/userDetails/${rev.addedBy}`);
+          let newUsers = reviewUsers;
+          newUsers.push(user);
+          setReviewUsers(newUsers);
+        });
       })
       .catch(console.log);
-  }, []);
+  }, [reviewUsers]);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
   };
-  const addToCart = async(p) => {
-    if (cart_p.findIndex(pr=>pr._id === p._id)>-1) {
+  const addToCart = async (p) => {
+    if (cart_p.findIndex((pr) => pr._id === p._id) > -1) {
       warningNotification("Already in the cart");
       return;
     }
     let item = cart_p;
     item.push(p);
-    let pIDs = item.map(p=>p._id)
-    if (!localStorage.getItem('i_hash')) {
-      localStorage.setItem("cart_p", JSON.stringify(pIDs));      
+    let pIDs = item.map((p) => p._id);
+    if (!localStorage.getItem("i_hash")) {
+      localStorage.setItem("cart_p", JSON.stringify(pIDs));
 
-    saveCartPToState(item);
-    successNotification("Addedd to cart");
-    } else {
-      let formData = new FormData();
-      formData.append('cart',  p._id);
-      formData.append('action', 'add')
-     try{
-      let user = await put(
-        "/user",
-        { body :formData},
-        true,
-        "multipart/form-data"
-      );
-      saveUserToState(user);    
       saveCartPToState(item);
       successNotification("Addedd to cart");
-     }
-     catch(e){
-       failureNotification('Some Error Occured')
-       return;
-     }
+    } else {
+      let formData = new FormData();
+      formData.append("cart", p._id);
+      formData.append("action", "add");
+      try {
+        let user = await put(
+          "/user",
+          { body: formData },
+          true,
+          "multipart/form-data"
+        );
+        saveUserToState(user);
+        saveCartPToState(item);
+        successNotification("Addedd to cart");
+      } catch (e) {
+        failureNotification("Some Error Occured");
+        return;
+      }
     }
-
   };
-  const reviewTextChange = e =>{
-    setReviewText(e.target.value)
-  }
- const postReview = e =>{
-   if(localStorage.getItem('i_hash')){
-     post('/product/review', {body: {
-       rating: reviewRating,
-       text: reviewText,
-       pId: product._id,
-     }}, true)
-     .then(console.log)
-     .catch(console.log)
-   }
-   else{
-     failureNotification('Please Login First')
-   }
- }
+  const reviewTextChange = (e) => {
+    setReviewText(e.target.value);
+  };
+  const postReview = (e) => {
+    if (localStorage.getItem("i_hash")) {
+      post(
+        "/product/review",
+        {
+          body: {
+            rating: reviewRating,
+            text: reviewText,
+            pId: product._id,
+          },
+        },
+        true
+      )
+        .then((product) => setProduct(product))
+        .catch(console.log);
+    } else {
+      failureNotification("Please Login First");
+    }
+  };
   if (loading) {
     return null;
   }
@@ -126,13 +145,13 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
         </div>
         <div className="ddetails">
           <h2>{product && product.name}</h2>
-          <span className = 'starRating'>
-          <StarRatingComponent 
-          name="rate1" 
-          starCount={5}
-          value={product.rating||0}
-        />
-        </span>
+          <span className="starRating">
+            <StarRatingComponent
+              name="rate1"
+              starCount={5}
+              value={product.rating || 0}
+            />
+          </span>
           <hr />
           <h3>Price: Nrs. {product && product.price}</h3>
           <h4>Type: {product && product.pType}</h4>
@@ -149,41 +168,27 @@ function ProductDetails({ products, user, match, cart_p,saveUserToState, saveCar
             {cart_p.findIndex((p) => p._id === product._id) > -1
               ? "Already in Cart"
               : "Add to Cart"}
-              
           </button>
 
           <hr />
-          {
-            isAuthorized(user)?
+          {isAuthorized(user) ? (
             <Link to={`/admin/post/updateProduct/${product._id}`}>
-              <button
-            >
-              Update
-            </button>
-              </Link>
-            :null
-          }
+              <button>Update</button>
+            </Link>
+          ) : null}
           <hr />
         </div>
-      <div className = 'reviewsPostContainer'>
-        <span className = 'starRating'>
-          <StarRatingComponent 
-          name="rate1" 
-          starCount={5}
-          value={reviewRating}
-          onStarHover = {(nextValue)=>setReviewRating(nextValue)}
-          onStarClick= {(nextValue)=>setReviewRating(nextValue)}
-        /></span>
-          <textarea rows={5} cols = {30} placeholder = 'Please give the review...' type = 'text' className = 'postReview' onChange = {reviewTextChange}/>
-          <button className = 'postReviewButton' onClick = {postReview}>Post</button>
-        </div>
-   
+        <Reviews
+          reviews={product.reviews}
+          reviewRating={reviewRating}
+          reviewUsers={reviewUsers}
+          setReviewRating={setReviewRating}
+          postReview={postReview}
+          reviewTextChange={reviewTextChange}
+        />
       </div>
     </div>
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

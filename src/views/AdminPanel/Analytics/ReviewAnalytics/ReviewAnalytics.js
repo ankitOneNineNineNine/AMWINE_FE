@@ -1,5 +1,5 @@
 import React from 'react';
-import './Reviews.css';
+import './ReviewAnalytics.css';
 
 export default function ReviewsAnalytics(){
     return (

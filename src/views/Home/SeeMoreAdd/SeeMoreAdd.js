@@ -4,7 +4,7 @@ import './SeeMoreAdd.css'
 
 function SeeMoreAdd(props){
     const goToShop = () =>{
-        props.history.push('/Shop');
+        props.history.push('/shop');
     }
     return (
         <div className = 'seeMore'>

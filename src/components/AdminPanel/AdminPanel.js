@@ -4,12 +4,13 @@ import { Link, Route } from "react-router-dom";
 import SideNav from "../../views/Dashboard/Nav/SideNav";
 import NavTop from "../../views/Dashboard/NavTop/NavTop";
 import SalesAnalytics from "../../views/AdminPanel/Analytics/Sales/SalesAnalytics";
-import ReviewsAnalytics from "../../views/AdminPanel/Analytics/Reviews/Reviews";
+
 import AddProduct from "./Post/AddProduct/AddProduct";
 import UpdateProduct from "./Post/UpdateProduct/UpdateProduct";
 import PostAds from "./Post/PostAds/PostAds";
 import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
 import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
+import ReviewsAnalytics from "../../views/AdminPanel/Analytics/ReviewAnalytics/ReviewAnalytics";
 
 
 

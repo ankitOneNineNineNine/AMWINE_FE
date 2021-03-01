@@ -59,7 +59,6 @@ function Shop({
         ...filterDetails
       },
     }).then(({products, count}) => {
-      console.log(products, count)
       setTotalProducts(count)
       saveProductsToState(products);
       if (!products.length) {

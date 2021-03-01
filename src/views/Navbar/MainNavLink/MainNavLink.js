@@ -20,7 +20,7 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 isAuthorized(user)?
                 (
                   <Link to={`/admin`} key={i}>
-                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
+                    <li className={currentLink === `/admin` ? "activeMainNav" : null} >
                       <img className="publicProfile" src = {user.image? `${profilePicUrl}/${user.image}` : Wine}/>
                     </li>
                   </Link>
@@ -28,13 +28,13 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
                 :
                 (
                   <Link to={`/profile/${user._id}`} key={i}>
-                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
+                    <li className={(currentLink === `profile/${user._id}`) ? "activeMainNav" : null} >
                       <img className="publicProfile" src = {user.image? `${profilePicUrl}/${user.image}` : Wine}/>
                     </li>
                   </Link>
                 ) : (
                   <Link to={"/" + link.toLowerCase()} key={i}>
-                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null}>
+                    <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null} >
                       {link}
                     </li>
                   </Link>
@@ -46,13 +46,29 @@ function MainNavLink({user, setShowMenu, showMenu, currentLink,signOut }) {
         <div className="menu">
           <ul>
             {mapLinks.map((link, i) => {
-              return (
+              return link === "Profile" ?  
+              isAuthorized(user)?
+              (
+                <Link to={`/admin`} key={i}>
+                  <li className={currentLink ==='/admin' ? "activeMainNav" : null} onClick = {()=>{setShowMenu()}}>
+                  {link}
+                  </li>
+                </Link>
+              ) 
+              :
+              (
+                <Link to={`/profile/${user._id}`} key={i}>
+                  <li className={(currentLink === `profile/${user._id}`) ? "activeMainNav" : null} onClick = {()=>{setShowMenu()}}>
+                  {link}
+                  </li>
+                </Link>
+              ) : (
                 <Link to={"/" + link.toLowerCase()} key={i}>
-                  <li className={currentLink === link ? "activeMainNav" : null}  onClick = {()=> {setShowMenu(false)}}>
+                  <li className={currentLink === link.toLowerCase() ? "activeMainNav" : null} onClick = {()=>{setShowMenu()}}>
                     {link}
                   </li>
                 </Link>
-              );
+              )
             })}
           </ul>
         </div>

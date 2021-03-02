@@ -40,7 +40,6 @@ function ProductDetails({
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
-
   const [reviewUsers, setReviewUsers] = useState([]);
   useEffect(() => {
     get(`/product/${match.params.id}`)
@@ -149,7 +148,7 @@ function ProductDetails({
             <StarRatingComponent
               name="rate1"
               starCount={5}
-              value={product.rating || 0}
+              value={product.reviews.reduce((acc, item)=>acc+item.rating,0)/product.reviews.length}
             />
           </span>
           <hr />

@@ -1,0 +1,25 @@
+.addAdmins {
+  text-align: center;
+}
+
+.addAdminForm {
+  margin: auto;
+  display: block;
+  width: 400px;
+}
+.addAdminForm label {
+  display: block;
+  font-weight: bold;
+}
+.addAdminForm input .addAdminForm option {
+  display: block;
+  margin: auto;
+  padding: 5px;
+  width: 200px;
+}
+.addAdminForm button {
+  display: block;
+  margin: auto;
+  padding: 10px;
+  margin-top: 5px;
+}

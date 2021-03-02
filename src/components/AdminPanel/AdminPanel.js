@@ -10,7 +10,7 @@ import UpdateProduct from "./Post/UpdateProduct/UpdateProduct";
 import PostAds from "./Post/PostAds/PostAds";
 import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
 import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
-import ReviewsAnalytics from "../../views/AdminPanel/Analytics/ReviewAnalytics/ReviewAnalytics";
+
 import ProductAnalytics from "../../views/ProductAnalytics/ProductAnalytics";
 import Admins from "./Admins/Admins";
 

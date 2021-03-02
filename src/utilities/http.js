@@ -16,7 +16,6 @@ const authReqToken = {
 //api call functions
 
 function get(url, { headers = reqHeaders, params = {} } = {}, secured = false, type = "application/json") {
-
   return http({
     method: "GET",
     url,

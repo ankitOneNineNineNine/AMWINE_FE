@@ -8,8 +8,12 @@ export default function ImageText(){
         <div className="newsBefore">
         <div className="newsText">
           <h2>ANKIT WINE SHOP</h2>
-          <p>Join us to get Special Discounts!!</p>
-          <Link to = '/join' className = 'JoinButtonBelow'>Join</Link>
+          <p>Jin us for perks on buys</p>
+          {
+            localStorage.getItem("i_hash")?
+            null: 
+            <Link to = '/join' className = 'JoinButtonBelow'>Join</Link>
+          }
         </div>
       </div>
     )

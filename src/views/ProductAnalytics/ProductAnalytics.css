@@ -1,0 +1,16 @@
+.productNav {
+  width: 98%;
+}
+.productNav th,
+.productNav td {
+  text-align: center;
+  border-right: 1px solid var(--main-color);
+  cursor: pointer;
+}
+
+.productNav tr:hover {
+  box-shadow: 0 0 5px var(--main-color);
+}
+.productNav tr a {
+  width: 100%;
+}

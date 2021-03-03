@@ -32,7 +32,7 @@ function AdminRoute({ component: Component, user, ...rest }) {
       {...rest}
       render={(props) => {
         return isAuthorized(user) ? (
-          <Component {...props} user={user} />
+          <Component {...props}/>
         ) : (
           <Redirect to="/" />
         );

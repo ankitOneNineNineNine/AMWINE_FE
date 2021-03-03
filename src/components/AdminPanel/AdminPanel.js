@@ -13,22 +13,44 @@ import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
 
 import ProductAnalytics from "../../views/ProductAnalytics/ProductAnalytics";
 import Admins from "./Admins/Admins";
+import { setProducts } from "../../reduxMgmt/actions/actions";
+import { connect } from "react-redux";
+import { get } from "../../utilities/http";
 
+const mapStateToProps = state => {
+  return {
+    products: state.product.products,
+    user: state.user.user
+  }
+}
 
+const mapDispatchToProps = dispatch =>{
+  return {
+    saveProductToState: products => dispatch(setProducts(products))
+  }
+}
 
-
-export default function AdminPanel({ user, match }) {
+function AdminPanel({ products, saveProductToState, user,history, match }) {
   
   const [sideNavOpen, setSideNavOpen] = useState(true);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-  });
+    get('/product/', {}, true)
+    .then(products  => saveProductToState(products))
+    .catch(console.log)
+  }, []);
+
+
   const handleResize = () => {
     if (window.innerWidth < 500) setSideNavOpen(false);
   };
   const openSideNav = () => {
     setSideNavOpen((sideNavOpen) => !sideNavOpen);
   };
+
+  const goToProduct = id => {
+    history.push(`/shop/${id}`)
+  }
   const postContentsStyle = {
     width: '100%',
     marginLeft: '0'
@@ -45,7 +67,7 @@ function AdminSubRoute({component:Component, ...rest}){
       </div><div className = 'postContents' style = {!sideNavOpen? postContentsStyle:null}>
       <NavTop openSideNav={openSideNav} user = {user} match = {match} sideNavOpen={sideNavOpen} />
           <div className = 'compContents'>
-          <Component {...props}/>
+          <Component {...props} products = {products} goToProduct = {goToProduct}/>
           </div>
       </div>
       
@@ -68,3 +90,5 @@ function AdminSubRoute({component:Component, ...rest}){
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPanel)

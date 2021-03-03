@@ -155,8 +155,11 @@ function ProductDetails({
           <h3>Price: Nrs. {product && product.price}</h3>
           <h4>Type: {product && product.pType}</h4>
           <h5>Variety: {product && product.variety}</h5>
+          <span>{product.quantity-(product.sold|| 0)} remaining in stock</span>
           <hr />
-          <button
+         { 
+         product.quantity-(product.sold|| 0)> 0?
+         <button
             onClick={() => addToCart(product)}
             style={
               cart_p.findIndex((p) => p._id === product._id) > -1
@@ -167,7 +170,7 @@ function ProductDetails({
             {cart_p.findIndex((p) => p._id === product._id) > -1
               ? "Already in Cart"
               : "Add to Cart"}
-          </button>
+          </button>: null}
 
           <hr />
           {isAuthorized(user) ? (

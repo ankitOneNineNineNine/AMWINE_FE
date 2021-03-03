@@ -9,6 +9,7 @@ import {
   successNotification,
   warningNotification,
 } from "../../utilities/toast";
+import { Link } from "react-router-dom";
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
@@ -19,19 +20,25 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveProductsToCart: (products) => dispatch(setCart(products)),
-    saveUserToState:user=>dispatch(setUser(user))
+    saveUserToState: (user) => dispatch(setUser(user)),
   };
 };
-function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToState }) {
+function CartContents({
+  user,
+  products,
+  cart_p,
+  saveProductsToCart,
+  saveUserToState,
+}) {
   const [productSelected, setProductsSelected] = useState([]);
   const [qty, setQty] = useState({});
-  useEffect(()=>{
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
-  }, [])
+  }, [productSelected]);
   const selectQty = (e) => {
     let { name, value } = e.target;
 
@@ -56,22 +63,21 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
     let products = cart_p;
     let nowProduct = product._id;
     products.splice(products.indexOf(nowProduct), 1);
-    
-    let pIDs = products.map(p=>p._id)
-    if (!localStorage.getItem('i_hash')) {
+
+    let pIDs = products.map((p) => p._id);
+    if (!localStorage.getItem("i_hash")) {
       localStorage.setItem("cart_p", JSON.stringify(pIDs));
-      
     } else {
       let formData = new FormData();
-      formData.append('action', 'remove');
-      formData.append('cart',product._id)
+      formData.append("action", "remove");
+      formData.append("cart", product._id);
       let user = await put(
         "/user",
-        { body :formData},
+        { body: formData },
         true,
         "multipart/form-data"
       );
-      saveUserToState(user)
+      saveUserToState(user);
     }
     saveProductsToCart(products);
     successNotification("Removed to cart");
@@ -79,25 +85,33 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
   const selectProduct = (e) => {
     // console.log(e.target.name, e.target.checked, i)
     let { name, checked, value } = e.target;
-
-    if (qty[value]) {
-      setProductsSelected([
-        ...productSelected,
-        {
-          p: value,
-          qty: qty[value],
-          price: +e.target.attributes[2].value,
-        },
-      ]);
+    if (checked) {
+      if (qty[value]) {
+        setProductsSelected([
+          ...productSelected,
+          {
+            p: value,
+            qty: qty[value],
+            price: +e.target.attributes[2].value,
+          },
+        ]);
+      } else {
+        setProductsSelected([
+          ...productSelected,
+          {
+            p: value,
+            qty: 1,
+            price: +e.target.attributes[2].value,
+          },
+        ]);
+      }
     } else {
-      setProductsSelected([
-        ...productSelected,
-        {
-          p: value,
-          qty: 1,
-          price: +e.target.attributes[2].value,
-        },
-      ]);
+      let product = productSelected;
+      product.splice(
+        product.findIndex((p) => p.p === value),
+        1
+      );
+      setProductsSelected(product);
     }
   };
 
@@ -108,6 +122,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
 
   let sTPrice = productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0);
   let tPrice = sTPrice ? sTPrice + 150 : 0;
+
   return (
     <div className="cartContents">
       <h2>Cart</h2>
@@ -115,7 +130,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
       <div className="productsInCart">
         {cart_p.map((product, i) => {
           return (
-            <div key={i}>
+            <Link key={i} to={`/shop/${product._id}`}>
               <div className="cartProduct">
                 <img
                   src={`${productPicUrl}/${product.images[0]}`}
@@ -125,7 +140,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
                   className="trash"
                   onClick={() => removePFromCart(product)}
                 >
-                  <i className="removeFromCart fa fa-trash fa-2x"></i>
+                  <i className="fa fa-trash "></i>
                 </span>
                 <input
                   type="checkbox"
@@ -139,23 +154,25 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
                     <span>{product.name}</span>
                   </div>
                   <div className="remDetailsPCart">
-                    <span className="quantity">
-                      Quantity:{" "}
-                      <input
-                        type="number"
-                        onChange={selectQty}
-                        name={product._id}
-                        min={1}
-                        defaultValue={1}
-                        max={product.quantity}
-                      />
-                    </span>
-                    <span className="pCartPrice">{product.price}</span>
+                    <div className="quantityAddToCart">
+                      <span className="quantity">
+                        Quantity:{" "}
+                        <input
+                          type="number"
+                          onChange={selectQty}
+                          name={product._id}
+                          min={1}
+                          defaultValue={1}
+                          max={product.quantity}
+                        />
+                      </span>
+                    </div>
+
+                    <span className="pCartPrice">Price: {product.price}</span>
                   </div>
                 </div>
               </div>
-              <br />
-            </div>
+            </Link>
           );
         })}
       </div>
@@ -164,7 +181,7 @@ function CartContents({ user, products, cart_p, saveProductsToCart, saveUserToSt
         <table>
           <tbody>
             <tr>
-              <td>Subtotal (x items)</td>
+              <td>Subtotal</td>
               <td>Rs. {sTPrice}</td>
             </tr>
             <tr>

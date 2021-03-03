@@ -1,28 +1,42 @@
 .cartContents {
   margin-top: 80px;
+  text-align: center;
   height: fit-content;
 }
-.cartContents > h2 {
-  text-align: center;
-}
+
 .productsInCart {
   margin-left: 20px;
   margin-top: 5px;
-  width: 60%;
-  padding: 4px;
+  width: 250px;
+  text-align: center;
   display: inline-block;
 }
 .cartProduct {
-  border: 1px solid var(--main-color);
+  box-shadow: 0 0 5px var(--main-color);
   height: 80px;
   overflow: hidden;
-  width: 450px;
+  width: 100%;
   display: flex;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.trash {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  right: 0;
+}
+.trash i {
+  font-size: 1em;
+}
+.cartProduct:hover {
+  transform: scale(1.02);
 }
 .p_name {
-  text-align: center;
+  text-align: left;
   font-weight: bolder;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 .pInCartImg {
   width: 100px;
@@ -31,12 +45,11 @@
 }
 .quantity {
   font-weight: bold;
-  padding: 5px;
+  font-size: 0.8em;
 }
+
 .remDetailsPCart {
-  display: flex;
-  justify-content: space-around;
-  width: 250px;
+  text-align: left;
 }
 .checkOut {
   width: 30%;
@@ -55,10 +68,9 @@ table {
   width: 100%;
 }
 .pCartPrice {
-  background: var(--main-color);
-  color: white;
+  box-shadow: 2px 2px var(--main-color);
   padding: 5px;
-  margin-right: -160px;
+  display: inline-block;
 }
 .quantity > input {
   width: 30px;
@@ -74,6 +86,7 @@ table {
 .removeFromCart {
   position: absolute;
   width: 15px;
+  left: 50%;
   height: 15px;
   color: red;
   padding: 2px;

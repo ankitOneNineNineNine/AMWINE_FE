@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Reviews.css";
 import StarRatingComponent from "react-star-rating-component";
 import { get } from "../../utilities/http";
@@ -13,6 +13,8 @@ export default function Reviews({
   postReview,
   reviewTextChange,
 }) {
+
+
   return (
     <>
       {localStorage.getItem("i_hash") ? (

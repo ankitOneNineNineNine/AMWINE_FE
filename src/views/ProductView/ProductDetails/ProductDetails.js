@@ -46,13 +46,17 @@ function ProductDetails({
       .then((tP) => {
         setProduct(tP);
         setCurrentSelectedImage(tP.images[0]);
-        setLoading(false);
+        if(!tP.reviews.length){
+          setLoading(false);
+        }
         tP.reviews.forEach(async (rev) => {
           let user = await get(`/userDetails/${rev.addedBy}`);
           let newUsers = reviewUsers;
           newUsers.push(user);
           setReviewUsers(newUsers);
+          setLoading(false);
         });
+  
       })
       .catch(console.log);
   }, [reviewUsers]);

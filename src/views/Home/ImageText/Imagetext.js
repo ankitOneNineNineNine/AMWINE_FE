@@ -8,7 +8,7 @@ export default function ImageText(){
         <div className="newsBefore">
         <div className="newsText">
           <h2>ANKIT WINE SHOP</h2>
-          <p>Jin us for perks on buys</p>
+          <p>Join us for perks on buys</p>
           {
             localStorage.getItem("i_hash")?
             null: 

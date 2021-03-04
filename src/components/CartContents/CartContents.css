@@ -82,6 +82,9 @@ table {
   height: 15px;
   cursor: pointer;
 }
+.footer {
+  margin-top: 200px;
+}
 
 .removeFromCart {
   position: absolute;

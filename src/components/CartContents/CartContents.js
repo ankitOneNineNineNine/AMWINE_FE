@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./CartContents.css";
 import Wine from "../../images/wine.png";
 import { setCart, setUser } from "../../reduxMgmt/actions/actions";
-import { get, put } from "../../utilities/http";
+import { get, post, put } from "../../utilities/http";
 import { productPicUrl } from "../../utilities/urls";
 import {
   successNotification,
@@ -31,6 +31,7 @@ function CartContents({
   saveUserToState,
 }) {
   const [productSelected, setProductsSelected] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
   const [qty, setQty] = useState({});
   useEffect(() => {
     window.scrollTo({
@@ -38,6 +39,7 @@ function CartContents({
       left: 0,
       behavior: "smooth",
     });
+    setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   }, [productSelected]);
   const selectQty = (e) => {
     let { name, value } = e.target;
@@ -58,6 +60,7 @@ function CartContents({
     } else {
       setQty({ ...qty, [name]: value });
     }
+    setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   };
   const removePFromCart = async (product) => {
     let products = cart_p;
@@ -81,6 +84,7 @@ function CartContents({
     }
     saveProductsToCart(products);
     successNotification("Removed to cart");
+    setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   };
   const selectProduct = (e) => {
     // console.log(e.target.name, e.target.checked, i)
@@ -113,15 +117,22 @@ function CartContents({
       );
       setProductsSelected(product);
     }
+    setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   };
 
   const checkout = (e) => {
     e.preventDefault();
-    console.log(productSelected);
+    let bodyForPost = {
+      productReq: productSelected,
+      subTotal,
+      shippingCharge: 150,
+    };
+    post("/bought", { body: bodyForPost }, true)
+      .then(console.log)
+      .catch(console.log);
   };
 
-  let sTPrice = productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0);
-  let tPrice = sTPrice ? sTPrice + 150 : 0;
+  let tPrice = subTotal ? subTotal + 150 : 0;
 
   return (
     <div className="cartContents">
@@ -130,49 +141,46 @@ function CartContents({
       <div className="productsInCart">
         {cart_p.map((product, i) => {
           return (
-            <Link key={i} to={`/shop/${product._id}`}>
-              <div className="cartProduct">
-                <img
-                  src={`${productPicUrl}/${product.images[0]}`}
-                  className="pInCartImg"
-                />
-                <span
-                  className="trash"
-                  onClick={() => removePFromCart(product)}
-                >
-                  <i className="fa fa-trash "></i>
-                </span>
-                <input
-                  type="checkbox"
-                  className="selectChecboxCart"
-                  value={product._id}
-                  onChange={selectProduct}
-                  price={product.price}
-                />
-                <div className="cartProductDetails">
+            <div key={i} className="cartProduct">
+              <img
+                src={`${productPicUrl}/${product.images[0]}`}
+                className="pInCartImg"
+              />
+              <span className="trash" onClick={() => removePFromCart(product)}>
+                <i className="fa fa-trash "></i>
+              </span>
+              <input
+                type="checkbox"
+                className="selectChecboxCart"
+                value={product._id}
+                onChange={selectProduct}
+                price={product.price}
+              />
+              <div className="cartProductDetails">
+                <Link key={i} to={`/shop/${product._id}`}>
                   <div className="p_name">
                     <span>{product.name}</span>
                   </div>
-                  <div className="remDetailsPCart">
-                    <div className="quantityAddToCart">
-                      <span className="quantity">
-                        Quantity:{" "}
-                        <input
-                          type="number"
-                          onChange={selectQty}
-                          name={product._id}
-                          min={1}
-                          defaultValue={1}
-                          max={product.quantity}
-                        />
-                      </span>
-                    </div>
-
-                    <span className="pCartPrice">Price: {product.price}</span>
+                </Link>
+                <div className="remDetailsPCart">
+                  <div className="quantityAddToCart">
+                    <span className="quantity">
+                      Quantity:{" "}
+                      <input
+                        type="number"
+                        onChange={selectQty}
+                        name={product._id}
+                        min={1}
+                        defaultValue={1}
+                        max={product.quantity}
+                      />
+                    </span>
                   </div>
+
+                  <span className="pCartPrice">Price: {product.price}</span>
                 </div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>
@@ -182,7 +190,7 @@ function CartContents({
           <tbody>
             <tr>
               <td>Subtotal</td>
-              <td>Rs. {sTPrice}</td>
+              <td>Rs. {subTotal}</td>
             </tr>
             <tr>
               <td>Shipping Fee</td>

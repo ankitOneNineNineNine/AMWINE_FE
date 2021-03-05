@@ -3,6 +3,13 @@
   width: 100%;
   position: relative;
 }
+.browseAll {
+  padding: 10px;
+  background: var(--main-color);
+  color: white;
+  cursor: pointer;
+  border: none;
+}
 .filterContainer {
   width: 25%;
   display: inline-block;
@@ -102,6 +109,7 @@
 
     z-index: 10;
   }
+
   .filter {
     margin-top: -70px;
   }

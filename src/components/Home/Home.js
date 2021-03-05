@@ -8,7 +8,7 @@ import Slideshow from "../../views/Home/slideShow/Slideshow";
 import Ad from "../../views/Ad/Ad";
 import { connect } from "react-redux";
 import { setProducts } from "../../reduxMgmt/actions/actions";
-import { get } from "../../utilities/http";
+import { get, post } from "../../utilities/http";
 
 
 
@@ -27,8 +27,14 @@ const mapDispatchToProps = dispatch=>{
 function Home({products, user, saveProductsToState}) {
   const [ad, setAd] = useState({})
 useEffect(()=>{
-  get('/product/search')
-  .then(products=>{
+  post('/product/search',{
+    body: {
+      pageNumber: 1,
+      itemsToShow: 10
+    }
+  } )
+  .then(({products})=>{
+
     saveProductsToState(products)
   })
   .catch(console.log)

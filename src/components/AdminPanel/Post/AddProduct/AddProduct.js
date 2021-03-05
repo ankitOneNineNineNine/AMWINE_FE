@@ -65,7 +65,7 @@ function AddProduct({ products, saveProductToState, history }) {
     }
     if (test) {
       let product = await post(
-        "/authProduct/",
+        "/product/",
         { body: formData },
         true,
         "multipart/form-data"

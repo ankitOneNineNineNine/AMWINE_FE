@@ -6,6 +6,7 @@ import { setCart, setUser } from "../../reduxMgmt/actions/actions";
 import { get, post, put } from "../../utilities/http";
 import { productPicUrl } from "../../utilities/urls";
 import {
+  failureNotification,
   successNotification,
   warningNotification,
 } from "../../utilities/toast";
@@ -122,14 +123,32 @@ function CartContents({
 
   const checkout = (e) => {
     e.preventDefault();
-    let bodyForPost = {
-      productReq: productSelected,
-      subTotal,
-      shippingCharge: 150,
-    };
-    post("/bought", { body: bodyForPost }, true)
-      .then(console.log)
-      .catch(console.log);
+    if (localStorage.getItem("i_hash")) {
+      if (productSelected.length) {
+        let bodyForPost = {
+          productReq: productSelected,
+          subTotal,
+          shippingCharge: 150,
+        };
+        post("/bought", { body: bodyForPost }, true)
+          .then((msg) => {
+            productSelected.forEach((pr) => {
+              let prId = pr.p;
+              cart_p.splice(
+                cart_p.findIndex((pr) => pr._id === prId),
+                1
+              );
+              saveProductsToCart(cart_p);
+            });
+            successNotification(msg);
+          })
+          .catch((err) => failureNotification("Some Error Occured!"));
+      } else {
+        failureNotification("Select the Product first!");
+      }
+    } else {
+      failureNotification("Please Login First!");
+    }
   };
 
   let tPrice = subTotal ? subTotal + 150 : 0;

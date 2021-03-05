@@ -96,7 +96,21 @@ function Shop({
       saveFilterDetailsToState({ ...filterDetails, [name]: value });
     }
   };
+  const searchAll = e =>{
+    post("/product/search", { body: {
+      ...defaultF, 
+      pageNumber,
+      itemsToShow:5,
+    }})
+      .then(({products, count}) => {
+        setTotalProducts(count)
+        
+        saveProductsToState(products);
+      })
+      .catch((err) => console.log(err));
+  }
   const filter = (e) => {
+   
     post("/product/search", { body: {
       ...filterDetails, 
       pageNumber,
@@ -133,6 +147,7 @@ function Shop({
     <div className="shop">
       <div className="filterSub"></div>
       <div className="filterC">
+     
       <SearchContext.Provider value = {{
         searchChange,
         search
@@ -143,6 +158,7 @@ function Shop({
       <div className="filterContainer"></div>
       <div className="productCollection">
         <div className="detailPlusSort">
+        <button className = 'browseAll' onClick = {searchAll}>Browse All</button>
         <div className="pageNumberShow">Page: {pageNumber}</div>
           <h3>Showing {products && products.length} of {totalProducts} results</h3>
         </div>

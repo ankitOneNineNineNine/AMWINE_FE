@@ -95,7 +95,6 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
       get("/user", {}, true)
       .then((user) => {
         saveUserToState(user);
-        console.log('cart', user.cart)
         let  products = [];
         user.cart.forEach(p_id=>{
         get(`/product/${p_id}`)

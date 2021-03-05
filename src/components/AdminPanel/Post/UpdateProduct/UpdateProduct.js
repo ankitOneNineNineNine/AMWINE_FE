@@ -1,21 +1,44 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./UpdateProduct.css";
 import {
   failureNotification,
   successNotification,
 } from "../../../../utilities/toast";
+import { get, put } from "../../../../utilities/http";
+import { setProducts } from "../../../../reduxMgmt/actions/actions";
+import { productPicUrl } from "../../../../utilities/urls";
 const updateProductDetails = {
-  name: "",
-  price: 0,
-  quantity: 0,
-  description: "",
+  name: null,
+  price: null,
+  quantity: null,
   images: [],
+  pType: "wine",
+  variety: null,
 };
 
-export default function UpdateProduct({match, product}) {
-  console.log(match.params.id)
+export default function UpdateProduct({match, history}) {
+  const [product, setProduct] = useState(null);
   const productImage = useRef(null);
   const [formDetails, setFormDetails] = useState({ ...updateProductDetails });
+  const [alreadyImage, setAlreadyImage] = useState([])
+  const [removeImage, setRemoveImage] = useState([])
+  useEffect(()=>{
+      get(`/product/${match.params.id}`)
+      .then(product=>{
+        setProduct(product);
+        setAlreadyImage(product.images)
+        setFormDetails({
+          name: product.name,
+          price: product.price,
+          quantity: product.quantity,
+          images: [],
+          pType: product.pType,
+          variety: product.variety,
+
+        })
+      })
+      .catch(err => failureNotification("Some Failure Occured!"))
+    }, [])
   const formChange = (e) => {
     let { name, value } = e.target;
     if (name === "images") {
@@ -31,18 +54,46 @@ export default function UpdateProduct({match, product}) {
     images.splice(i, 1);
     setFormDetails({ ...formDetails, images });
   };
-  const update = (e) => {
+  const update = async (e) => {
     e.preventDefault();
-
-    console.log(formDetails);
+  
+    let { name, price, variety, pType, quantity, images } = formDetails;
+    let formData = new FormData();
+    if (name && name.length) formData.append("name", name);
+    if (price) formData.append("price", price);
+    if (variety) formData.append("variety", variety);
+    if (pType) formData.append("pType", pType);
+    if (quantity) formData.append("quantity", quantity);
+    if(removeImage.length) {
+      formData.append("removeImage[]", removeImage)
+    }
+    if (images.length) {
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+    }
+    let updatedProduct = await put(
+      `/product/${match.params.id}`,
+      { body: formData },
+      true,
+      "multipart/form-data"
+    );
+    history.push(`/shop/${product._id}`)
   };
- 
+ const removeAlreadyImage = (image) =>{
+   setRemoveImage([...removeImage, image]);
+   let removeImg = alreadyImage;
+   removeImg.splice(alreadyImage.indexOf(image),1);
+   setAlreadyImage(removeImg)
+ }
   const updateMoreImage = () => {
     productImage.current.click();
   };
+
   return (
     <div className="updateProduct">
       <h2>Update Product</h2>
+      
       <form className="productForm" method="post" onSubmit={update}>
         <label>Name</label>
         <input
@@ -63,27 +114,49 @@ export default function UpdateProduct({match, product}) {
           type="number"
           onChange={formChange}
           name="quantity"
-          defaultValue={formDetails.price}
+          defaultValue={formDetails.quantity}
         />
-        <label>Description</label>
-        <textarea
-          rows="10"
-          cols="30"
+        <label>Variety</label>
+        <input
           onChange={formChange}
-          name="description"
-          defaultValue={formDetails.description}
+          name="variety"
+          placeholder="Sparkling, Red, Sweet, Rose, etc."
+          defaultValue={formDetails.variety}
         />
+        <label>Type</label>
+        <select name="pType" onChange = {formChange} defaultValue = {formDetails.pType}>
+          <option value="wine">Wine</option>
+          <option value="beer">Beer</option>
+        </select>
+      
+          <label>Present Images</label>
+          <div className="imageSelectedForProduct">
+          {alreadyImage.map((image, i) => {
+            return (
+              <div key={i} className="individualImageContainer">
+                <img
+                  className="individualImages"
+                  src={`${productPicUrl}/${image}`}
+                />
+                <i
+                  className="deleteImage fa fa-trash"
+                  onClick={() => removeAlreadyImage(image)}
+                />
+              </div>
+            );
+          })}
+        </div>
         <label>Images</label>
         <input
           type="file"
-          className="pImageupdate"
+          className="pImageAdd"
           ref={productImage}
           name="images"
           onChange={formChange}
           multiple="multiple"
         />
         <div className="imageSelectedForProduct">
-          <div className="updateMoreImageForProduct" onClick={updateMoreImage}>
+          <div className="addMoreImageForProduct" onClick={updateMoreImage}>
             <i className="addMoreIcon fa fa-plus fa-2x" />
           </div>
           {formDetails.images.map((image, i) => {

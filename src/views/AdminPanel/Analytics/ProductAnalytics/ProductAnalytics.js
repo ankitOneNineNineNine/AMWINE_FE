@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import './ProductAnalytics.css';
 
 
-export default function ProductAnalytics({products, goToProduct}){
+export default function ProductAnalytics({min, max, products, goToProduct,changePageNumber }){
+
 return (
     <div className = 'productAnalytics'>
+  
      <div className = 'productNav'>
             <table>
                 <thead>
@@ -19,7 +22,7 @@ return (
                     {
                         products.map(product=>{
                             return (
-                                <tr onClick = {() => goToProduct(product._id)}>
+                                <tr key = {product._id} onClick = {() => goToProduct(product._id)}>
                                
                                     <td>{product.name}</td>
                                     <td>{product.sold|| 0}</td>
@@ -29,9 +32,14 @@ return (
                             )
                         })
                     }
-                      
+                
                     </tbody>
             </table>
+
+            <div className = "analyticsPaginate">
+            <button style = {min? {backgroundColor: 'gray'}: null}  onClick = {() => changePageNumber('prev')}>Prev</button>
+            <button style = {max? {backgroundColor: 'gray'}: null}  onClick = {() => changePageNumber('next')}>Next</button>
+            </div>
      </div>
     </div>
 )

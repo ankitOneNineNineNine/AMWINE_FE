@@ -16,8 +16,8 @@ export default function Slideshow({
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     speed: 500,
-    slidesToShow: 4.5,
-    slidesToScroll: 4.5,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     initialSlide: 0,
     responsive: [
       {
@@ -31,16 +31,16 @@ export default function Slideshow({
       {
         breakpoint: 760,
         settings: {
-          slidesToShow: 2.5,
-          slidesToScroll: 2.5,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           initialSlide: 2,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
-          slidesToScroll: 1.5,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ],

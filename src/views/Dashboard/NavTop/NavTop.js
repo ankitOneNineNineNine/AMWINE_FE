@@ -11,22 +11,16 @@ const navTopStyle = {
 }
 
     return (
-        <div className = ''>
+   
         <div className = 'navTop' style = {!sideNavOpen?navTopStyle: null }>
         <div className = 'sideNavOpen'>
         <i className = 'fa fa-align-right fa-2x' onClick = {()=>{openSideNav()}}></i>
         </div>
-            <div className = 'searchBoxDash'>
-                <input className = 'dashSearch' type = 'search' placeholder = 'Search your products/ads'/>
-                <div className = 'iconContainerSearch'>
-                    <i className = 'dashSearchIcon fa fa-search fa-2x'></i>
-                    </div>
-            </div>
-               <Link to  = {match.url}><img className = 'profilePicture' src = {(user && user.image)? `${profilePicUrl}/${user.image}` : Wine} /></Link> 
+         <Link to  = {match.url}><img className = 'profilePicture' src = {(user && user.image)? `${profilePicUrl}/${user.image}` : Wine} /></Link> 
 
 
         </div>
 
-    </div>
+  
     )
 }

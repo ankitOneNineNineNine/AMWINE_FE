@@ -4,16 +4,13 @@ import { Link, NavLink } from "react-router-dom";
 import "./SideNav.css";
 
 export default function SideNav({ name, sideNavOpen,currentSideNavLink, match }) {
-  
+ 
   return (
     <div className="dashNav" style = {sideNavOpen? {left: '0%'}: {left: '-100%'}}>
       <h2> <Link to={`${match.url}`}>Hellow {name}</Link></h2>
       <div className="analytics">
         <h3 className="headingLink">Analytics</h3>
         <ul>
-          <Link to={`${match.url}/analytics/sales`}>
-            <li className = {currentSideNavLink === '/analytics/sales'?'sideNavLinkActive':null }>Sales</li>
-          </Link>
           <Link to={`${match.url}/analytics/products`}>
             <li className = {currentSideNavLink === '/analytics/products'?'sideNavLinkActive':null }>Products</li>
           </Link>

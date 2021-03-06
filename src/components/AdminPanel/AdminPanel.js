@@ -3,7 +3,7 @@ import "./AdminPanel.css";
 import { Link, Route } from "react-router-dom";
 import SideNav from "../../views/Dashboard/Nav/SideNav";
 import NavTop from "../../views/Dashboard/NavTop/NavTop";
-import SalesAnalytics from "../../views/AdminPanel/Analytics/Sales/SalesAnalytics";
+
 
 import AddProduct from "./Post/AddProduct/AddProduct";
 import UpdateProduct from "./Post/UpdateProduct/UpdateProduct";
@@ -11,7 +11,7 @@ import PostAds from "./Post/PostAds/PostAds";
 import ProfileUpdate from "../Profile/ProfileUpdate/ProfileUpdate";
 import ProfileDetails from "../Profile/ProfileDetails/ProfileDetails";
 
-import ProductAnalytics from "../../views/ProductAnalytics/ProductAnalytics";
+import ProductAnalytics from "../../views/AdminPanel/Analytics/ProductAnalytics/ProductAnalytics";
 import Admins from "./Admins/Admins";
 import { setProducts } from "../../reduxMgmt/actions/actions";
 import { connect } from "react-redux";
@@ -30,17 +30,39 @@ const mapDispatchToProps = dispatch =>{
   }
 }
 
-function AdminPanel({ products, saveProductToState, user,history, match }) {
-  
+function AdminPanel({ products, saveProductToState, user,history, match}) {
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const [totalP, settotalP] = useState(0)
   const [sideNavOpen, setSideNavOpen] = useState(true);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    get('/product/', {}, true)
-    .then(products  => saveProductToState(products))
+    get(`/product?pageNumber=${pageNumber}&itemsToShow=2`, {}, true)
+    .then(({products, count})  => {
+      saveProductToState(products);
+      settotalP(count)
+    })
     .catch(console.log)
-  }, []);
+  }, [pageNumber]);
 
-
+const changePageNumber = (action) =>{
+  if(action === 'next'){
+      if(pageNumber !== (totalP/2)){
+          setPageNumber(pageNumber=>pageNumber+1)
+      }
+      else{
+        setPageNumber(pageNumber=>pageNumber)
+      }
+  }
+  else{
+    if(pageNumber!==1){
+      setPageNumber(pageNumber=>pageNumber-1)
+  }
+  else{
+    setPageNumber(pageNumber=>1)
+  }
+  }
+}
   const handleResize = () => {
     if (window.innerWidth < 500) setSideNavOpen(false);
   };
@@ -57,17 +79,16 @@ function AdminPanel({ products, saveProductToState, user,history, match }) {
 }
 
 function AdminSubRoute({component:Component, ...rest}){
-
   return (
     <Route {...rest} render = {(props)=>{
         return (
           <>
         <div className = 'sidenav'>
-      <SideNav name={user && user.userName} sideNavOpen={sideNavOpen} match = {match} currentSideNavLink = {rest.path.substring(10, rest.path.length)} />
+      <SideNav name={user && user.userName} sideNavOpen={sideNavOpen} match = {match} currentSideNavLink = {rest.path.substring(6, rest.path.length)} />
       </div><div className = 'postContents' style = {!sideNavOpen? postContentsStyle:null}>
       <NavTop openSideNav={openSideNav} user = {user} match = {match} sideNavOpen={sideNavOpen} />
           <div className = 'compContents'>
-          <Component {...props} products = {products} goToProduct = {goToProduct}/>
+          <Component {...props} products = {products} changePageNumber = { changePageNumber} goToProduct = {goToProduct} max = {pageNumber === (totalP/2)} min = {pageNumber === 1} />
           </div>
       </div>
       
@@ -80,8 +101,7 @@ function AdminSubRoute({component:Component, ...rest}){
     <div className="adminPanel">
       <AdminSubRoute exact path = {match.url} component = {ProfileDetails} />
       <AdminSubRoute path = {match.url + '/update'} component = {ProfileUpdate} />
-      <AdminSubRoute path = {match.url + '/analytics/sales'} component = {SalesAnalytics} />
-      <AdminSubRoute path = {match.url + '/analytics/products'} component = {ProductAnalytics} />
+      <AdminSubRoute path = {match.url + '/analytics/products'} component = {ProductAnalytics}/>
       <AdminSubRoute path = {match.url + '/post/addProduct'} component = {AddProduct} />
       <AdminSubRoute path = {match.url + '/post/updateProduct/:id'} component = {UpdateProduct} />
       <AdminSubRoute path = {match.url + '/admins'} component = {Admins} />

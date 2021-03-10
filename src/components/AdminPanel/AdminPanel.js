@@ -37,7 +37,7 @@ function AdminPanel({ products, saveProductToState, user,history, match}) {
   const [sideNavOpen, setSideNavOpen] = useState(true);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    get(`/product?pageNumber=${pageNumber}&itemsToShow=2`, {}, true)
+    get(`/product?pageNumber=${pageNumber}&itemsToShow=10`, {}, true)
     .then(({products, count})  => {
       saveProductToState(products);
       settotalP(count)
@@ -47,7 +47,7 @@ function AdminPanel({ products, saveProductToState, user,history, match}) {
 
 const changePageNumber = (action) =>{
   if(action === 'next'){
-      if(pageNumber !== (totalP/2)){
+      if(pageNumber !== Math.ceil(totalP/10)){
           setPageNumber(pageNumber=>pageNumber+1)
       }
       else{
@@ -88,7 +88,7 @@ function AdminSubRoute({component:Component, ...rest}){
       </div><div className = 'postContents' style = {!sideNavOpen? postContentsStyle:null}>
       <NavTop openSideNav={openSideNav} user = {user} match = {match} sideNavOpen={sideNavOpen} />
           <div className = 'compContents'>
-          <Component {...props} products = {products} changePageNumber = { changePageNumber} goToProduct = {goToProduct} max = {pageNumber === (totalP/2)} min = {pageNumber === 1} />
+          <Component {...props} products = {products} changePageNumber = { changePageNumber} goToProduct = {goToProduct} max = {pageNumber === Math.ceil(totalP/10)} min = {pageNumber === 1} />
           </div>
       </div>
       

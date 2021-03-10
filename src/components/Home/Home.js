@@ -34,7 +34,6 @@ useEffect(()=>{
     }
   } )
   .then(({products})=>{
-
     saveProductsToState(products)
   })
   .catch(console.log)
@@ -52,7 +51,7 @@ useEffect(()=>{
       <h2>Latest Wine on Stock</h2>
       <Slideshow products = {products} user = {user}/>
       <SeeMoreAdd />
-      <Ad ad = {ad}/>
+      <Ad ad = {ad|| {}}/>
 
     </div>
   );

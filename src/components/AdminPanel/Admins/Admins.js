@@ -50,13 +50,14 @@ function Admins({user}){
         post('adminAuth', {body:formDetails}, true)
         .then(admin=>{
             successNotification('Auccessfully added');
+            setFormDetails({...newAdminFormDetails})
             setAllAdmins([...allAdmins, {
                 _id: admin._id,
                 image: admin._image,
                 fullName: admin.fullName,
                 role : admin.role,
                 userName: admin.userName
-            }])
+            }]);
         })
         .catch(err=>console.log(err))
     }

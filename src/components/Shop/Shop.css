@@ -48,6 +48,7 @@
   box-shadow: 0 0 10px var(--main-color);
 }
 .productCollection {
+  min-height: 500px;
   width: 70%;
   overflow: hidden;
   display: inline-block;

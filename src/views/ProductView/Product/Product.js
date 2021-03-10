@@ -6,6 +6,7 @@ import { isAuthorized } from "../../../utilities/auth.middleware";
 import { setCart, setUser } from "../../../reduxMgmt/actions/actions";
 import { connect } from "react-redux";
 import {
+  failureNotification,
   successNotification,
   warningNotification,
 } from "../../../utilities/toast";
@@ -40,16 +41,25 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
       let formData = new FormData();
       formData.append('cart', p._id)
       formData.append('action', 'add')
-      let user = await put(
-        "/user",
-        { body :formData},
-        true,
-        "multipart/form-data"
-      );
-      saveUserToState(user)
+      try{
+        let user = await put(
+          "/user",
+          { body :formData},
+          true,
+          "multipart/form-data"
+        );
+        saveUserToState(user)
+        saveCartPToState(item);
+        successNotification("Addedd to cart");
+
+      }
+      catch(e){
+        failureNotification("Error Occured!")
+      }
+
+
     }
-    saveCartPToState(item);
-    successNotification("Addedd to cart");
+ 
   };
   return (
     <div className="product">

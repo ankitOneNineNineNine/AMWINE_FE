@@ -16,7 +16,6 @@ import StarRatingComponent from "react-star-rating-component";
 import Reviews from "../../Reviews/Reviews";
 const mapStateToProps = (state) => {
   return {
-    products: state.product.products,
     user: state.user.user,
     cart_p: state.cart.products,
   };
@@ -28,7 +27,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 function ProductDetails({
-  products,
   user,
   match,
   cart_p,
@@ -59,7 +57,7 @@ function ProductDetails({
   
       })
       .catch(console.log);
-  }, [reviewUsers]);
+  }, []);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
@@ -74,7 +72,6 @@ function ProductDetails({
     let pIDs = item.map((p) => p._id);
     if (!localStorage.getItem("i_hash")) {
       localStorage.setItem("cart_p", JSON.stringify(pIDs));
-
       saveCartPToState(item);
       successNotification("Addedd to cart");
     } else {

@@ -189,9 +189,9 @@ function CartContents({
                         type="number"
                         onChange={selectQty}
                         name={product._id}
-                        min={1}
-                        defaultValue={1}
-                        max={product.quantity}
+                        min={0}
+                        defaultValue={product.quantity - (product.sold||0)}
+                        max = {product.quantity - (product.sold||0)}
                       />
                     </span>
                   </div>

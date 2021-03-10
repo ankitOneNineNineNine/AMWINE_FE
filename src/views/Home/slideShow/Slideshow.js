@@ -16,6 +16,7 @@ export default function Slideshow({
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     speed: 500,
+    infinite:false,
     slidesToShow: 4,
     slidesToScroll: 4,
     initialSlide: 0,

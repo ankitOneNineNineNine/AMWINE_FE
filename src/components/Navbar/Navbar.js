@@ -8,6 +8,8 @@ import { setUser } from "../../reduxMgmt/actions/actions";
 
 
 import { connect } from "react-redux";
+import { get, post } from "../../utilities/http";
+import { failureNotification, successNotification } from "../../utilities/toast";
 let scrolledNav = {
   backgroundColor: "var(--main-color)",
   boxShadow: " 0 0 15px white",
@@ -34,9 +36,20 @@ function Navbar(props) {
     setShowMenu((showMenu) => !showMenu);
   };
   const signOut = (e) => {
-    localStorage.clear();
-    props.onSignOut();
-    props.history.push("/");
+    let token = JSON.parse(localStorage.getItem("i_hash"));
+
+    post("/auth/logout", {body: {token}})
+    .then(msg => {
+      
+      successNotification(msg)
+      localStorage.clear();
+      props.onSignOut();
+      props.history.push("/");
+    
+    })
+    .catch(err => failureNotification(err))
+
+    
   };
   useEffect(() => {
     let link = props.location.pathname.substring(
@@ -59,9 +72,10 @@ function Navbar(props) {
       }
     };
   }, [props.location.pathname]);
-  useEffect(() => {});
+
   return (
     <>
+
       <nav className="nav" style={styleNav}>
         <Logo />
         <MainNavLink

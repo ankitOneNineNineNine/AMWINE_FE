@@ -18,7 +18,7 @@ export default function AdminDisplay({admins, mainAdmin, deleteAdmin, user}){
                
                       return (     
                         <li className = {(admin.role === 'ADMIN_P')? "primaryAdmin": "secondaryAdmin"} key = {i}>
-                        {admin.userName}
+                        {admin.userName} {admin.userName === user.userName? "(YOU)": null}
                        {
                           mainAdmin && (admin._id!==user._id)?
                            <div className = 'deleteAdmin'>

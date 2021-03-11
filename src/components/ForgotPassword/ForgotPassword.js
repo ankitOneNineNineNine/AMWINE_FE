@@ -1,50 +1,54 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { post } from '../../utilities/http';
 import { failureNotification, successNotification } from '../../utilities/toast';
 import './ForgotPassword.css'
 
 
 
-export default function ForgotPassword(){
-    const [email, setEmail] = useState("")
+export default function ForgotPassword({history}){
+    const [eoru, setEoru] = useState("");
+    const [submitted, setSubmitted] = useState(false)
     function formChange(e) {
       let {  value } = e.target;
-      setEmail(value)
+      setEoru(value)
     }
     function forgotPassword(e) {
+     
       e.preventDefault();
-        let msg;
-        let {emailTest} = validate();
-        if (!emailTest) {
-          msg = "Please enter the valid email";
-          failureNotification(msg);
-        }
-       else{
-
-       }
-        
+      if(eoru){
+        setSubmitted(true);
+        post('/auth/forgot-password', {body: {
+        eoru,
+      }})
+      .then(data=>{
+        successNotification(`Email has been sent to ${data.accepted[0]}`)
+        setSubmitted(false);
+        history.push('/login')
+      })
+      .catch(err=>{
+        let errMsg = err?.response?.data?.msg;
+        failureNotification(errMsg)
+        setSubmitted(false)
+      })
       }
-
-    function validate(){
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let emailTest = re.test(email.toLowerCase());
-        return {
-            emailTest
-        };
+       
     }
+
    
     return (
         <div className="fPassword">
         <h2>Forgot Password</h2>
         <form className="fPasswordForm" method="post" onSubmit={forgotPassword}>
-          <label>Email</label>
+          <label>Email/Username</label>
           <input
             onChange={formChange}
-            type="email"
-            name="email"
-            defaultValue={email}
+            type="text"
+            name="eoru"
+            value = {eoru}
           />
-          <button className="fPasswordButton" onClick={forgotPassword}>
+          
+          <button className={"fPasswordButton " + (submitted? "clicked":null) } onClick={submitted ?null:forgotPassword}>
           Submit
         </button>
         </form>

@@ -25,6 +25,7 @@ import { get, post } from "./utilities/http";
 import { connect } from "react-redux";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
 import CartContents from "./components/CartContents/CartContents";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 
 function AdminRoute({ component: Component, user, ...rest }) {
   return (
@@ -144,7 +145,10 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
           <PublicAuth
             path="/forgot-password"
             component={ForgotPassword}
-            user={user}
+          />
+           <PublicAuth
+            path="/reset-password/:token"
+            component={ResetPassword}
           />
           {/* <Route exact path="/adminLogin" component={AdminSignin} /> */}
         </Switch>

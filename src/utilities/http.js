@@ -16,10 +16,12 @@ const authReqToken = {
 //api call functions
 
 function get(url, { headers = reqHeaders, params = {} } = {}, secured = false, type = "application/json") {
+  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
+ 
   return http({
     method: "GET",
     url,
-    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
+    headers: head,
     params,
   }).then((data) => data.data);
 }
@@ -31,11 +33,12 @@ function post(
   type = "application/json"
 ) {
   
-  
+  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
+ 
   return http({
     method: "POST",
     url,
-    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
+    headers: head,
     data: body,
     params,
   }).then((data) => data.data);
@@ -47,11 +50,12 @@ function put(
   secured = false,
   type = "application/json"
 ) {
+  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
  
   return http({
     method: "PUT",
     url,
-    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
+    headers: head,
     data: body,
     params,
   })
@@ -64,11 +68,12 @@ function remove(
   secured = false,
   type = "application/json"
 ) {
+  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
  
   return http({
     method: "DELETE",
     url,
-    headers: secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type},
+    headers: head,
     params,
   });
 }

@@ -71,6 +71,9 @@ function Navbar(props) {
         }
       }
     };
+    return () =>{
+      setStyleNav(scrolledNav);
+    }
   }, [props.location.pathname]);
 
   return (
@@ -90,4 +93,4 @@ function Navbar(props) {
     </>
   );
 }
-export default connect(mapStateToProps, mapDispathToProps)(withRouter(Navbar));
+export default withRouter(connect(mapStateToProps, mapDispathToProps)(Navbar));

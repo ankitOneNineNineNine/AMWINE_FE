@@ -4,7 +4,8 @@
 }
 .topHandle > ul {
   margin: auto;
-  width: 50%;
+  text-align: center;
+  padding: 0;
 }
 .topHandle > ul > li {
   list-style: none;

@@ -1,9 +1,10 @@
 .reviewShow {
   margin: auto;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 100px;
   display: block;
 }
+
 .reviewIndividual {
   width: 50%;
 
@@ -21,6 +22,7 @@
 .reviewIndividual > .details {
   display: block;
   padding: 5px;
+  text-align: left;
 }
 .reviewIndividual > .details > .personName {
   display: block;

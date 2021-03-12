@@ -27,7 +27,7 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
   const picUrl = productPicUrl + "/" + product.images[0];
 
   const addToCart = async (p) => {
-    if (cart_p.indexOf(p._id) > -1) {
+    if (cart_p.findIndex((p) => p._id === product._id) > -1) {
       warningNotification("Already in the cart");
       return;
     }
@@ -37,6 +37,8 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
     let pIDs = item.map(p=>p._id)
     if (!localStorage.getItem('i_hash')) {
       localStorage.setItem("cart_p", JSON.stringify(pIDs));
+      saveCartPToState(item);
+      successNotification("Addedd to cart");
     } else {
       let formData = new FormData();
       formData.append('cart', p._id)

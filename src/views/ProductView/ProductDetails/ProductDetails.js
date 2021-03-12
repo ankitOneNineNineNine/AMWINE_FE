@@ -57,7 +57,7 @@ function ProductDetails({
   
       })
       .catch(console.log);
-  }, []);
+  }, [reviewText]);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);

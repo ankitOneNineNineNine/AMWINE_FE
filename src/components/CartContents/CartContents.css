@@ -1,6 +1,7 @@
 .cartContents {
   margin-top: 80px;
   text-align: center;
+  min-height: 500px;
   height: fit-content;
 }
 

@@ -27,6 +27,9 @@ const mapDispatchToProps = dispatch=>{
 function Home({products, user, saveProductsToState}) {
   const [ad, setAd] = useState({})
 useEffect(()=>{
+  window.scrollTo({
+    top:0,
+  })
   post('/product/search',{
     body: {
       pageNumber: 1,

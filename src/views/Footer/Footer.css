@@ -3,6 +3,8 @@
   color: var(--main-color);
   background-color: #ffffff;
   position: relative;
+  min-height: 300px;
+
   bottom: 0;
 }
 .footer > span {

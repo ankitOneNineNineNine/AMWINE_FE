@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, memo, Suspense, useEffect, useState } from "react";
 import "./ProductDetails.css";
 import Product from "../Product/Product";
 import { connect } from "react-redux";
@@ -13,7 +13,8 @@ import { get, post, put } from "../../../utilities/http";
 import { isAuthorized } from "../../../utilities/auth.middleware";
 import { Link } from "react-router-dom";
 import StarRatingComponent from "react-star-rating-component";
-import Reviews from "../../Reviews/Reviews";
+const Reviews = lazy(()=>import('../../Reviews/Reviews'));
+
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
@@ -39,25 +40,29 @@ function ProductDetails({
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
   const [reviewUsers, setReviewUsers] = useState([]);
+
+ 
   useEffect(() => {
-    get(`/product/${match.params.id}`)
-      .then((tP) => {
-        setProduct(tP);
-        setCurrentSelectedImage(tP.images[0]);
-        if(!tP.reviews.length){
-          setLoading(false);
-        }
+    const saveProduct = async() =>{
+      let tP = await get(`/product/${match.params.id}`);
+      setProduct(tP);
+      setCurrentSelectedImage(tP.images[0]);
+      if(!tP.reviews.length){
+        setLoading(false);
+      }
+      if(reviewUsers.length!==tP.reviews.length){
         tP.reviews.forEach(async (rev) => {
           let user = await get(`/userDetails/${rev.addedBy}`);
-          let newUsers = reviewUsers;
-          newUsers.push(user);
-          setReviewUsers(newUsers);
-          setLoading(false);
+          setReviewUsers([...reviewUsers, user])
         });
-  
-      })
-      .catch(console.log);
-  }, [reviewText]);
+      }
+        
+      
+    }
+    saveProduct().then(_=>{
+      setLoading(false);
+    });
+  }, []);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
@@ -110,7 +115,10 @@ function ProductDetails({
         },
         true
       )
-        .then((product) => setProduct(product))
+        .then((product) => {
+          setProduct(product);
+          setReviewUsers([user, ...reviewUsers]);
+        })
         .catch(console.log);
     } else {
       failureNotification("Please Login First");
@@ -181,6 +189,7 @@ function ProductDetails({
           ) : null}
           <hr />
         </div>
+        <Suspense fallback = {<h1>Loading</h1>}>
         <Reviews
           reviews={product.reviews}
           reviewRating={reviewRating}
@@ -189,6 +198,7 @@ function ProductDetails({
           postReview={postReview}
           reviewTextChange={reviewTextChange}
         />
+        </Suspense>
       </div>
     </div>
   );

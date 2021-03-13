@@ -120,7 +120,8 @@
     margin: auto;
     text-align: center;
   }
-  .ddetails > button {
+  .ddetails > button,
+  .ddetails > a > button {
     margin: auto;
   }
 }

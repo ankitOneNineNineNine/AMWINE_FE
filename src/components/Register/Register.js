@@ -44,6 +44,7 @@ function Register({ saveUserToStore, history }) {
     if (test.msg.length) {
       msg = test.msg;
       failureNotification(msg);
+      setSubmitClicked(false)
     } else {
       try{
         let details = await post("/auth/signup", { body: formDetails });

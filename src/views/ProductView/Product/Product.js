@@ -50,13 +50,15 @@ function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
           true,
           "multipart/form-data"
         );
+        
         saveUserToState(user)
         saveCartPToState(item);
         successNotification("Addedd to cart");
 
       }
       catch(e){
-        failureNotification("Error Occured!")
+        console.log(e.response)
+         failureNotification("Error Occured!")
       }
 
 

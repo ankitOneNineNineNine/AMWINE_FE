@@ -38,7 +38,7 @@ function CartContents({
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "smooth",
+
     });
     setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   }, [productSelected]);
@@ -101,14 +101,7 @@ function CartContents({
           },
         ]);
       } else {
-        setProductsSelected([
-          ...productSelected,
-          {
-            p: value,
-            qty: 1,
-            price: +e.target.attributes[2].value,
-          },
-        ]);
+        failureNotification("Select Quantity")
       }
     } else {
       let product = productSelected;
@@ -123,12 +116,18 @@ function CartContents({
 
   const checkout = (e) => {
     e.preventDefault();
+   
     if (localStorage.getItem("i_hash")) {
       if (productSelected.length) {
         let bodyForPost = {
           productReq: productSelected,
           subTotal,
           shippingCharge: 150,
+          address: "Radhe-Radhe Bhaktapur",
+          city: "Bhaktapur",
+          state: "Bagmati Province",
+          postalCode: 44812,
+          country: "Nepal"
         };
         post("/bought", { body: bodyForPost }, true)
           .then((msg) => {
@@ -168,13 +167,17 @@ function CartContents({
               <span className="trash" onClick={() => removePFromCart(product)}>
                 <i className="fa fa-trash "></i>
               </span>
-              <input
+              
+              {
+                qty[product._id]>0?
+                <input
                 type="checkbox"
                 className="selectChecboxCart"
                 value={product._id}
                 onChange={selectProduct}
                 price={product.price}
               />
+            :null}
               <div className="cartProductDetails">
                 <Link key={i} to={`/shop/${product._id}`}>
                   <div className="p_name">
@@ -190,7 +193,7 @@ function CartContents({
                         onChange={selectQty}
                         name={product._id}
                         min={0}
-                        defaultValue={product.quantity - (product.sold||0)}
+                        defaultValue={0}
                         max = {product.quantity - (product.sold||0)}
                       />
                     </span>

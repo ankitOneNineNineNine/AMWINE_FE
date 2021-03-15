@@ -6,18 +6,12 @@ const http = axios.create({
   responseType: "json",
 });
 
-const reqHeaders = {
-  "Content-Type": "application/json",
-};
-const authReqToken = {
-  Authorization: JSON.parse(localStorage.getItem("i_hash")),
-};
 
 //api call functions
 
-function get(url, { headers = reqHeaders, params = {} } = {}, secured = false, type = "application/json") {
-  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
- 
+function get(url, { headers = {}, params = {} } = {}, secured = false, type = "application/json") {
+  let head =secured ? {"Authorization": JSON.parse(localStorage.getItem("i_hash")), "Content-Type": type} : { "Content-Type": type};
+  console.log(head)
   return http({
     method: "GET",
     url,
@@ -28,12 +22,12 @@ function get(url, { headers = reqHeaders, params = {} } = {}, secured = false, t
 
 function post(
   url,
-  { headers = reqHeaders, params = {}, body = {} },
+  { headers ={}, params = {}, body = {} },
   secured = false,
   type = "application/json"
 ) {
   
-  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
+  let head =secured ? {"Authorization": JSON.parse(localStorage.getItem("i_hash")), "Content-Type": type} : { "Content-Type": type};
  
   return http({
     method: "POST",
@@ -46,11 +40,11 @@ function post(
 
 function put(
   url,
-  { headers = reqHeaders, params = {}, body = {} },
+  { headers ={}, params = {}, body = {} },
   secured = false,
   type = "application/json"
 ) {
-  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
+  let head =secured ? {"Authorization": JSON.parse(localStorage.getItem("i_hash")), "Content-Type": type} : { "Content-Type": type};
  
   return http({
     method: "PUT",
@@ -64,11 +58,11 @@ function put(
 
 function remove(
   url,
-  { headers = reqHeaders, params = {}, body = {} },
+  { headers ={}, params = {}, body = {} },
   secured = false,
   type = "application/json"
 ) {
-  let head =secured ? {...authReqToken, "Content-Type": type} : {...reqHeaders, "Content-Type": type};
+  let head =secured ? {"Authorization": JSON.parse(localStorage.getItem("i_hash")), "Content-Type": type} : { "Content-Type": type};
  
   return http({
     method: "DELETE",

@@ -30,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 function AddProduct({ products, saveProductToState, history }) {
   const productImage = useRef(null);
   const [formDetails, setFormDetails] = useState({ ...addProductFormDetails });
+  const [submitted, setSubmitted] = useState(false);
   const formChange = (e) => {
     let { name, value } = e.target;
     if (name === "price" || name === "quantity") {
@@ -50,31 +51,40 @@ function AddProduct({ products, saveProductToState, history }) {
   };
   const add = async (e) => {
     e.preventDefault();
-    let test = validate();
-    let formData = new FormData();
-    let { name, price, variety, pType, quantity, images } = formDetails;
-    if (name) formData.append("name", name);
-    if (price) formData.append("price", price);
-    if (variety) formData.append("variety", variety);
-    if (pType) formData.append("pType", pType);
-    if (quantity) formData.append("quantity", quantity);
-    if (images.length) {
-      images.forEach((image) => {
-        formData.append("images", image);
-      });
+    setSubmitted(true)
+    try{
+      let test = validate();
+      let formData = new FormData();
+      let { name, price, variety, pType, quantity, images } = formDetails;
+      if (name) formData.append("name", name);
+      if (price) formData.append("price", price);
+      if (variety) formData.append("variety", variety);
+      if (pType) formData.append("pType", pType);
+      if (quantity) formData.append("quantity", quantity);
+      if (images.length) {
+        images.forEach((image) => {
+          formData.append("images", image);
+        });
+      }
+      if (test) {
+        let product = await post(
+          "/product/",
+          { body: formData },
+          true,
+          "multipart/form-data"
+        );
+        setSubmitted(false);
+        let prod = products;
+        prod.push(formDetails);
+        saveProductToState(prod);
+        successNotification("Successfully Added");
+        setFormDetails(addProductFormDetails);
+        setFormDetails({ ...formDetails, images: [] });
+        history.push('/');
+      }
     }
-    if (test) {
-      let product = await post(
-        "/product/",
-        { body: formData },
-        true,
-        "multipart/form-data"
-      );
-      let prod = products;
-      prod.push(formDetails);
-      saveProductToState(prod);
-      successNotification("Successfully Added");
-      history.push('/')
+    catch(e){
+      setSubmitted(false);
     }
   };
   const validate = () => {
@@ -155,7 +165,7 @@ function AddProduct({ products, saveProductToState, history }) {
             );
           })}
         </div>
-        <button className="productAddButton" onClick={add}>
+        <button className={"productAddButton " + (submitted? "clicked": null) } onClick={submitted? null: add}>
           Add
         </button>
       </form>

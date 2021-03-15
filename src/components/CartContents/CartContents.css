@@ -54,6 +54,7 @@
 }
 .checkOut {
   width: 30%;
+
   float: right;
 }
 .checkOut {
@@ -62,7 +63,11 @@
 table {
   width: 100%;
 }
+.addressToDeliver{
+  margin-top: 130px;
+}
 .proceedToCheckout {
+  cursor: pointer;
   padding: 10px;
   background: var(--main-color);
   color: white;

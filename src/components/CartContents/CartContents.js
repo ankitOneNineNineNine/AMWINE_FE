@@ -11,6 +11,8 @@ import {
   warningNotification,
 } from "../../utilities/toast";
 import { Link } from "react-router-dom";
+import AddressInput from "../AddressInput/AddressInput";
+import Modal from "../../Modal/Modal";
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
@@ -34,6 +36,8 @@ function CartContents({
   const [productSelected, setProductsSelected] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [qty, setQty] = useState({});
+  const [showModel, setShowModel] = useState(false);
+  const [addressFormDetails, setAddressFormDetails] = useState({})
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -113,47 +117,63 @@ function CartContents({
     }
     setSubTotal(productSelected.reduce((a, sP) => a + sP.qty * sP.price, 0));
   };
-
+  
   const checkout = (e) => {
     e.preventDefault();
-   
-    if (localStorage.getItem("i_hash")) {
-      if (productSelected.length) {
-        let bodyForPost = {
-          productReq: productSelected,
-          subTotal,
-          shippingCharge: 150,
-          address: "Radhe-Radhe Bhaktapur",
-          city: "Bhaktapur",
-          state: "Bagmati Province",
-          postalCode: 44812,
-          country: "Nepal"
-        };
-        post("/bought", { body: bodyForPost }, true)
-          .then((msg) => {
-            productSelected.forEach((pr) => {
-              let prId = pr.p;
-              cart_p.splice(
-                cart_p.findIndex((pr) => pr._id === prId),
-                1
-              );
-              saveProductsToCart(cart_p);
-            });
-            successNotification(msg);
-          })
-          .catch((err) => failureNotification("Some Error Occured!"));
-      } else {
-        failureNotification("Select the Product first!");
-      }
-    } else {
-      failureNotification("Please Login First!");
+    if(Object.keys(addressFormDetails).length!== 5){
+      setShowModel(true);
+      return;
     }
+     
+  
+     if (localStorage.getItem("i_hash")) {
+       if (productSelected.length) {
+         let bodyForPost = {
+           productReq: productSelected,
+           subTotal,
+           shippingCharge: 150,
+           address: addressFormDetails.address,
+           city: addressFormDetails.city,
+           state: addressFormDetails.state,
+           postalCode: addressFormDetails.postalCode,
+           country: addressFormDetails.country,
+         };
+         post("/bought", { body: bodyForPost }, true)
+           .then((msg) => {
+             productSelected.forEach((pr) => {
+               let prId = pr.p;
+               cart_p.splice(
+                 cart_p.findIndex((pr) => pr._id === prId),
+                 1
+               );
+               saveProductsToCart(cart_p);
+             });
+             successNotification(msg);
+           })
+           .catch((err) => failureNotification("Some Error Occured!"));
+       } else {
+         failureNotification("Select the Product first!");
+       }
+     } else {
+       failureNotification("Please Login First!");
+     }
+  
+
   };
 
   let tPrice = subTotal ? subTotal + 150 : 0;
 
+
+  const addressFilled= Object.keys(addressFormDetails).length=== 5;
+
   return (
     <div className="cartContents">
+      {
+        showModel && 
+        <Modal>
+          <AddressInput setShowModal = {setShowModel} setAddressFormDetails = {setAddressFormDetails}/>
+        </Modal>
+      }
       <h2>Cart</h2>
 
       <div className="productsInCart">
@@ -226,8 +246,17 @@ function CartContents({
         </table>
 
         <button onClick={checkout} className="proceedToCheckout">
-          Proceed to Checkout
+          {addressFilled? "Checkout": "Enter Full Address"}
         </button>
+      </div>
+
+      <div className = 'addressToDeliver'>
+        <h2>Address Information</h2>
+        <h4>Address: {addressFormDetails?.address}</h4>
+        <h4>City: {addressFormDetails?.city}</h4>
+        <h4>State: Bagmati {addressFormDetails?.state}</h4>
+        <h4>PostalCode: {addressFormDetails?.postalCode}</h4>
+        <h4>Country: {addressFormDetails?.country}</h4>
       </div>
     </div>
   );

@@ -35,6 +35,7 @@ export default function Slideshow({
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          infinite:true
         },
       },
       {

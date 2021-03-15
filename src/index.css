@@ -24,3 +24,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+#root{
+  overflow-y: hidden;
+}
+#modal{
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  top: 0;
+}

@@ -11,7 +11,7 @@ const http = axios.create({
 
 function get(url, { headers = {}, params = {} } = {}, secured = false, type = "application/json") {
   let head =secured ? {"Authorization": JSON.parse(localStorage.getItem("i_hash")), "Content-Type": type} : { "Content-Type": type};
-  console.log(head)
+ 
   return http({
     method: "GET",
     url,

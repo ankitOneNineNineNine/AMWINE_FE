@@ -1,0 +1,13 @@
+.boughtHistory {
+  margin: auto;
+  text-align: center;
+}
+.boughtItems {
+  width: 200px;
+  height: 200px;
+  box-shadow: 0 0 10px var(--main-color);
+  color: black;
+  display: inline-block;
+  margin: auto;
+  margin: 10px;
+}

@@ -44,7 +44,7 @@ export default function AddAdmins({ addAdmin,submitted, addAdminFormChange, admi
           onChange={addAdminFormChange}
           value = {adminForm.password}
         />
-        <button className={"addAdminFormButton "+ (submitted? "clicked": null)} onCli = {submitted? null: addAdmin}>Add</button>
+        <button className={"addAdminFormButton "+ (submitted? "clicked": null)} onClick = {submitted? null: addAdmin}>Add</button>
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./AddAdmins.css";
 
-export default function AddAdmins({ addAdmin, addAdminFormChange }) {
+export default function AddAdmins({ addAdmin,submitted, addAdminFormChange, adminForm }) {
   return (
     <div className="addAdmins">
       <form className="addAdminForm" onSubmit={addAdmin}>
@@ -13,6 +13,7 @@ export default function AddAdmins({ addAdmin, addAdminFormChange }) {
           className="formInput"
           name="userName"
           onChange={addAdminFormChange}
+          value = {adminForm.userName}
         />
         <label>Fullname</label>
         <input
@@ -20,6 +21,7 @@ export default function AddAdmins({ addAdmin, addAdminFormChange }) {
           className="formInput"
           name="fullName"
           onChange={addAdminFormChange}
+          value = {adminForm.fullName}
         />
         <label>Role</label>
         <select name = "role" onChange = {addAdminFormChange} defaultValue = "ADMIN_S">
@@ -32,6 +34,7 @@ export default function AddAdmins({ addAdmin, addAdminFormChange }) {
           className="formInput"
           name="email"
           onChange={addAdminFormChange}
+          value = {adminForm.email}
         />
         <label>Password</label>
         <input
@@ -39,8 +42,9 @@ export default function AddAdmins({ addAdmin, addAdminFormChange }) {
           className="formInput"
           name="password"
           onChange={addAdminFormChange}
+          value = {adminForm.password}
         />
-        <button className="addAdminFormButton">Add</button>
+        <button className={"addAdminFormButton "+ (submitted? "clicked": null)} onCli = {submitted? null: addAdmin}>Add</button>
       </form>
     </div>
   );

@@ -37,7 +37,8 @@ function CartContents({
   const [subTotal, setSubTotal] = useState(0);
   const [qty, setQty] = useState({});
   const [showModel, setShowModel] = useState(false);
-  const [addressFormDetails, setAddressFormDetails] = useState({})
+  const [addressFormDetails, setAddressFormDetails] = useState({});
+  const [checkedOut, setCheckedOut] = useState(false);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -128,6 +129,7 @@ function CartContents({
   
      if (localStorage.getItem("i_hash")) {
        if (productSelected.length) {
+        setCheckedOut(true);
          let bodyForPost = {
            productReq: productSelected,
            subTotal,
@@ -147,10 +149,11 @@ function CartContents({
                  1
                );
                saveProductsToCart(cart_p);
+               setCheckedOut(false);
              });
              successNotification(msg);
            })
-           .catch((err) => failureNotification("Some Error Occured!"));
+           .catch((err) => {failureNotification("Some Error Occured!");   setCheckedOut(false);});
        } else {
          failureNotification("Select the Product first!");
        }
@@ -174,12 +177,21 @@ function CartContents({
           <AddressInput setShowModal = {setShowModel} setAddressFormDetails = {setAddressFormDetails}/>
         </Modal>
       }
+      
       <h2>Cart</h2>
+   
 
       <div className="productsInCart">
         {cart_p.map((product, i) => {
           return (
             <div key={i} className="cartProduct">
+              {
+                (product.quantity - (product.sold||0))? 
+                null:
+                <div className = 'out-of-stock'>
+                <p>Out-of-Stock</p>
+                </div>
+              }
               <img
                 src={`${productPicUrl}/${product.images[0]}`}
                 className="pInCartImg"
@@ -245,12 +257,13 @@ function CartContents({
           </tbody>
         </table>
 
-        <button onClick={checkout} className="proceedToCheckout">
+        <button onClick={checkedOut? null:checkout} className={"proceedToCheckout " + (checkedOut? "clicked": 'null')}>
           {addressFilled? "Checkout": "Enter Full Address"}
         </button>
       </div>
-
-      <div className = 'addressToDeliver'>
+      {
+        addressFilled? 
+        <div className = 'addressToDeliver'>
         <h2>Address Information</h2>
         <h4>Address: {addressFormDetails?.address}</h4>
         <h4>City: {addressFormDetails?.city}</h4>
@@ -258,6 +271,8 @@ function CartContents({
         <h4>PostalCode: {addressFormDetails?.postalCode}</h4>
         <h4>Country: {addressFormDetails?.country}</h4>
       </div>
+      :null}
+
     </div>
   );
 }

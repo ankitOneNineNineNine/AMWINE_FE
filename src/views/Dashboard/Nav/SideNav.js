@@ -33,6 +33,9 @@ export default function SideNav({ name, sideNavOpen,currentSideNavLink, match })
           <Link to={`${match.url}`}>
             <li className = {currentSideNavLink === ''?'sideNavLinkActive':null }>My Profile</li>
           </Link>
+          <Link to={`${match.url}/boughtHistory`}>
+            <li className = {currentSideNavLink === '/boughtHistory'?'sideNavLinkActive':null }>Bought History</li>
+          </Link>
           <Link to={`${match.url}/update`}>
             <li className = {currentSideNavLink === '/update'?'sideNavLinkActive':null }>Update Profile</li>
           </Link>

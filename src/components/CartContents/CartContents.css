@@ -16,6 +16,7 @@
   box-shadow: 0 0 5px var(--main-color);
   height: 80px;
   overflow: hidden;
+  padding-right: 100px;
   width: 100%;
   display: flex;
   position: relative;
@@ -63,7 +64,7 @@
 table {
   width: 100%;
 }
-.addressToDeliver{
+.addressToDeliver {
   margin-top: 130px;
 }
 .proceedToCheckout {
@@ -98,12 +99,27 @@ table {
   padding: 2px;
   cursor: pointer;
 }
+.out-of-stock {
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 100%;
+  margin-top: -2px;
+  text-align: center;
+  z-index: 1;
+  opacity: 0.8;
+  font-weight: bolder;
+  font-size: 2em;
+}
 @media only screen and (max-width: 500px) {
   .cartContents {
     margin: auto;
     display: block;
     margin-top: 80px;
     width: 80%;
+  }
+  .cartProduct {
+    padding-right: 0px;
   }
   .productsInCart {
     display: block;

@@ -36,7 +36,9 @@
 .pDetailsContainer > p {
   font-weight: 500;
 }
-
+.bought_products {
+  text-align: center;
+}
 @media only screen and (max-width: 500px) {
   .profileDetails {
     width: 80%;

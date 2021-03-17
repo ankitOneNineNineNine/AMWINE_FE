@@ -23,6 +23,11 @@
   background-color: var(--main-color);
   color: white;
 }
+.varietyContainer {
+  overflow-y: scroll;
+  height: 100px;
+}
+
 @media only screen and (min-width: 400px) and (max-width: 700px) {
   .filter {
     display: block;

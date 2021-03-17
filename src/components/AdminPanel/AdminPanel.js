@@ -16,6 +16,7 @@ import Admins from "./Admins/Admins";
 import { setProducts } from "../../reduxMgmt/actions/actions";
 import { connect } from "react-redux";
 import { get } from "../../utilities/http";
+import BoughtHistory from "../BoughtHistory/BoughtHistory";
 
 const mapStateToProps = state => {
   return {
@@ -106,7 +107,7 @@ function AdminSubRoute({component:Component, ...rest}){
       <AdminSubRoute path = {match.url + '/post/updateProduct/:id'} component = {UpdateProduct} />
       <AdminSubRoute path = {match.url + '/admins'} component = {Admins} />
       <AdminSubRoute path = {match.url + '/post/postAds'} component = {PostAds} />
-      
+      <AdminSubRoute path = {match.url + '/boughtHistory'} component = {BoughtHistory} />
     </div>
   );
 }

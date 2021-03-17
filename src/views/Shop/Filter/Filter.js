@@ -24,7 +24,8 @@ export default function Filter({filter, varieties, filterChange, searchChange, s
       </div>
       <div className="variety">
         <h2>Variety</h2>
-        {
+       <div className = 'varietyContainer'>
+       {
           varieties.map((variety, i) =>{
             return (
               <div key = {i}>
@@ -35,6 +36,7 @@ export default function Filter({filter, varieties, filterChange, searchChange, s
             )
           })
         }
+       </div>
 
    
       </div>

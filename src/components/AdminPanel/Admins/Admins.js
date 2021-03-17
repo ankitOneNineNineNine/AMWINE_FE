@@ -23,6 +23,7 @@ const newAdminFormDetails = {
 function Admins({user}){
     const [formDetails, setFormDetails] = useState({...newAdminFormDetails})
     const [allAdmins, setAllAdmins] =useState([]);
+    const [submitted, setSubmitted] = useState(false)
     useEffect(()=>{
         get('/adminAuth', {} ,true)
         .then(admins=>{
@@ -47,6 +48,7 @@ function Admins({user}){
     }
     const addAdmin = e =>{
         e.preventDefault();
+        setSubmitted(true);
         post('adminAuth', {body:formDetails}, true)
         .then(admin=>{
             successNotification('Auccessfully added');
@@ -58,14 +60,15 @@ function Admins({user}){
                 role : admin.role,
                 userName: admin.userName
             }]);
+            setSubmitted(false)
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{console.log(err); setSubmitted(false)})
     }
     return (
        <>
         <AdminDisplay admins = {allAdmins} mainAdmin = {isMainAdmin(user)} deleteAdmin = {deleteAdmin} user = {user}/>
       {isMainAdmin(user)?
-        <AddAdmins  addAdmin = {addAdmin} addAdminFormChange  = {addAdminFormChange}/>
+        <AddAdmins  addAdmin = {addAdmin} submitted = {submitted} adminForm = {formDetails} addAdminFormChange  = {addAdminFormChange}/>
         :null  
     }
        </>

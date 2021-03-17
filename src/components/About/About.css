@@ -1,0 +1,49 @@
+.about {
+  display: block;
+  margin-top: 100px;
+  min-height: 500px;
+  text-align: center;
+}
+.aboutUS {
+  text-align: center;
+  box-shadow: 0 0 10px var(--main-color);
+  padding: 10px;
+}
+
+.memContainer {
+  display: block;
+}
+
+.mem {
+  display: inline-block;
+  width: 30%;
+  height: 500px;
+  box-shadow: 0 0 5px var(--main-color);
+  background-size: cover;
+  background-position: center;
+  color: black;
+  text-align: left;
+  position: relative;
+  text-shadow: 1px 1px black;
+  margin: 10px;
+}
+
+.founder {
+  background-image: url("../../images/founder.jpg");
+}
+.president {
+  background-image: url("../../images/president.jpg");
+}
+.vice-president {
+  background-image: url("../../images/vice-president.jpg");
+}
+
+@media only screen and (max-width: 500px) {
+  .mem {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+  }
+}

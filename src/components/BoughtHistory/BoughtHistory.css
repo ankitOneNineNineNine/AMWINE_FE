@@ -9,5 +9,6 @@
   color: black;
   display: inline-block;
   margin: auto;
+  text-shadow: 1px 1px black;
   margin: 10px;
 }

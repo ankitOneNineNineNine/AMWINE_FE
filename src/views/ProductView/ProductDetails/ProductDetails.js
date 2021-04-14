@@ -13,7 +13,7 @@ import { get, post, put } from "../../../utilities/http";
 import { isAuthorized } from "../../../utilities/auth.middleware";
 import { Link } from "react-router-dom";
 import StarRatingComponent from "react-star-rating-component";
-const Reviews = lazy(()=>import('../../Reviews/Reviews'));
+const Reviews = lazy(() => import("../../Reviews/Reviews"));
 
 const mapStateToProps = (state) => {
   return {
@@ -39,29 +39,38 @@ function ProductDetails({
   const [currentSelectedImage, setCurrentSelectedImage] = useState(null);
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
-  const [reviewUsers, setReviewUsers] = useState([]);
+  const [reviewUsers, setReviewUsers] = useState({});
 
- 
+  const getAllReviews = (tP) => {
+    return new Promise((resolve) => {
+      let revUsers = reviewUsers;
+      tP.reviews.forEach(async (rev, i) => {
+        let u = await get(`/userDetails/${rev.addedBy}`);
+        reviewUsers[rev.addedBy] = u;
+
+        if (i + 1 === tP.reviews.length) {
+          resolve(revUsers);
+        }
+      });
+    });
+  };
   useEffect(() => {
-    const saveProduct = async() =>{
+    const saveProduct = async () => {
       let tP = await get(`/product/${match.params.id}`);
       setProduct(tP);
       setCurrentSelectedImage(tP.images[0]);
-      if(!tP.reviews.length){
+      if (tP.reviews.length) {
+        console.log("here");
+        let a = await getAllReviews(tP);
+        setReviewUsers(a);
+        setTimeout(() => {
+          setLoading(false);
+        }, 30);
+      } else {
         setLoading(false);
       }
-      if(reviewUsers.length!==tP.reviews.length){
-        tP.reviews.forEach(async (rev) => {
-          let user = await get(`/userDetails/${rev.addedBy}`);
-          setReviewUsers([...reviewUsers, user])
-        });
-      }
-        
-      
-    }
-    saveProduct().then(_=>{
-      setLoading(false);
-    });
+    };
+    saveProduct();
   }, []);
 
   const nextImageSelect = (i) => {
@@ -157,29 +166,34 @@ function ProductDetails({
             <StarRatingComponent
               name="rate1"
               starCount={5}
-              value={product.reviews.reduce((acc, item)=>acc+item.rating,0)/product.reviews.length}
+              value={
+                product.reviews.reduce((acc, item) => acc + item.rating, 0) /
+                product.reviews.length
+              }
             />
           </span>
           <hr />
           <h3>Price: Nrs. {product && product.price}</h3>
           <h4>Type: {product && product.pType}</h4>
           <h5>Variety: {product && product.variety}</h5>
-          <span>{product.quantity-(product.sold|| 0)} remaining in stock</span>
+          <span>
+            {product.quantity - (product.sold || 0)} remaining in stock
+          </span>
           <hr />
-         { 
-         product.quantity-(product.sold|| 0)> 0?
-         <button
-            onClick={() => addToCart(product)}
-            style={
-              cart_p.findIndex((p) => p._id === product._id) > -1
-                ? { backgroundColor: "var(--main-color)", color: "white" }
-                : null
-            }
-          >
-            {cart_p.findIndex((p) => p._id === product._id) > -1
-              ? "Already in Cart"
-              : "Add to Cart"}
-          </button>: null}
+          {product.quantity - (product.sold || 0) > 0 ? (
+            <button
+              onClick={() => addToCart(product)}
+              style={
+                cart_p.findIndex((p) => p._id === product._id) > -1
+                  ? { backgroundColor: "var(--main-color)", color: "white" }
+                  : null
+              }
+            >
+              {cart_p.findIndex((p) => p._id === product._id) > -1
+                ? "Already in Cart"
+                : "Add to Cart"}
+            </button>
+          ) : null}
 
           <hr />
           {isAuthorized(user) ? (
@@ -189,15 +203,15 @@ function ProductDetails({
           ) : null}
           <hr />
         </div>
-        <Suspense fallback = {<h1>Loading</h1>}>
-        <Reviews
-          reviews={product.reviews}
-          reviewRating={reviewRating}
-          reviewUsers={reviewUsers}
-          setReviewRating={setReviewRating}
-          postReview={postReview}
-          reviewTextChange={reviewTextChange}
-        />
+        <Suspense fallback={<h1>Loading</h1>}>
+          <Reviews
+            reviews={product.reviews}
+            reviewRating={reviewRating}
+            reviewUsers={reviewUsers}
+            setReviewRating={setReviewRating}
+            postReview={postReview}
+            reviewTextChange={reviewTextChange}
+          />
         </Suspense>
       </div>
     </div>

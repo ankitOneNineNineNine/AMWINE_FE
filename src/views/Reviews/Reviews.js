@@ -15,6 +15,7 @@ export default function Reviews({
 }) {
 
 
+
   return (
     <>
       {localStorage.getItem("i_hash") ? (
@@ -46,13 +47,15 @@ export default function Reviews({
         <div className="reviewShow">
           <h2>Reviews by Our Customer</h2>
           {reviews.map((review, i) => {
+            let adUser = reviewUsers[review.addedBy];
             return (
               <div className="reviewIndividual" key={i}>
                 <img
                   className="addedByReview"
+                  alt = "Added By User"
                   src={
-                    reviewUsers[i]
-                      ? reviewUsers[i].image
+                    adUser
+                      ? adUser.image
                         ? `${profilePicUrl}/${reviewUsers[i].image}`
                         : Wine
                       : Wine
@@ -60,7 +63,7 @@ export default function Reviews({
                 />
                 <div className="details">
                   <span className="personName">
-                    {reviewUsers[i] ? reviewUsers[i].fullName : "Anonymous"}
+                    {adUser ? adUser.fullName : "Anonymous"}
                   </span>
                   <span>
                     <StarRatingComponent

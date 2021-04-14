@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { get, post } from "../../utilities/http";
 import "./BoughtHistory.css";
 import { productPicUrl } from "../../utilities/urls";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,33 +13,38 @@ const mapStateToProps = (state) => {
 
 function BoughtHistory({ user }) {
   const [allBoughts, setAllBoughts] = useState({});
-  useEffect(() => {
-    const getBought = async () => {
-      return new Promise((resolve, reject) => {
-        let b = { ...allBoughts };
-        user.bought.map(async (boughtID) => {
-          let bought = await get(`/bought/${boughtID}`, {}, true);
-          let boughtDate = bought.createdAt.slice(0, 10);
+  const [updated, setUpdated] = useState(false);
 
-          bought.products.map(async (pr) => {
-            let product = await get(`product/${pr.product}`);
-            let quantityBought = pr.quantity;
-
-            setAllBoughts({
-              ...allBoughts,
-              [boughtDate]: [
-                ...(allBoughts.boughtDate || []),
-                {
-                  product,
-                  quantityBought,
-                },
-              ],
-            });
-          });
+  const getAllBougt = () => {
+    return new Promise((resolve) => {
+      user.bought.map(async (bought, i) => {
+        let bts;
+        let b = await get(`/bought/${bought}`, {}, true);
+        let date = b.createdAt.slice(0, 10);
+        b.products.map(async (pr) => {
+          let product = await get(`/product/${pr.product}`);
+          bts = allBoughts;
+          bts[date] = [
+            ...(bts[date] || []),
+            {
+              product,
+              boughtQuantity: pr.quantity,
+            },
+          ];
+          if (i + 1 === user.bought.length) {
+            resolve(bts);
+          }
         });
       });
-    };
-    getBought();
+    });
+  };
+  useEffect(() => {
+    getAllBougt().then((data) => {
+      setAllBoughts((allBoughts) => data);
+      setTimeout(() => {
+        setUpdated(true);
+      }, 20);
+    });
   }, []);
   let items = Object.keys(allBoughts).map((date) => {
     return (
@@ -47,10 +53,19 @@ function BoughtHistory({ user }) {
         <hr />
         {allBoughts[date].map((p, i) => {
           return (
-            <div className="boughtItems" key={i}>
-              <h2>{p.product.name}</h2>
-              <span>Bought: {p.quantityBought}</span>
-            </div>
+            <Link to={`/shop/${p.product._id}`}>
+              <div
+                className="boughtItems"
+                key={i}
+                style={{
+                  backgroundImage: `url(${productPicUrl}/${p.product.images[0]})`,
+                  backgroundSize: "cover",
+                }}
+              >
+                <h2>{p.product.name}</h2>
+                <span>Bought: {p.boughtQuantity}</span>
+              </div>
+            </Link>
           );
         })}
       </>

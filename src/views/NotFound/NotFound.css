@@ -12,7 +12,11 @@
     margin: auto;
     padding: 20px;
     text-align: center;
+
     display: inline-block;
+}
+.goBack:hover{
+    box-shadow: 0 0 10px var(--main-color);
 }
 .goHome{
     text-decoration: underline;

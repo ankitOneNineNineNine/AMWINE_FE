@@ -134,15 +134,15 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
       <Router>
         <Switch>
           <PublicRoute exact path="/AMWINE_FE" component={Home} />
-          <PublicRoute exact path="/AMWINE_FE/shop" component={Shop} />
-          <PublicRoute exact path="/AMWINE_FE/profile/:link" component={PublicProfile} />
-          <PublicRoute path="/AMWINE_FE/cart" component={CartContents} />
-          <PublicRoute path="/AMWINE_FE/shop/:id" component={ProductDetails} />
-          <PublicRoute path="/AMWINE_FE/about" component={About} />
-          {/* <PublicRoute path="/AMWINE_FE/about" component = {About} /> */}
-          <AdminRoute path="/AMWINE_FE/admin" component={AdminPanel} user={user} />
-          <PublicAuth path="/AMWINE_FE/login" component={Login} user={user} />
-          <PublicAuth path="/AMWINE_FE/join" component={Register} user={user} />
+          <PublicRoute exact path="/shop" component={Shop} />
+          <PublicRoute exact path="/profile/:link" component={PublicProfile} />
+          <PublicRoute path="/cart" component={CartContents} />
+          <PublicRoute path="/shop/:id" component={ProductDetails} />
+          <PublicRoute path="/about" component={About} />
+          {/* <PublicRoute path="/about" component = {About} /> */}
+          <AdminRoute path="/admin" component={AdminPanel} user={user} />
+          <PublicAuth path="/login" component={Login} user={user} />
+          <PublicAuth path="/join" component={Register} user={user} />
           <PublicAuth
             path="/forgot-password"
             component={ForgotPassword}

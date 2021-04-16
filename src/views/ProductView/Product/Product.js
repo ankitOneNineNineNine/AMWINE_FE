@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
-  const productURL = "/shop/" + product._id;
+  const productURL = "/AMWINE_FE/shop/" + product._id;
   const picUrl = product.images[0];
 
   const addToCart = async (p) => {

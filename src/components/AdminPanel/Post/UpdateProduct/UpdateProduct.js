@@ -78,7 +78,7 @@ export default function UpdateProduct({match, history}) {
       true,
       "multipart/form-data"
     );
-    history.push(`/shop/${product._id}`)
+    history.push(`shop/${product._id}`)
   };
  const removeAlreadyImage = (image) =>{
    setRemoveImage([...removeImage, image]);

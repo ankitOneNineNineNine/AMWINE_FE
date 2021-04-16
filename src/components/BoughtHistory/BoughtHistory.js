@@ -53,7 +53,7 @@ function BoughtHistory({ user }) {
         <hr />
         {allBoughts[date].map((p, i) => {
           return (
-            <Link to={`/AMWINE_FE/shop/${p.product._id}`}>
+            <Link to={`/shop/${p.product._id}`}>
               <div
                 className="boughtItems"
                 key={i}

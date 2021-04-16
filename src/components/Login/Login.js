@@ -39,7 +39,7 @@ function Login({history, saveUserToStore}) {
       if(isAuthorized(details.user)){
         successNotification(`Hello Admin!`);
       }
-      history.push("/");
+      history.push("/AMWINE_FE");
     }
     catch(e){
       failureNotification(e.response.data.msg)

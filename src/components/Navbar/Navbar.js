@@ -44,7 +44,7 @@ function Navbar(props) {
       successNotification(msg)
       localStorage.clear();
       props.onSignOut();
-      props.history.push("/");
+      props.history.push("/AMWINE_FE");
     
     })
     .catch(err => failureNotification(err))

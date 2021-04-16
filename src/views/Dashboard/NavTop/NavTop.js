@@ -16,7 +16,7 @@ const navTopStyle = {
         <div className = 'sideNavOpen'>
         <i className = 'fa fa-align-right fa-2x' onClick = {()=>{openSideNav()}}></i>
         </div>
-         <Link to  = {match.url}><img className = 'profilePicture' src = {(user && user.image)? `${profilePicUrl}/${user.image}` : Wine} /></Link> 
+         <Link to  = {match.url}><img className = 'profilePicture' src = {(user && user.image)? user.image : Wine} /></Link> 
 
 
         </div>

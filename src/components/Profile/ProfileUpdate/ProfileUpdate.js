@@ -78,7 +78,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
       <form method="put" onSubmit={submit}>
         <div className="profileUpdator">
           <div className="pImageContainer">
-            <img className="pImage" src={user.image? `${profilePicUrl}/${user.image}` : Wine} />
+            <img className="pImage" src={user.image? user.image : Wine} />
 
             <i
               className={`uploaderIcon fa ${
@@ -158,7 +158,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
                   formDetails.image
                     ? URL.createObjectURL(formDetails.image)
                     : user.image? 
-                    `${profilePicUrl}/${user.image}`
+                    user.image
                     :Wine
                 }
                 className="editProfileProfileImage"

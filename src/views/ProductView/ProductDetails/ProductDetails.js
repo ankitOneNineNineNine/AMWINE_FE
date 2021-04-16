@@ -142,7 +142,7 @@ function ProductDetails({
         <div className="dImageContainer">
           <div className="selectedDImage">
             <img
-              src={`${productPicUrl}/${currentSelectedImage}`}
+              src={currentSelectedImage}
               className="dImage"
               alt="productPic Current"
             />
@@ -155,7 +155,7 @@ function ProductDetails({
                     key={i}
                     alt="product pic"
                     onClick={() => nextImageSelect(i)}
-                    src={`${productPicUrl}/${image}`}
+                    src = {image}
                     className="otherDImage"
                   />
                 );

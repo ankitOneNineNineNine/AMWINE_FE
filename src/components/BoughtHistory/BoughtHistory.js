@@ -58,7 +58,7 @@ function BoughtHistory({ user }) {
                 className="boughtItems"
                 key={i}
                 style={{
-                  backgroundImage: `url(${productPicUrl}/${p.product.images[0]})`,
+                  backgroundImage: `url(${p.product.images[0]})`,
                   backgroundSize: "cover",
                 }}
               >

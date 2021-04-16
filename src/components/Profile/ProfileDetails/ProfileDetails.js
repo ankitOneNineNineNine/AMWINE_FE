@@ -15,7 +15,7 @@ function ProfileDetails({user}){
         <div className = 'profileContainer'>
         <div className = 'profileDetails'>
             <div className = 'pImageContainer'>
-                <img className = 'pImage' src = {user.image? `${profilePicUrl}/${user.image}` : Wine} />
+                <img className = 'pImage' src = {user.image? user.image : Wine} />
             </div>
             <div className = 'pDetailsContainer'>
                 <h2>{user.fullName}</h2>

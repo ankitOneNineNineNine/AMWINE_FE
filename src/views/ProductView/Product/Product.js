@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 function Product({ product, user, saveCartPToState, cart_p,saveUserToState }) {
   const productURL = "/shop/" + product._id;
-  const picUrl = productPicUrl + "/" + product.images[0];
+  const picUrl = product.images[0];
 
   const addToCart = async (p) => {
     if (cart_p.findIndex((p) => p._id === product._id) > -1) {

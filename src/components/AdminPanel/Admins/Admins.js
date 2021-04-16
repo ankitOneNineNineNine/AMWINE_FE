@@ -51,8 +51,8 @@ function Admins({user}){
         setSubmitted(true);
         post('adminAuth', {body:formDetails}, true)
         .then(admin=>{
-            successNotification('Auccessfully added');
-            setFormDetails({...newAdminFormDetails})
+            setFormDetails(newAdminFormDetails)
+            successNotification('Successfully added');
             setAllAdmins([...allAdmins, {
                 _id: admin._id,
                 image: admin._image,
@@ -62,7 +62,7 @@ function Admins({user}){
             }]);
             setSubmitted(false)
         })
-        .catch(err=>{console.log(err); setSubmitted(false)})
+        .catch(err=>{console.log(err); setSubmitted(false); setFormDetails(newAdminFormDetails)})
     }
     return (
        <>

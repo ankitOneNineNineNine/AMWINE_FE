@@ -26,7 +26,7 @@ export default function Slideshow({
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite:true
+          infinite:false
         },
       },
       {
@@ -35,7 +35,7 @@ export default function Slideshow({
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
-          infinite:true
+          infinite:false
         },
       },
       {
@@ -43,7 +43,7 @@ export default function Slideshow({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          infinite:true
+          infinite:false
         },
       },
     ],

@@ -136,7 +136,7 @@ export default function UpdateProduct({match, history}) {
               <div key={i} className="individualImageContainer">
                 <img
                   className="individualImages"
-                  src={`${productPicUrl}/${image}`}
+                  src = {image}
                 />
                 <i
                   className="deleteImage fa fa-trash"

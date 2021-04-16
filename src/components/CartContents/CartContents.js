@@ -193,7 +193,7 @@ function CartContents({
                 </div>
               }
               <img
-                src={`${productPicUrl}/${product.images[0]}`}
+                src={product.images[0]}
                 className="pInCartImg"
               />
               <span className="trash" onClick={() => removePFromCart(product)}>

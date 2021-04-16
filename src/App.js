@@ -26,6 +26,7 @@ import { connect } from "react-redux";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
 import CartContents from "./components/CartContents/CartContents";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import NotFound from "./views/NotFound/NotFound";
 
 function AdminRoute({ component: Component, user, ...rest }) {
   return (
@@ -132,16 +133,16 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
     <>
       <Router>
         <Switch>
-          <PublicRoute exact path="/" component={Home} />
-          <PublicRoute exact path="/shop" component={Shop} />
-          <PublicRoute exact path="/profile/:link" component={PublicProfile} />
-          <PublicRoute path="/cart" component={CartContents} />
-          <PublicRoute path="/shop/:id" component={ProductDetails} />
-          <PublicRoute path="/about" component={About} />
-          {/* <PublicRoute path="/about" component = {About} /> */}
-          <AdminRoute path="/admin" component={AdminPanel} user={user} />
-          <PublicAuth path="/login" component={Login} user={user} />
-          <PublicAuth path="/join" component={Register} user={user} />
+          <PublicRoute exact path="/AMWINE_FE" component={Home} />
+          <PublicRoute exact path="/AMWINE_FE/shop" component={Shop} />
+          <PublicRoute exact path="/AMWINE_FE/profile/:link" component={PublicProfile} />
+          <PublicRoute path="/AMWINE_FE/cart" component={CartContents} />
+          <PublicRoute path="/AMWINE_FE/shop/:id" component={ProductDetails} />
+          <PublicRoute path="/AMWINE_FE/about" component={About} />
+          {/* <PublicRoute path="/AMWINE_FE/about" component = {About} /> */}
+          <AdminRoute path="/AMWINE_FE/admin" component={AdminPanel} user={user} />
+          <PublicAuth path="/AMWINE_FE/login" component={Login} user={user} />
+          <PublicAuth path="/AMWINE_FE/join" component={Register} user={user} />
           <PublicAuth
             path="/forgot-password"
             component={ForgotPassword}
@@ -150,7 +151,7 @@ function App({ saveUserToState, cart_p, user, products , saveProductToState, sav
             path="/reset-password/:token"
             component={ResetPassword}
           />
-          {/* <Route exact path="/adminLogin" component={AdminSignin} /> */}
+          <Route component = {NotFound} />
         </Switch>
       </Router>
       <ToastContainer />

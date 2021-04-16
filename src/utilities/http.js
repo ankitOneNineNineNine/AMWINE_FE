@@ -2,7 +2,7 @@ import axios from "axios";
 
 //options
 const http = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://amwine.herokuapp.com",
   responseType: "json",
 });
 

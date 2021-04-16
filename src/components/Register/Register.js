@@ -51,7 +51,7 @@ function Register({ saveUserToStore, history }) {
       localStorage.setItem("i_hash", JSON.stringify(details.token));
       saveUserToStore(details.user);
       successNotification(`Welcome ${details.user.userName}`);
-      history.push("/");
+      history.push("/AMWINE_FE");
       }
       catch(e){
         failureNotification(e)

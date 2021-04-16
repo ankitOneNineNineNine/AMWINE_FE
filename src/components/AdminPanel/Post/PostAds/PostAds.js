@@ -36,7 +36,7 @@ export default function PostAds({ history }) {
     post("/ad", { body: formData }, true, "multipart/form-data")
       .then((data) => {
         successNotification("Posted");
-        history.push("/");
+        history.push("/AMWINE_FE");
       })
       .catch((err) => failureNotification("Some Error Occured"));
   };

@@ -48,7 +48,7 @@ export default function SideNav({ name, sideNavOpen,currentSideNavLink, match })
           </Link>
         </ul>
       </div>
-      <Link to= '/'><button className = 'gotoHome'>GoTo Home</button></Link>
+      <Link to= '/AMWINE_FE'><button className = 'gotoHome'>GoTo Home</button></Link>
     </div>
   );
 }

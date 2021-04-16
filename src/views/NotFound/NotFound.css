@@ -1,3 +1,7 @@
+
+.notF{
+    overflow-y: hidden;
+}
 .notFoundIcon{
     background-image: url('../../images/404.gif');
     background-position: center;
@@ -22,4 +26,9 @@
     text-decoration: underline;
     color: blue;
     padding: 20px;
+}
+
+.topIcons{
+    position: fixed;
+    height: 50px;
 }

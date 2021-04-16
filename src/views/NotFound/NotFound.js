@@ -9,12 +9,14 @@ export default function NotFound({history}){
         history.goBack();
     }
     return (
-        <>
+        <div className = 'notF'>
+        <div className = 'topIcons'>
         <i className = 'goBack fa fa-arrow-left' onclick = {goBack} />
         <NavLink to = '/AMWINE_FE' className = 'goHome'>Go to Home</NavLink>
+        </div>
         <div className = 'notFoundIcon'>
            
         </div>
-        </>
+        </div>
     )
 }

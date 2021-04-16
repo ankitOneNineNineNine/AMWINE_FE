@@ -6,7 +6,7 @@ import './Logo.css'
 export default function Logo(){
     return(
         <div className = 'linkContainer'>
-        <Link to = '/'>
+        <Link to = '/AMWINE_FE'>
         <div className = 'logo'>
         <div className ='box'></div>
         <span>AMWINE</span>

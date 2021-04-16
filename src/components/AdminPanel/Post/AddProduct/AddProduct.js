@@ -80,7 +80,7 @@ function AddProduct({ products, saveProductToState, history }) {
         successNotification("Successfully Added");
         setFormDetails(addProductFormDetails);
         setFormDetails({ ...formDetails, images: [] });
-        history.push('/');
+        history.push('/AMWINE_FE');
       }
     }
     catch(e){

@@ -1,0 +1,1 @@
+google.sbox.p50 && google.sbox.p50(["forever Vue tutorial",[],{"j":"2b","k":1,"l":"1","q":"H25Qci9KAxTj79wBAifA5t9OjF8"}])

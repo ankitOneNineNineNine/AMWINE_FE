@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 function ProfileUpdate({ user, saveUserToState, history }) {
   const imageChange = useRef(null);
+  const [submitted, setSubmitted] = useState(false);
   const [formDetails, setFormDetails] = useState({ ...updateFormDetails });
 
   const detailsChange = (e) => {
@@ -40,6 +41,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
   };
   const submit = async (e) => {
     e.preventDefault();
+    setSubmitted(true)
     let formData = new FormData();
     if (formDetails.fullName) formData.append("fullName", formDetails.fullName);
     if (formDetails.number) formData.append("number", formDetails.number);
@@ -53,6 +55,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
       "multipart/form-data"
     );
     if (user) {
+      setSubmitted(false)
       saveUserToState(user);
       successNotification("Successfully Updated!");
       if(isAuthorized(user)){
@@ -165,7 +168,7 @@ function ProfileUpdate({ user, saveUserToState, history }) {
               />
             </p>
           </div>
-          <button className="updateProfileButton" onClick={submit}>
+          <button className={submitted? "clicked updateProfileButton": "updateProfileButton"} onClick={submitted? null: submit} >
             Update
           </button>
         </div>

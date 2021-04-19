@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/AMWINE_FE/static/css/main.fcdf8cda.chunk.css",
+    "main.css": "/AMWINE_FE/static/css/main.aeb59689.chunk.css",
     "main.js": "/AMWINE_FE/static/js/main.0406411f.chunk.js",
     "main.js.map": "/AMWINE_FE/static/js/main.0406411f.chunk.js.map",
     "runtime-main.js": "/AMWINE_FE/static/js/runtime-main.a47b47e4.js",
@@ -16,7 +16,7 @@
     "index.html": "/AMWINE_FE/index.html",
     "static/css/2.ffda3d49.chunk.css.map": "/AMWINE_FE/static/css/2.ffda3d49.chunk.css.map",
     "static/css/3.16af6d47.chunk.css.map": "/AMWINE_FE/static/css/3.16af6d47.chunk.css.map",
-    "static/css/main.fcdf8cda.chunk.css.map": "/AMWINE_FE/static/css/main.fcdf8cda.chunk.css.map",
+    "static/css/main.aeb59689.chunk.css.map": "/AMWINE_FE/static/css/main.aeb59689.chunk.css.map",
     "static/js/2.8bd0e40f.chunk.js.LICENSE.txt": "/AMWINE_FE/static/js/2.8bd0e40f.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/AMWINE_FE/static/media/404.b2dbc68d.gif",
     "static/media/esewa.a56ea46b.png": "/AMWINE_FE/static/media/esewa.a56ea46b.png",
@@ -33,7 +33,7 @@
     "static/js/runtime-main.a47b47e4.js",
     "static/css/2.ffda3d49.chunk.css",
     "static/js/2.8bd0e40f.chunk.js",
-    "static/css/main.fcdf8cda.chunk.css",
+    "static/css/main.aeb59689.chunk.css",
     "static/js/main.0406411f.chunk.js"
   ]
 }

@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/AMWINE_FE/static/css/main.fcdf8cda.chunk.css",
-    "main.js": "/AMWINE_FE/static/js/main.71c3c627.chunk.js",
-    "main.js.map": "/AMWINE_FE/static/js/main.71c3c627.chunk.js.map",
-    "runtime-main.js": "/AMWINE_FE/static/js/runtime-main.ad3e1b10.js",
-    "runtime-main.js.map": "/AMWINE_FE/static/js/runtime-main.ad3e1b10.js.map",
+    "main.js": "/AMWINE_FE/static/js/main.c98005ac.chunk.js",
+    "main.js.map": "/AMWINE_FE/static/js/main.c98005ac.chunk.js.map",
+    "runtime-main.js": "/AMWINE_FE/static/js/runtime-main.83a47809.js",
+    "runtime-main.js.map": "/AMWINE_FE/static/js/runtime-main.83a47809.js.map",
     "static/css/2.ffda3d49.chunk.css": "/AMWINE_FE/static/css/2.ffda3d49.chunk.css",
     "static/js/2.c991e3a2.chunk.js": "/AMWINE_FE/static/js/2.c991e3a2.chunk.js",
     "static/js/2.c991e3a2.chunk.js.map": "/AMWINE_FE/static/js/2.c991e3a2.chunk.js.map",
     "static/css/3.16af6d47.chunk.css": "/AMWINE_FE/static/css/3.16af6d47.chunk.css",
-    "static/js/3.55ef61de.chunk.js": "/AMWINE_FE/static/js/3.55ef61de.chunk.js",
-    "static/js/3.55ef61de.chunk.js.map": "/AMWINE_FE/static/js/3.55ef61de.chunk.js.map",
+    "static/js/3.635083a7.chunk.js": "/AMWINE_FE/static/js/3.635083a7.chunk.js",
+    "static/js/3.635083a7.chunk.js.map": "/AMWINE_FE/static/js/3.635083a7.chunk.js.map",
     "static/js/4.af065cb1.chunk.js": "/AMWINE_FE/static/js/4.af065cb1.chunk.js",
     "static/js/4.af065cb1.chunk.js.map": "/AMWINE_FE/static/js/4.af065cb1.chunk.js.map",
     "index.html": "/AMWINE_FE/index.html",
@@ -30,10 +30,10 @@
     "static/media/wineComp2.c30c18dc.jpg": "/AMWINE_FE/static/media/wineComp2.c30c18dc.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ad3e1b10.js",
+    "static/js/runtime-main.83a47809.js",
     "static/css/2.ffda3d49.chunk.css",
     "static/js/2.c991e3a2.chunk.js",
     "static/css/main.fcdf8cda.chunk.css",
-    "static/js/main.71c3c627.chunk.js"
+    "static/js/main.c98005ac.chunk.js"
   ]
 }

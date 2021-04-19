@@ -71,7 +71,7 @@ function ProductDetails({
       }
     };
     saveProduct();
-  }, [submitted]);
+  }, [submitted, reviewUsers]);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);

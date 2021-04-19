@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/AMWINE_FE/static/css/main.aeb59689.chunk.css",
-    "main.js": "/AMWINE_FE/static/js/main.e7d3fc90.chunk.js",
-    "main.js.map": "/AMWINE_FE/static/js/main.e7d3fc90.chunk.js.map",
+    "main.js": "/AMWINE_FE/static/js/main.44a38664.chunk.js",
+    "main.js.map": "/AMWINE_FE/static/js/main.44a38664.chunk.js.map",
     "runtime-main.js": "/AMWINE_FE/static/js/runtime-main.a47b47e4.js",
     "runtime-main.js.map": "/AMWINE_FE/static/js/runtime-main.a47b47e4.js.map",
     "static/css/2.ffda3d49.chunk.css": "/AMWINE_FE/static/css/2.ffda3d49.chunk.css",
@@ -34,6 +34,6 @@
     "static/css/2.ffda3d49.chunk.css",
     "static/js/2.8bd0e40f.chunk.js",
     "static/css/main.aeb59689.chunk.css",
-    "static/js/main.e7d3fc90.chunk.js"
+    "static/js/main.44a38664.chunk.js"
   ]
 }

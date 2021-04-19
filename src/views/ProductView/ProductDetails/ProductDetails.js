@@ -129,7 +129,7 @@ function ProductDetails({
           
           setProduct(product);
           let u = reviewUsers;
-          u.push(user);
+          u[user._id] = user;
           setReviewUsers(u);
           setTimeout(()=>{
             setSubmitted(false)

@@ -71,7 +71,7 @@ function ProductDetails({
       }
     };
     saveProduct();
-  }, []);
+  }, [submitted]);
 
   const nextImageSelect = (i) => {
     setCurrentSelectedImage(product.images[i]);
@@ -126,11 +126,14 @@ function ProductDetails({
         true
       )
         .then((product) => {
-          setSubmitted(false)
+          
           setProduct(product);
           let u = reviewUsers;
           u.push(user);
           setReviewUsers(u);
+          setTimeout(()=>{
+            setSubmitted(false)
+          },5)
         })
         .catch(err=>{
           setSubmitted(true);

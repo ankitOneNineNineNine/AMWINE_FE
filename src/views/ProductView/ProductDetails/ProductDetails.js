@@ -40,7 +40,7 @@ function ProductDetails({
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
   const [reviewUsers, setReviewUsers] = useState({});
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
 
   const getAllReviews = (tP) => {
     return new Promise((resolve) => {
@@ -126,18 +126,16 @@ function ProductDetails({
         true
       )
         .then((product) => {
-          
           setProduct(product);
           let u = reviewUsers;
           u[user._id] = user;
           setReviewUsers(u);
-          setTimeout(()=>{
-            setSubmitted(false)
-          },5)
+
+          setSubmitted(false);
         })
-        .catch(err=>{
+        .catch((err) => {
           setSubmitted(true);
-          console.log(err)
+          console.log(err);
         });
     } else {
       failureNotification("Please Login First");
@@ -165,7 +163,7 @@ function ProductDetails({
                     key={i}
                     alt="product pic"
                     onClick={() => nextImageSelect(i)}
-                    src = {image}
+                    src={image}
                     className="otherDImage"
                   />
                 );
@@ -223,7 +221,7 @@ function ProductDetails({
             setReviewRating={setReviewRating}
             postReview={postReview}
             reviewTextChange={reviewTextChange}
-            submitted = {submitted}
+            submitted={submitted}
           />
         </Suspense>
       </div>

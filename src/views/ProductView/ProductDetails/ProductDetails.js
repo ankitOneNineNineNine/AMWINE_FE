@@ -61,7 +61,6 @@ function ProductDetails({
       setProduct(tP);
       setCurrentSelectedImage(tP.images[0]);
       if (tP.reviews.length) {
-        console.log("here");
         let a = await getAllReviews(tP);
         setReviewUsers(a);
         setTimeout(() => {

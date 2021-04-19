@@ -61,6 +61,7 @@
 .logoutFloat {
   display: inline-block;
   position: absolute;
+  cursor: pointer;
   top: 30px;
 
   transform: translateX(-50%);

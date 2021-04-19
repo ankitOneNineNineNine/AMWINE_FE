@@ -40,6 +40,7 @@ function ProductDetails({
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
   const [reviewUsers, setReviewUsers] = useState({});
+  const [submitted, setSubmitted] = useState(false)
 
   const getAllReviews = (tP) => {
     return new Promise((resolve) => {
@@ -112,6 +113,7 @@ function ProductDetails({
     setReviewText(e.target.value);
   };
   const postReview = (e) => {
+    setSubmitted(true);
     if (localStorage.getItem("i_hash")) {
       post(
         "/product/review",
@@ -125,10 +127,16 @@ function ProductDetails({
         true
       )
         .then((product) => {
+          setSubmitted(false)
           setProduct(product);
-          setReviewUsers([user, ...reviewUsers]);
+          let u = reviewUsers;
+          u.push(user);
+          setReviewUsers(u);
         })
-        .catch(console.log);
+        .catch(err=>{
+          setSubmitted(true);
+          console.log(err)
+        });
     } else {
       failureNotification("Please Login First");
     }
@@ -213,6 +221,7 @@ function ProductDetails({
             setReviewRating={setReviewRating}
             postReview={postReview}
             reviewTextChange={reviewTextChange}
+            submitted = {submitted}
           />
         </Suspense>
       </div>

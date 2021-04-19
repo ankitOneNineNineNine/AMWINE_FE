@@ -12,6 +12,7 @@ export default function Reviews({
   setReviewRating,
   postReview,
   reviewTextChange,
+  submitted
 }) {
 
 
@@ -38,7 +39,7 @@ export default function Reviews({
             className="postReview"
             onChange={reviewTextChange}
           />
-          <button className="postReviewButton" onClick={postReview}>
+          <button className={submitted? "postReviewButton clicked" : "postReviewButton"} onClick={submitted? null: postReview}>
             Post
           </button>
         </div>

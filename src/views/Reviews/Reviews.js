@@ -56,7 +56,7 @@ export default function Reviews({
                   src={
                     adUser
                       ? adUser.image
-                        ? `${profilePicUrl}/${reviewUsers[i].image}`
+                        ? adUser.image
                         : Wine
                       : Wine
                   }
